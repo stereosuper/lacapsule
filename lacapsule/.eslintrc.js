@@ -8,6 +8,7 @@ module.exports = {
     parser: 'babel-eslint'
   },
   extends: [
+    'eslint:recommended',
     'plugin:vue/recommended',
     'plugin:prettier/recommended'
   ],
@@ -24,7 +25,11 @@ module.exports = {
     "singleQuote": true,
     "tabWidth": 4,
     "bracketSpacing": true,
-    "proseWrap": "never",
-    "vue/max-attributes-per-line": "off"
+    "vue/max-attributes-per-line": "off",
+    "vue/html-indent": ["error", 4, {
+        "alignAttributesVertically": false
+    }],
+    "vue/html-quotes": ["error", "single"],
+    "vue/require-v-for-key": "off"
   }
 }
