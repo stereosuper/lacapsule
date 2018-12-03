@@ -24,6 +24,7 @@ module.exports = {
     "singleQuote": true,
     "tabWidth": 4,
     "bracketSpacing": true,
+    "proseWrap": "never",
     "vue/max-attributes-per-line": "off"
   }
 }
