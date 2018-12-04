@@ -1,16 +1,14 @@
 <template>
     <div class='Logo'>
-        <img :src='img.url' :alt='img.alt'>
+        <img :src='settings.logo.url' :alt='settings.logo.alt'>
     </div>
 </template>
 
 <script>
 export default {
-    props: {
-        img: {
-            type: Object,
-            required: true,
-            default: () => []
+    computed: {
+        settings() {
+            return this.$store.state.settings;
         }
     }
 };

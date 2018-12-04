@@ -10,23 +10,21 @@ module.exports = {
         ecmaVersion: 6
     },
     extends: [
-        "eslint:recommended",
-        "plugin:vue/recommended",
-        "plugin:prettier/recommended"
+        'eslint:recommended',
+        'plugin:vue/recommended',
+        'plugin:prettier/recommended'
     ],
     // required to lint *.vue files
-    plugins: [
-        'vue'
-    ],
+    plugins: ['vue'],
     // add your custom rules here
     rules: {
-        "trailingComma": "es5",
-        "singleQuote": true,
-        "tabWidth": 4,
-        "bracketSpacing": true,
-        "arrowParens": "avoid",
-        "no-console": "off",
-        "vue/max-attributes-per-line": "off",
-        "no-unused-vars": 1
+        trailingComma: 'es5',
+        singleQuote: true,
+        tabWidth: 4,
+        bracketSpacing: true,
+        arrowParens: 'avoid',
+        'no-console': 'off',
+        'vue/max-attributes-per-line': 'off',
+        'no-unused-vars': 1
     }
-}
+};

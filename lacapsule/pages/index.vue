@@ -1,9 +1,9 @@
 <template>
     <div>
-        <siteHeader :logo='settings[0].data.logo' :menu='menu[0].data.items'/>
+        <siteHeader/>
         
         <div class='container'>
-            <h1 class='title'>{{ home[0].data.title[0].text }}</h1>
+            <h1 class='title'>{{ home.title[0].text }}</h1>
             <div v-html='homeText'/>
         </div>
     </div>
@@ -22,32 +22,17 @@ export default {
         const api = await Prismic.getApi(apiEndpoint);
         const PrismicDOM = require('prismic-dom');
 
-        let settings = {},
-            menu = {},
-            home = {},
+        let home = {},
             homeText;
-
-        await api
-            .query(Prismic.Predicates.at('document.type', 'settings'))
-            .then(function(response) {
-                settings = response.results;
-            });
-
-        await api
-            .query(Prismic.Predicates.at('document.type', 'menu'))
-            .then(function(response) {
-                menu = response.results;
-                console.log(menu[0].data.items);
-            });
 
         await api
             .query(Prismic.Predicates.at('document.type', 'frontpage'))
             .then(function(response) {
-                home = response.results;
-                homeText = PrismicDOM.RichText.asHtml(home[0].data.text);
+                home = response.results[0].data;
+                homeText = PrismicDOM.RichText.asHtml(home.text);
             });
 
-        return { settings, menu, home, homeText };
+        return { home, homeText };
     }
 };
 </script>

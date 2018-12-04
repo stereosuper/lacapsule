@@ -1,8 +1,8 @@
 <template>
     <header class='header'>
-        <logo :img='logo'/>
+        <logo/>
         <ul>
-            <li v-for='item in menu' v-if='!item.isBroken' :menu='menu' :key='item.label'>
+            <li v-for='item in menu' v-if='!item.isBroken' :key='item.label'>
                 <a :href='item.link.slug ? item.link.slug : item.link.url' :target='item.link.target'>{{ item.label }}</a>
             </li>
         </ul>
@@ -16,16 +16,9 @@ export default {
     components: {
         Logo
     },
-    props: {
-        logo: {
-            type: Object,
-            required: true,
-            default: () => []
-        },
-        menu: {
-            type: Array,
-            required: true,
-            default: () => []
+    computed: {
+        menu() {
+            return this.$store.state.menu.items;
         }
     }
 };
