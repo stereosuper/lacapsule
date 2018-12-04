@@ -1,1 +1,15 @@
 /* Buttons */
+
+.btn,
+.button > a {
+    display: inline-block;
+    padding: 11px 27px 12px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    background: $primary;
+    &:after {
+        content: ' ›';
+    }
+}

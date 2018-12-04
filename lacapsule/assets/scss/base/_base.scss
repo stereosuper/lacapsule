@@ -1,164 +1,195 @@
 /******* GÉNÉRAL *******/
 
-::-moz-selection{
-    background: $black;
-    color: $white;
+::-moz-selection {
+    background: #000;
+    color: #fff;
     text-shadow: none;
 }
-::selection{
-    background: $black;
-    color: $white;
+::selection {
+    background: #000;
+    color: #fff;
     text-shadow: none;
 }
 
-html{
+html {
+    min-height: 100%;
     font-size: 62.5%; /* sets the base font to 10px for easier math */
 }
 
-body{
-    font: 1.6em / 1.2 sans-serif;
+body {
+    min-height: 100%;
+    font: 1.5em / 1.7 $ibm;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(
+            179.94deg,
+            rgba(0, 0, 0, 0.72) 0.1%,
+            rgba(0, 0, 0, 0) 52%
+        ),
+        radial-gradient(952.78px at 13.6% 31.4%, #254d94 0%, #14233e 100%)
+            no-repeat;
+    color: #fff;
 }
 
-h1{
-    font-size: 5rem;
+h1 {
     margin: 0.67em 0;
+    font-family: $league;
+    font-size: 4rem;
+    line-height: 1.25;
 }
 
-h2{
+h2 {
     font-size: 3rem;
     margin: 0.83em 0;
 }
 
-h3{
+h3 {
     font-size: 2.4rem;
     margin: 1em 0;
 }
 
-h4{
+h4 {
     font-size: 2.2rem;
     margin: 1.33em 0;
 }
 
-h5{
+h5 {
     font-size: 2rem;
     margin: 1.67em 0;
 }
 
-h6{
+h6 {
     font-size: 1.8rem;
     margin: 2.33em 0;
 }
 
-p{
+p {
     margin: 1em 0;
 }
 
-b, strong{
-
+b,
+strong {
 }
 
-i, em{
-
+i,
+em {
 }
 
-blockquote{
+blockquote {
     margin: 1em 40px;
 }
 
-ol, ul{
+ol,
+ul {
     padding: 0;
     margin: 1em 0;
-}
-ul{
-    ul{
+    list-style: none;
+    ol,
+    ul {
         padding: 0 0 0 25px;
         margin: 1em 0;
     }
-}
-ol{
-    counter-reset: ol-counter;
-    > li{
-        counter-increment: ol-counter;
-        &:before{
-            content: counter(ol-counter)'.';
+    li {
+        position: relative;
+        &:before {
+            content: '';
+            position: absolute;
+            left: $gutter * -2;
         }
     }
-    ol{
-        padding: 0 0 0 25px;
-        margin: 1em 0;
+}
+ul {
+    > li {
+        &:before {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            top: 10px;
+            background: $primary;
+        }
+    }
+}
+ol {
+    counter-reset: ol-counter;
+    > li {
+        counter-increment: ol-counter;
+        &:before {
+            content: counter(ol-counter) '.';
+            top: 3px;
+            font-size: 1.2rem;
+            color: $primary;
+        }
     }
 }
 
-dt, dd{
+dt,
+dd {
     display: inline;
     margin: 0;
 }
-dt{
-    &:after{
+dt {
+    &:after {
         content: ': ';
     }
 }
-dd{
-    + dt{
-        &:before{
+dd {
+    + dt {
+        &:before {
             content: '\A';
             white-space: pre;
         }
     }
-    + dd{
-        &:before{
+    + dd {
+        &:before {
             content: ', ';
             margin: 0 0 0 -0.25em;
         }
     }
 }
 
-img{
+img {
     max-width: 100%;
     height: auto;
 }
 
-code, pre{
+code,
+pre {
     display: block;
     padding: 10px 15px;
     margin: 1em 0;
     background: grey;
 }
 
-hr{
+hr {
     height: 1px;
     max-width: 250px;
     border: 0;
     margin: 3em auto 5em;
-    background: $black;
+    background: #fff;
 }
-
 
 /******* LIENS / BOUTONS *******/
 
-a{
-    color: inherit;
-    text-decoration: none;
+a {
+    color: $primary;
     transition: $transition;
-    &:focus, &:hover{
+    &:focus,
+    &:hover {
+        color: #fff;
     }
-    &:focus{
+    &:focus {
         outline: 0;
     }
-    &:active{
-        filter: saturate(200%);
+    &:active {
     }
 }
-
 
 /******* CLASSES GENERALES  *******/
 
-.hidden{
+.hidden {
     display: none !important;
 }
-.visually-hidden{
+.visually-hidden {
     width: 1px;
     height: 1px;
     padding: 0;
@@ -169,50 +200,51 @@ a{
     overflow: hidden;
 }
 
-.clearfix{
+.clearfix {
     @include clearfix;
 }
 
-.pos-relative{
+.pos-relative {
     position: relative;
 }
 
-.align-center{
+.align-center {
     text-align: center;
 }
-.align-left{
+.align-left {
     text-align: left;
 }
-.align-right{
+.align-right {
     text-align: right;
 }
 
-.inline-b{
+.inline-b {
     display: inline-block;
     vertical-align: middle;
     transform: translateY(-0.1em);
 }
 
-.full-width{
+.full-width {
     width: 100%;
 }
 
-.icon{
+.icon {
     width: 1.2em;
     height: 1.2em;
     fill: currentColor;
 }
 
-.img-fit{
-    &.compat-object-fit{
+.img-fit {
+    &.compat-object-fit {
         background-size: cover;
         background-position: 50% 50%;
-        img{ // hide image if object fit is not supported - opacity to 0 for the link area
+        img {
+            // hide image if object fit is not supported - opacity to 0 for the link area
             opacity: 0;
         }
     }
 }
 
-.no-transition{
-    transition: none!important;
+.no-transition {
+    transition: none !important;
 }

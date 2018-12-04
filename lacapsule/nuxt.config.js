@@ -20,7 +20,27 @@ module.exports = {
                 content: pkg.description
             }
         ],
-        link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+        link: [
+            {
+                rel: 'icon',
+                type: 'image/x-icon',
+                href: '/favicon.ico'
+            },
+            {
+                rel: 'stylesheet',
+                href:
+                    'https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600,600i'
+            },
+            {
+                rel: 'dns-prefetch',
+                href: '//fonts.googleapis.com'
+            },
+            {
+                rel: 'preconnect',
+                href: 'https://fonts.gstatic.com',
+                crossorigin: ''
+            }
+        ]
     },
 
     /*
