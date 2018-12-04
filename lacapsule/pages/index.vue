@@ -3,8 +3,10 @@
         <siteHeader/>
         
         <div class='container'>
-            <h1 class='title'>{{ home.title[0].text }}</h1>
-            <div v-html='homeText'/>
+            <div class='text'>
+                <h1 class='title'>{{ home.title[0].text }}</h1>
+                <div v-html='homeText'/>
+            </div>
         </div>
     </div>
 </template>
@@ -37,5 +39,14 @@ export default {
 };
 </script>
 
-<style>
+<style lang='scss' scoped>
+.container {
+    position: relative;
+    top: -50%;
+    margin-top: 40vh;
+}
+
+.text {
+    width: 40%;
+}
 </style>
