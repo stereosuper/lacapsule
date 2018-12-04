@@ -2,7 +2,7 @@
     <header class='header'>
         <logo :img='logo'/>
         <ul>
-            <li v-for='item in menu' v-if='!item.isBroken' :menu='menu'>
+            <li v-for='item in menu' v-if='!item.isBroken' :menu='menu' :key='item.label'>
                 <a :href='item.link.slug ? item.link.slug : item.link.url' :target='item.link.target'>{{ item.label }}</a>
             </li>
         </ul>
