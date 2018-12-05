@@ -1,11 +1,11 @@
 <template>
     <header class='header'>
-        <div class='container'>
+        <div class='header-container'>
             <a href='./' class='Logo'>
                 <img :src='settings.logo.url' :alt='settings.logo.alt'>
             </a>
 
-            <button class='burger'>Menu</button>
+            <button class='menu-btn'>Menu<i class='burger'></i></button>
 
             <ul class='menu'>
                 <li v-for='item in menu' v-if='!item.isBroken' :key='item.label'>
@@ -31,15 +31,14 @@ export default {
 
 <style lang='scss' scoped>
 .header {
-    width: 100%;
-    padding: 55px 0 0;
-    position: fixed;
-    top: 0;
-    left: 0;
+    padding: $gutter 0;
 }
 
-.container {
+.header-container {
     display: flex;
+    max-width: 2600px;
+    padding: 0 $gutter;
+    margin: 0 auto;
     align-items: center;
     justify-content: space-between;
 }
@@ -52,5 +51,54 @@ export default {
     top: 0;
     left: 0;
     margin: 0;
+}
+
+.menu-btn {
+    display: flex;
+    position: fixed;
+    right: 50%;
+    justify-content: space-between;
+    align-items: center;
+    font-family: $league;
+    transform: translateX(1277px); // half the container size
+}
+.burger {
+    display: block;
+    width: 19px;
+    height: 2px;
+    position: relative;
+    margin: 0 0 0 20px;
+    border-radius: 2px;
+    background: #fff;
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        height: 2px;
+        left: 0;
+        border-radius: 2px;
+        background: #fff;
+    }
+    &:before {
+        width: 14px;
+        top: -6px;
+    }
+    &:after {
+        width: 19px;
+        bottom: -6px;
+    }
+}
+
+@media (max-width: 2660px) {
+    .menu-btn {
+        right: $gutter;
+        transform: none;
+    }
+}
+
+@media (max-width: $tablet) {
+    .menu-btn {
+        position: static;
+    }
 }
 </style>

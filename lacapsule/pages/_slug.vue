@@ -43,4 +43,13 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.text {
+    margin: 0 $col;
+}
+
+@media (max-width: $tablet) {
+    .text {
+        margin: 0;
+    }
+}
 </style>

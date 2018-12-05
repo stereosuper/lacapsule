@@ -40,10 +40,14 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+h1 {
+    margin-top: 0;
+}
+
 .container {
     position: relative;
     top: -50%;
-    margin-top: 40vh;
+    margin-top: 30vh;
 }
 
 .text {

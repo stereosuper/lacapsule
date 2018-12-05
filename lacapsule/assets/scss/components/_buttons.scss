@@ -3,10 +3,14 @@
 .btn,
 .button > a {
     display: inline-block;
-    padding: 11px 27px 12px;
+    padding: 15px 27px 13px;
     border-radius: 5px;
     text-transform: uppercase;
     text-decoration: none;
+    font-family: $league;
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    font-style: normal;
     color: #fff;
     background: $primary;
     &:after {
