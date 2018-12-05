@@ -1,7 +1,20 @@
 const pkg = require('./package');
+const Prismic = require('prismic-javascript');
 
 module.exports = {
     mode: 'universal',
+    generate: {
+        routes: async function() {
+            const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
+            const api = await Prismic.getApi(apiEndpoint);
+            return await api.query('').then(res => {
+                return res.results.reduce((acc, cur) => {
+                    if (cur.uid !== null) acc.push(cur.uid);
+                    return acc;
+                }, []);
+            });
+        }
+    },
 
     /*
   ** Headers of the page
