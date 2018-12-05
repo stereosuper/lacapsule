@@ -4,8 +4,8 @@
         
         <div class='container'>
             <div class='text'>
-                <h1 class='title'>{{ home.title[0].text }}</h1>
-                <div v-html='homeText'/>
+                <h1 class='title'>{{ page.title[0].text }}</h1>
+                <div v-html='pageText'/>
             </div>
         </div>
     </div>
@@ -20,33 +20,27 @@ export default {
     components: {
         SiteHeader
     },
-    async asyncData() {
+    async asyncData({ params }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
 
-        let home = {},
-            homeText;
+        let page = {},
+            pageText;
+
+        console.log(params.slug);
 
         await api
-            .query(Prismic.Predicates.at('document.type', 'frontpage'))
+            .query(Prismic.Predicates.at('my.page.uid', params.slug))
             .then(function(response) {
-                home = response.results[0].data;
-                homeText = PrismicDOM.RichText.asHtml(home.text);
+                console.log(response);
+                page = response.results[0].data;
+                pageText = PrismicDOM.RichText.asHtml(page.text);
             });
 
-        return { home, homeText };
+        return { page, pageText };
     }
 };
 </script>
 
 <style lang='scss' scoped>
-.container {
-    position: relative;
-    top: -50%;
-    margin-top: 40vh;
-}
-
-.text {
-    width: 40%;
-}
 </style>
