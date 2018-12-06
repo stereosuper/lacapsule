@@ -18,7 +18,6 @@ html {
 
 body {
     min-height: 100%;
-    padding: 25px 0 120px;
     font: 1.5em / 1.7 $ibm;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -30,6 +29,10 @@ body {
         radial-gradient(952.78px at 13.6% 31.4%, #254d94 0%, #14233e 100%)
             no-repeat;
     color: #fff;
+    > div,
+    > div > div {
+        min-height: 100%;
+    }
 }
 
 h1,

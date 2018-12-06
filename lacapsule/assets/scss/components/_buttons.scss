@@ -1,9 +1,16 @@
 /* Buttons */
 
+.button {
+    display: inline-block;
+}
+
 .btn,
 .button > a {
     display: inline-block;
     padding: 15px 27px 13px;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
     border-radius: 5px;
     text-transform: uppercase;
     text-decoration: none;
@@ -15,5 +22,53 @@
     background: $primary;
     &:after {
         content: ' ›';
+    }
+    &:before {
+        top: -14px;
+        left: -14px;
+        right: -14px;
+        bottom: -14px;
+    }
+    &:hover,
+    &:focus {
+        border-color: rgba(#fff, 0.2);
+        background: lighten($primary, 2%);
+    }
+    > .glow {
+        width: 240px;
+        height: 240px;
+        position: absolute;
+        top: -130px;
+        left: -130px;
+        opacity: 0;
+        transform-origin: 50% 50%;
+        opacity: 0.3 !important;
+        &:before,
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+        }
+        &:after {
+            width: 20px;
+            height: 20px;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            background: #fff;
+            filter: blur(1px);
+        }
+        &:before {
+            width: 240px;
+            height: 240px;
+            background: radial-gradient(
+                ellipse at center,
+                #fff 20%,
+                rgba(#fff, 0) 40%
+            );
+            filter: blur(3.5px);
+        }
     }
 }

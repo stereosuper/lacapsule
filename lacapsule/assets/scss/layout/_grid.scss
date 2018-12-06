@@ -1,5 +1,12 @@
 /* Grid */
 
+.wrapper {
+    min-height: 100%;
+    padding: 25px 0 120px;
+    position: relative;
+    overflow: hidden;
+}
+
 .container {
     max-width: $container;
     padding: 0 $gutter * 2;
