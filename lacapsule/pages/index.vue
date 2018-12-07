@@ -18,87 +18,14 @@
 import Prismic from 'prismic-javascript';
 import PrismicDOM from 'prismic-dom';
 
-import { TweenMax } from 'gsap';
-
 import SiteHeader from '~/components/Header.vue';
+import btn from '~/mixins/btn.js';
 
 export default {
     components: {
         SiteHeader
     },
-    mounted: function() {
-        const btn = document.getElementsByClassName('button');
-        let glow,
-            i = 0,
-            nbBtn = btn.length,
-            btnCoordinates,
-            mouseX,
-            mouseY,
-            glowX,
-            glowY,
-            distanceMax,
-            distance;
-
-        for (i; i < nbBtn; i++) {
-            glow = document.createElement('i');
-            glow.className = 'glow';
-
-            btn[i].querySelector('a').appendChild(glow);
-
-            btn[i].addEventListener('mouseenter', function(e) {
-                TweenMax.to(glow, 0.2, { opacity: 1 });
-
-                btnCoordinates = this.getBoundingClientRect();
-                mouseX = this.offsetWidth - (e.clientX - btnCoordinates.x); // inverted position x in btn
-                mouseY = this.offsetHeight - (e.clientY - btnCoordinates.y); // inverted position y in btn
-
-                if (mouseX <= 0) {
-                    glowX = 0;
-                } else if (mouseX >= this.offsetWidth) {
-                    glowX = this.offsetWidth;
-                } else {
-                    glowX = mouseX;
-                }
-
-                if (mouseY <= 0) {
-                    glowY = 0;
-                } else if (mouseY >= this.offsetHeight) {
-                    glowY = this.offsetHeight;
-                } else {
-                    glowY = mouseY;
-                }
-
-                distance = 1 - Math.abs(e.clientX - btnCoordinates.x - glowX)/this.offsetWidth;
-
-                TweenMax.set(glow, { x: glowX, y: glowY, scale: distance });
-            });
-
-            btn[i].addEventListener('mousemove', function(e) {
-                mouseX = this.offsetWidth - (e.clientX - btnCoordinates.x); // inverted position x in btn
-                mouseY = this.offsetHeight - (e.clientY - btnCoordinates.y); // inverted position y in btn
-
-                if (mouseX <= 0) {
-                    glowX = 0;
-                } else if (mouseX >= this.offsetWidth) {
-                    glowX = this.offsetWidth;
-                } else {
-                    glowX = mouseX;
-                }
-
-                if (mouseY <= 0) {
-                    glowY = 0;
-                } else if (mouseY >= this.offsetHeight) {
-                    glowY = this.offsetHeight;
-                } else {
-                    glowY = mouseY;
-                }
-
-                distance = 1 - Math.abs(e.clientX - btnCoordinates.x - glowX)/this.offsetWidth;
-
-                TweenMax.set(glow, { x: glowX, y: glowY, scale: distance });
-            });
-        }
-    },
+    mixins: [btn],
     async asyncData() {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
