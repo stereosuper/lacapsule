@@ -8,16 +8,19 @@
             <button class='menu-btn'>Menu<i class='burger'></i></button>
 
             <ul class='menu'>
-                <li v-for='item in menu' v-if='!item.isBroken' :key='item.label'>
-                    <a :href='item.link.slug ? item.link.slug : item.link.url' :target='item.link.target'>{{ item.label }}</a>
-                </li>
+                <menuItem v-for='item in menu' v-if='!item.isBroken' :key='item.label' :item='item'/>
             </ul>
         </div>
     </header>
 </template>
 
 <script>
+import MenuItem from '~/components/MenuItem.vue';
+
 export default {
+    components: {
+        MenuItem
+    },
     computed: {
         settings() {
             return this.$store.state.settings;
