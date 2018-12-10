@@ -19,13 +19,11 @@ import Prismic from 'prismic-javascript';
 import PrismicDOM from 'prismic-dom';
 
 import SiteHeader from '~/components/Header.vue';
-import btn from '~/mixins/btn.js';
 
 export default {
     components: {
         SiteHeader
     },
-    mixins: [btn],
     async asyncData() {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
@@ -33,12 +31,10 @@ export default {
         let home = {},
             homeText;
 
-        await api
-            .query(Prismic.Predicates.at('document.type', 'frontpage'))
-            .then(function(response) {
-                home = response.results[0].data;
-                homeText = PrismicDOM.RichText.asHtml(home.text);
-            });
+        await api.query(Prismic.Predicates.at('document.type', 'frontpage')).then(function(response) {
+            home = response.results[0].data;
+            homeText = PrismicDOM.RichText.asHtml(home.text);
+        });
 
         return { home, homeText };
     }

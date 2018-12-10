@@ -21,13 +21,7 @@ body {
     font: 1.5em / 1.7 $ibm;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: linear-gradient(
-            179.94deg,
-            rgba(0, 0, 0, 0.72) 0.1%,
-            rgba(0, 0, 0, 0) 52%
-        ),
-        radial-gradient(952.78px at 13.6% 31.4%, #254d94 0%, #14233e 100%)
-            no-repeat;
+    background: linear-gradient(179.94deg, rgba(0, 0, 0, 0.72) 0.1%, rgba(0, 0, 0, 0) 52%), radial-gradient(952.78px at 13.6% 31.4%, #254d94 0%, #14233e 100%) no-repeat;
     color: #fff;
     > div,
     > div > div {
@@ -213,6 +207,15 @@ a {
 }
 
 /******* CLASSES GENERALES  *******/
+
+#stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
 
 .hidden {
     display: none !important;

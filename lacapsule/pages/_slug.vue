@@ -13,8 +13,9 @@
 
 <script>
 import Prismic from 'prismic-javascript';
-import SiteHeader from '~/components/Header.vue';
 import PrismicDOM from 'prismic-dom';
+
+import SiteHeader from '~/components/Header.vue';
 
 export default {
     components: {
@@ -27,15 +28,10 @@ export default {
         let page = {},
             pageText;
 
-        console.log(params.slug);
-
-        await api
-            .query(Prismic.Predicates.at('my.page.uid', params.slug))
-            .then(function(response) {
-                console.log(response);
-                page = response.results[0].data;
-                pageText = PrismicDOM.RichText.asHtml(page.text);
-            });
+        await api.query(Prismic.Predicates.at('my.page.uid', params.slug)).then(function(response) {
+            page = response.results[0].data;
+            pageText = PrismicDOM.RichText.asHtml(page.text);
+        });
 
         return { page, pageText };
     }

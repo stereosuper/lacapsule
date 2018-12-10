@@ -20,19 +20,9 @@ const createStore = () => {
                 const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
                 const api = await Prismic.getApi(apiEndpoint);
 
-                commit(
-                    'setSettings',
-                    await api.query(
-                        Prismic.Predicates.at('document.type', 'settings')
-                    )
-                );
+                commit('setSettings', await api.query(Prismic.Predicates.at('document.type', 'settings')));
 
-                commit(
-                    'setMenu',
-                    await api.query(
-                        Prismic.Predicates.at('document.type', 'menu')
-                    )
-                );
+                commit('setMenu', await api.query(Prismic.Predicates.at('document.type', 'menu')));
             }
         }
     });
