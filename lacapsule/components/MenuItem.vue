@@ -1,6 +1,6 @@
 <template>
-    <li>
-        <a :href='item.link.slug ? item.link.slug : item.link.url' :target='item.link.target'>{{ item.label }}</a>
+    <li class='item'>
+        <a :href='item.link.slug ? item.link.slug : item.link.url' :target='item.link.target' class='link'>{{ item.label }}</a>
     </li>
 </template>
 
@@ -16,4 +16,21 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.item{
+    position: absolute;
+    &:before{
+        display: none;
+    }
+    &:nth-of-type(1){
+        top: 30%;
+        left: $gutter*2;
+    }
+}
+
+.link{
+    font-family: $league;
+    font-style: normal;
+    color: #fff;
+    text-decoration: none;
+}
 </style>
