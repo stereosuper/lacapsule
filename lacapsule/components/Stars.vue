@@ -1,8 +1,19 @@
+<template>
+    <canvas id='stars' :refs='stars'/>
+</template>
+
+<script>
 export default {
+    // watch: {
+    //     settings: function(){
+            
+    //     }
+    // },
     mounted() {
         window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
-        const canvas = document.createElement('canvas');
+        //const canvas = this.$refs.stars;
+        const canvas = document.getElementById('stars');
         const context = canvas.getContext('2d');
 
         let windowW, stars, nbStars;
@@ -60,7 +71,6 @@ export default {
             context.bezierCurveTo(maxX, this.y + this.size - curve, maxX, this.y + this.size - curve, this.x, maxY);
             context.fill();
             context.closePath();
-            context.restore();
         };
 
         function drawSky() {
@@ -88,12 +98,10 @@ export default {
             }
         }
 
-        canvas.id = 'stars';
-        document.getElementById('wrapper').appendChild(canvas);
-
         init();
         drawSky();
 
         window.addEventListener('resize', init);
     }
 };
+</script>
