@@ -2,6 +2,25 @@
 
 .button {
     display: inline-block;
+    position: relative;
+    z-index: 1;
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        border-radius: 5px;
+        background: $primary;
+        transition: $transition;
+    }
+    &:hover {
+        &:after {
+            transform: scale(1.01);
+        }
+    }
     > a {
         display: inherit;
         padding: 15px 27px 13px;
@@ -27,10 +46,9 @@
         }
         &:hover,
         &:focus {
-            border-color: rgba(#fff, 0.2);
             background: lighten($primary, 2%);
         }
-        .glow-wrapper{
+        .glow-wrapper {
             position: absolute;
             top: 0;
             left: 0;
@@ -46,11 +64,7 @@
             left: -100px;
             border-radius: 50%;
             opacity: 0;
-            background: radial-gradient(
-                ellipse at center,
-                rgba(#fff, 0.3) 20%,
-                rgba(#fff, 0) 60%
-            );
+            background: radial-gradient(ellipse at center, rgba(#fff, 0.3) 20%, rgba(#fff, 0) 60%);
             filter: blur(3px);
             transform-origin: 50% 50%;
         }

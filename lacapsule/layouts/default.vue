@@ -3,7 +3,6 @@
         <siteHeader/>
         <div id='content' :class='[{"menuClicked": isBurgerClicked}, "content"]'><nuxt/></div>
         <stars/>
-
     </div>
 </template>
 
@@ -29,6 +28,7 @@ export default {
 
 <style lang='scss' scoped>
 .content {
+    transition: opacity $transition;
     &.menuClicked {
         opacity: 0;
     }

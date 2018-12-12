@@ -16,12 +16,17 @@ export default {
         window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
         const canvas = this.$refs.stars;
-        const context = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d');
 
-        let windowW, stars, nbStars;
+        let windowW,
+            stars,
+            nbStars,
+            comets,
+            nbComets,
+            currentComet = true,
+            drawingComet = true;
 
-        function Star(starsIndex) {
-            this.id = starsIndex;
+        function Star() {
             this.x = Math.random() * windowW;
             this.y = Math.random() * window.outerHeight;
             this.on = Math.random() > 0.1;
@@ -29,6 +34,24 @@ export default {
             this.opacity = this.on ? Math.random() * 0.7 : 0;
             this.clign = Math.random() > 0.5;
             this.satellite = Math.random() > 0.98;
+        }
+
+        function CometElt(i, x, y, speed) {
+            this.x = x - i * 4;
+            this.y = y + i * 4;
+            this.opacity = 0.1 * i;
+            this.speed = speed;
+        }
+
+        function Comet() {
+            this.elts = [];
+            this.x = Math.random() * windowW;
+            this.y = Math.random() * (window.outerHeight / 2);
+            this.speed = Math.random() * (15 - 10) + 10;
+
+            for (let i = 0; i < 30; i++) {
+                this.elts[i] = new CometElt(i, this.x, this.y, this.speed);
+            }
         }
 
         Star.prototype.draw = function() {
@@ -55,31 +78,69 @@ export default {
                 this.on = random > 0.5;
             }
 
-            context.fillStyle = '#fff';
+            ctx.fillStyle = '#fff';
 
             // fix - canvas desn't understand negative values
-            context.globalAlpha = this.opacity < 0 ? 0 : this.opacity;
-            context.globalAlpha = this.opacity > 1 ? 1 : this.opacity;
+            ctx.globalAlpha = this.opacity < 0 ? 0 : this.opacity;
+            ctx.globalAlpha = this.opacity > 1 ? 1 : this.opacity;
 
-            context.beginPath();
-            context.moveTo(maxX, this.y);
-            context.bezierCurveTo(this.x + curve, maxY, this.x + curve, maxY, maxX, this.y + this.size);
-            context.bezierCurveTo(this.x + this.size - curve, maxY, this.x + this.size - curve, maxY, maxX, this.y);
-            context.fill();
-            context.closePath();
-            context.beginPath();
-            context.moveTo(this.x, maxY);
-            context.bezierCurveTo(maxX, this.y + curve, maxX, this.y + curve, this.x + this.size, maxY);
-            context.bezierCurveTo(maxX, this.y + this.size - curve, maxX, this.y + this.size - curve, this.x, maxY);
-            context.fill();
-            context.closePath();
+            ctx.beginPath();
+            ctx.moveTo(maxX, this.y);
+            ctx.bezierCurveTo(this.x + curve, maxY, this.x + curve, maxY, maxX, this.y + this.size);
+            ctx.bezierCurveTo(this.x + this.size - curve, maxY, this.x + this.size - curve, maxY, maxX, this.y);
+            ctx.fill();
+            ctx.closePath();
+            ctx.beginPath();
+            ctx.moveTo(this.x, maxY);
+            ctx.bezierCurveTo(maxX, this.y + curve, maxX, this.y + curve, this.x + this.size, maxY);
+            ctx.bezierCurveTo(maxX, this.y + this.size - curve, maxX, this.y + this.size - curve, this.x, maxY);
+            ctx.fill();
+            ctx.closePath();
+        };
+
+        CometElt.prototype.draw = function() {
+            if (this.opacity <= 0) return false;
+
+            ctx.globalAlpha = this.opacity > 1 ? 1 : this.opacity;
+
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2, Math.PI * 2, false);
+            ctx.fill();
+
+            this.opacity -= 0.07;
+            this.x -= this.speed;
+            this.y += this.speed;
+
+            return true;
+        };
+
+        Comet.prototype.draw = function() {
+            this.elts.forEach(elt => {
+                drawingComet = elt.draw();
+                console.log(drawingComet);
+            });
+
+            return drawingComet;
         };
 
         function drawSky() {
-            context.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            for (let i in stars) {
-                stars[i].draw();
+            stars.forEach(elt => {
+                elt.draw();
+            });
+
+            // TO DO : affiner verif qu'une comet n'est pas en train de se dessiner (si un morceau de la comète passe à true alors il y a une chance qu'une autre se déclenche à la place)
+
+            if (drawingComet) {
+                comets[currentComet].draw();
+            }
+
+            if (Math.random() > 0.99 && !drawingComet) {
+                comets[currentComet].draw();
+                currentComet++;
             }
 
             requestAnimationFrame(drawSky);
@@ -87,7 +148,6 @@ export default {
 
         function init() {
             windowW = window.outerWidth;
-            nbStars = windowW / 5;
 
             canvas.width = window.outerWidth;
             canvas.height = window.outerHeight;
@@ -95,9 +155,19 @@ export default {
             stars = [];
             nbStars = windowW / 5;
 
+            comets = [];
+            nbComets = 100;
+            currentComet = 0;
+
             for (let i = 0; i < nbStars; i++) {
-                stars[i] = new Star(i);
+                stars[i] = new Star();
             }
+
+            for (let i = 0; i < nbComets; i++) {
+                comets[i] = new Comet();
+            }
+
+            comets[0].draw();
         }
 
         init();
@@ -116,8 +186,9 @@ export default {
     right: 0;
     bottom: 0;
     z-index: -1;
+    transition: opacity $transition;
     &.menuHovered {
-        opacity: 0.7;
+        opacity: 0.6;
     }
     &.menuClicked {
         opacity: 0.5;
