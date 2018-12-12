@@ -1,9 +1,8 @@
 <template>
     <div class='wrapper' id='wrapper'>
         <siteHeader/>
-        <nuxt/>
+        <div id='content' :class='[{"menuClicked": isBurgerClicked}, "content"]'><nuxt/></div>
         <stars/>
-        <!--<siteHeader @letrucmenu='jechangelopacity'/> <truc :opacity='opacityDucanvas' />-->
 
     </div>
 </template>
@@ -15,20 +14,23 @@ import Stars from '~/components/Stars.vue';
 import btn from '~/mixins/btn.js';
 
 export default {
-    // data(){
-    //     return {
-    //         opacityDucanvas: false
-    //     }
-    // },
     components: {
         SiteHeader,
         Stars
     },
     mixins: [btn],
-    // methods: {
-    //     jechangelopacity: function(val){
-    //         opacityDucanvas
-    //     }
-    // }
+    computed: {
+        isBurgerClicked: function() {
+            return this.$store.state.menuHTML.clickBurger;
+        }
+    }
 };
 </script>
+
+<style lang='scss' scoped>
+.content {
+    &.menuClicked {
+        opacity: 0;
+    }
+}
+</style>

@@ -1,19 +1,21 @@
 <template>
-    <canvas id='stars' :refs='stars'/>
+    <canvas :class='[{"menuHovered": isBurgerHovered}, {"menuClicked": isBurgerClicked}, "stars"]' ref='stars'/>
 </template>
 
 <script>
 export default {
-    // watch: {
-    //     settings: function(){
-            
-    //     }
-    // },
+    computed: {
+        isBurgerHovered: function() {
+            return this.$store.state.menuHTML.hoverBurger;
+        },
+        isBurgerClicked: function() {
+            return this.$store.state.menuHTML.clickBurger;
+        }
+    },
     mounted() {
         window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
-        //const canvas = this.$refs.stars;
-        const canvas = document.getElementById('stars');
+        const canvas = this.$refs.stars;
         const context = canvas.getContext('2d');
 
         let windowW, stars, nbStars;
@@ -37,7 +39,7 @@ export default {
                 random = Math.random(),
                 speed = random > 0.99 ? random * (0.01 - 0.005) + 0.005 : random * (0.001 - 0.005) + 0.005;
 
-            if(this.satellite){
+            if (this.satellite) {
                 speed = 0.01;
                 this.on = true;
             }
@@ -83,7 +85,7 @@ export default {
             requestAnimationFrame(drawSky);
         }
 
-        function init(){
+        function init() {
             windowW = window.outerWidth;
             nbStars = windowW / 5;
 
@@ -105,3 +107,20 @@ export default {
     }
 };
 </script>
+
+<style lang='scss' scoped>
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    &.menuHovered {
+        opacity: 0.7;
+    }
+    &.menuClicked {
+        opacity: 0.5;
+    }
+}
+</style>

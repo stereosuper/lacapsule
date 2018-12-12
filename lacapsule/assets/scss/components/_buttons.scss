@@ -2,58 +2,57 @@
 
 .button {
     display: inline-block;
-}
-
-.button > a {
-    display: inherit;
-    padding: 15px 27px 13px;
-    border: 1px solid transparent;
-    position: relative;
-    border-radius: 5px;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-family: $league;
-    font-size: 1.1rem;
-    letter-spacing: 0.2em;
-    font-style: normal;
-    color: #fff;
-    background: $primary;
-    &:after {
-        content: ' ›';
-    }
-    &:before {
-        top: -14px;
-        left: -14px;
-        right: -14px;
-        bottom: -14px;
-    }
-    &:hover,
-    &:focus {
-        border-color: rgba(#fff, 0.2);
-        background: lighten($primary, 2%);
-    }
-    .glow-wrapper{
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        overflow: hidden;
-    }
-    .glow {
-        width: 200px;
-        height: 200px;
-        position: absolute;
-        top: -100px;
-        left: -100px;
-        border-radius: 50%;
-        opacity: 0;
-        background: radial-gradient(
-            ellipse at center,
-            rgba(#fff, 0.3) 20%,
-            rgba(#fff, 0) 60%
-        );
-        filter: blur(3px);
-        transform-origin: 50% 50%;
+    > a {
+        display: inherit;
+        padding: 15px 27px 13px;
+        border: 1px solid transparent;
+        position: relative;
+        border-radius: 5px;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-family: $league;
+        font-size: 1.1rem;
+        letter-spacing: 0.2em;
+        font-style: normal;
+        color: #fff;
+        background: $primary;
+        &:after {
+            content: ' ›';
+        }
+        &:before {
+            top: -14px;
+            left: -14px;
+            right: -14px;
+            bottom: -14px;
+        }
+        &:hover,
+        &:focus {
+            border-color: rgba(#fff, 0.2);
+            background: lighten($primary, 2%);
+        }
+        .glow-wrapper{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+        .glow {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            border-radius: 50%;
+            opacity: 0;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(#fff, 0.3) 20%,
+                rgba(#fff, 0) 60%
+            );
+            filter: blur(3px);
+            transform-origin: 50% 50%;
+        }
     }
 }

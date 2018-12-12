@@ -5,7 +5,11 @@ const createStore = () => {
     return new Vuex.Store({
         state: () => ({
             settings: {},
-            menu: {}
+            menu: {},
+            menuHTML: {
+                hoverBurger: false,
+                clickBurger: false
+            }
         }),
         mutations: {
             setSettings(state, settings) {
@@ -13,6 +17,12 @@ const createStore = () => {
             },
             setMenu(state, menu) {
                 state.menu = menu.results[0].data;
+            },
+            setHoverBurger(state, value) {
+                state.menuHTML.hoverBurger = value;
+            },
+            setClickBurger(state, value) {
+                state.menuHTML.clickBurger = value;
             }
         },
         actions: {
