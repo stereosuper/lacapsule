@@ -19,16 +19,17 @@ export default {
         const ctx = canvas.getContext('2d');
 
         let windowW,
+            windowH,
             stars,
             nbStars,
             comets,
             nbComets,
-            currentComet = true,
+            currentComet = 0,
             drawingComet = true;
 
         function Star() {
             this.x = Math.random() * windowW;
-            this.y = Math.random() * window.outerHeight;
+            this.y = Math.random() * windowH;
             this.on = Math.random() > 0.1;
             this.size = Math.random() * (13 - 1) + 1;
             this.opacity = this.on ? Math.random() * 0.7 : 0;
@@ -46,7 +47,7 @@ export default {
         function Comet() {
             this.elts = [];
             this.x = Math.random() * windowW;
-            this.y = Math.random() * (window.outerHeight / 2);
+            this.y = Math.random() * (windowH / 2);
             this.speed = Math.random() * (15 - 10) + 10;
 
             for (let i = 0; i < 30; i++) {
@@ -81,8 +82,13 @@ export default {
             ctx.fillStyle = '#fff';
 
             // fix - canvas desn't understand negative values
-            ctx.globalAlpha = this.opacity < 0 ? 0 : this.opacity;
-            ctx.globalAlpha = this.opacity > 1 ? 1 : this.opacity;
+            if (this.opacity < 0) {
+                ctx.globalAlpha = 0;
+            } else if (this.opacity > 1) {
+                ctx.globalAlpha = 1;
+            } else {
+                ctx.globalAlpha = this.opacity;
+            }
 
             ctx.beginPath();
             ctx.moveTo(maxX, this.y);
@@ -119,28 +125,23 @@ export default {
         Comet.prototype.draw = function() {
             this.elts.forEach(elt => {
                 drawingComet = elt.draw();
-                console.log(drawingComet);
             });
-
-            return drawingComet;
         };
 
         function drawSky() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, windowW, windowH);
 
             stars.forEach(elt => {
                 elt.draw();
             });
 
-            // TO DO : affiner verif qu'une comet n'est pas en train de se dessiner (si un morceau de la comète passe à true alors il y a une chance qu'une autre se déclenche à la place)
-
             if (drawingComet) {
                 comets[currentComet].draw();
-            }
-
-            if (Math.random() > 0.99 && !drawingComet) {
-                comets[currentComet].draw();
-                currentComet++;
+            } else {
+                if (Math.random() > 0.9985) {
+                    currentComet++;
+                    comets[currentComet].draw();
+                }
             }
 
             requestAnimationFrame(drawSky);
@@ -148,26 +149,24 @@ export default {
 
         function init() {
             windowW = window.outerWidth;
+            windowH = window.outerHeight;
 
-            canvas.width = window.outerWidth;
-            canvas.height = window.outerHeight;
+            canvas.width = windowW;
+            canvas.height = windowH;
 
             stars = [];
             nbStars = windowW / 5;
-
-            comets = [];
-            nbComets = 100;
-            currentComet = 0;
-
             for (let i = 0; i < nbStars; i++) {
                 stars[i] = new Star();
             }
 
+            comets = [];
+            nbComets = 100;
+            currentComet = 0;
             for (let i = 0; i < nbComets; i++) {
                 comets[i] = new Comet();
             }
-
-            comets[0].draw();
+            comets[currentComet].draw();
         }
 
         init();
