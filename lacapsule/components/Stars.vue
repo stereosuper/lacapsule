@@ -38,8 +38,8 @@ export default {
         }
 
         function CometElt(i, x, y, speed) {
-            this.x = x - i * 4;
-            this.y = y + i * 4;
+            this.x = x - i * 2.5;
+            this.y = y + i * 2.5;
             this.opacity = 0.1 * i;
             this.speed = speed;
         }
@@ -118,6 +118,7 @@ export default {
             this.opacity -= 0.07;
             this.x -= this.speed;
             this.y += this.speed;
+            this.speed *= 0.97;
 
             return true;
         };
@@ -139,7 +140,7 @@ export default {
                 comets[currentComet].draw();
             } else {
                 if (Math.random() > 0.9985) {
-                    currentComet++;
+                    currentComet = currentComet === nbComets ? 0 : currentComet + 1;
                     comets[currentComet].draw();
                 }
             }

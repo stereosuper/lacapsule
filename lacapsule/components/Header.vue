@@ -1,9 +1,9 @@
 <template>
     <header class='header'>
         <div class='header-container'>
-            <a href='./' class='logo'>
+            <nuxt-link to='./' class='logo'>
                 <img :src='settings.logo.url' :alt='settings.logo.alt'>
-            </a>
+            </nuxt-link>
 
             <button class='menu-btn' @click='toggleMenu' @mouseover='indicateMenu' @mouseleave='hideIndicateMenu'>Menu<b class='burger'></b></button>
 
@@ -29,12 +29,14 @@ export default {
         },
         menu() {
             return this.$store.state.menu.items;
+        },
+        isBurgerClicked: function() {
+            return this.$store.state.menuHTML.clickBurger;
         }
     },
     methods: {
         toggleMenu: function() {
             this.menuOpen ? this.$store.commit('setClickBurger', false) : this.$store.commit('setClickBurger', true);
-            this.menuOpen = !this.menuOpen;
         },
         indicateMenu: function() {
             this.$store.commit('setHoverBurger', true);
@@ -43,6 +45,12 @@ export default {
             if (!this.menuOpen) {
                 this.$store.commit('setHoverBurger', false);
             }
+        }
+    },
+    watch: {
+        isBurgerClicked: function(val) {
+            this.menuOpen = !this.menuOpen;
+            console.log('header ' + val);
         }
     },
     data() {
@@ -56,6 +64,8 @@ export default {
 <style lang='scss' scoped>
 .header {
     padding: $gutter 0;
+    position: relative;
+    z-index: 1;
 }
 
 .header-container {
@@ -78,7 +88,13 @@ export default {
     max-width: $container;
     position: fixed;
     top: 0;
-    left: $gutter;
+    left: 10%;
+    margin: 0 0 0 $gutter;
+    > ul {
+        height: 100%;
+        position: relative;
+        margin: 0;
+    }
 }
 
 .menu-btn {

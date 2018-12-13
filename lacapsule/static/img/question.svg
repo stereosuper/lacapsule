@@ -1,0 +1,38 @@
+<svg width="166" height="193" viewBox="0 0 166 193" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter_question)">
+<line x1="85.0754" y1="141.012" x2="85.6069" y2="156.025" stroke="white" stroke-width="2"/>
+<line x1="84.0174" y1="141.577" x2="138.873" y2="98.4741" stroke="white" stroke-width="2"/>
+<line x1="85.4123" y1="25.0889" x2="127.412" y2="44.0889" stroke="white" stroke-width="2"/>
+<line x1="138.492" y1="99.2106" x2="140.001" y2="68.9502" stroke="white" stroke-width="2"/>
+<line x1="126.702" y1="43.4299" x2="139.893" y2="69.5492" stroke="white" stroke-width="2"/>
+<line x1="41.8076" y1="45.5898" x2="25.8296" y2="67.4645" stroke="white" stroke-width="2"/>
+<path d="M25.1776 77.8736L26.0001 67" stroke="white" stroke-width="2"/>
+<path d="M41.5001 45.5L86.0413 25.0903" stroke="white" stroke-width="2"/>
+</g>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M88.6357 187.725L84.1737 186.749L88.7115 185.927L89.6936 181.438L90.5027 185.902L95.0046 186.831L90.5354 187.791L89.6122 192.269L88.6357 187.725Z" fill="white" fill-opacity="0.9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M85.4993 156.485L83.2683 155.996L85.5372 155.585L86.0283 153.341L86.4328 155.573L88.6838 156.037L86.4492 156.517L85.9876 158.756L85.4993 156.485Z" fill="white" fill-opacity="0.9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M85.4878 26.0201L83.2568 25.5318L85.5257 25.1208L86.0168 22.8764L86.4213 25.1086L88.6723 25.5727L86.4377 26.0529L85.9761 28.2919L85.4878 26.0201Z" fill="white" fill-opacity="0.9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M41.3122 45.8055L40.217 45.5658L41.3308 45.3641L41.5718 44.2623L41.7704 45.358L42.8753 45.5859L41.7784 45.8216L41.5518 46.9207L41.3122 45.8055Z" fill="white" fill-opacity="0.9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M124.956 43.0705L123.861 42.8308L124.975 42.6291L125.216 41.5274L125.414 42.6231L126.519 42.8509L125.422 43.0866L125.196 44.1857L124.956 43.0705Z" fill="white" fill-opacity="0.9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M84.5432 141.498L83.4481 141.259L84.5618 141.057L84.8028 139.955L85.0014 141.051L86.1064 141.279L85.0095 141.514L84.7829 142.613L84.5432 141.498Z" fill="white" fill-opacity="0.9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M138.939 98.7768L137.844 98.5371L138.958 98.3354L139.199 97.2337L139.397 98.3294L140.502 98.5572L139.405 98.7929L139.179 99.892L138.939 98.7768Z" fill="white" fill-opacity="0.9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M25.117 78.4022L24.0219 78.1626L25.1357 77.9608L25.3767 76.8591L25.5753 77.9548L26.6802 78.1826L25.5833 78.4183L25.3567 79.5174L25.117 78.4022Z" fill="white" fill-opacity="0.9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M25.2695 68.3535L24.1743 68.1138L25.2881 67.912L25.5291 66.8103L25.7277 67.906L26.8326 68.1339L25.7357 68.3696L25.5091 69.4687L25.2695 68.3535Z" fill="white" fill-opacity="0.9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M139.557 68.9124L138.441 68.6683L139.576 68.4628L139.821 67.3406L140.024 68.4567L141.149 68.6888L140.032 68.9289L139.801 70.0484L139.557 68.9124Z" fill="white" fill-opacity="0.9"/>
+<defs>
+<filter id="filter_question" x="0.0268555" y="0.174679" width="164.973" height="179.886" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="12"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="7.5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.68 0"/>
+<feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape"/>
+</filter>
+</defs>
+</svg>

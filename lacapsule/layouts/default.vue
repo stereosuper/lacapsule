@@ -22,6 +22,12 @@ export default {
         isBurgerClicked: function() {
             return this.$store.state.menuHTML.clickBurger;
         }
+    },
+    watch: {
+        $route() {
+            this.$store.commit('setHoverBurger', false);
+            this.$store.commit('setClickBurger', false);
+        }
     }
 };
 </script>

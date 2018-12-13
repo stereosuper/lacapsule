@@ -22,6 +22,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: linear-gradient(179.94deg, rgba(0, 0, 0, 0.72) 0.1%, rgba(0, 0, 0, 0) 52%), radial-gradient(952.78px at 13.6% 31.4%, #254d94 0%, #14233e 100%) no-repeat;
+    background-attachment: fixed;
     color: #fff;
     > div,
     > div > div {
