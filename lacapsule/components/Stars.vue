@@ -140,7 +140,7 @@ export default {
                 comets[currentComet].draw();
             } else {
                 if (Math.random() > 0.9985) {
-                    currentComet = currentComet === nbComets ? 0 : currentComet + 1;
+                    currentComet = currentComet === nbComets - 1 ? 0 : currentComet + 1;
                     comets[currentComet].draw();
                 }
             }
@@ -162,7 +162,7 @@ export default {
             }
 
             comets = [];
-            nbComets = 100;
+            nbComets = 50;
             currentComet = 0;
             for (let i = 0; i < nbComets; i++) {
                 comets[i] = new Comet();

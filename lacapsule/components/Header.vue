@@ -5,12 +5,17 @@
                 <img :src='settings.logo.url' :alt='settings.logo.alt'>
             </nuxt-link>
 
-            <button class='menu-btn' @click='toggleMenu' @mouseover='indicateMenu' @mouseleave='hideIndicateMenu'>Menu<b class='burger'></b></button>
+            <button class='menu-btn' @click='toggleMenu' @mouseover='indicateMenu' @mouseleave='hideIndicateMenu'>{{menuText}}<b class='burger'></b></button>
 
             <nav class='menu' id='menu'>
                 <ul>
                     <menuItem v-for='item in menu' v-if='!item.isBroken' :key='item.label' :item='item'/>
                 </ul>
+                <div :class='[{"menuClicked": isBurgerClicked}, "bg-menu"]'>
+                    <div class='lines'></div>
+                    <div class='lines'></div>
+                    <div class='lines'></div>
+                </div>
             </nav>
         </div>
     </header>
@@ -36,7 +41,13 @@ export default {
     },
     methods: {
         toggleMenu: function() {
-            this.menuOpen ? this.$store.commit('setClickBurger', false) : this.$store.commit('setClickBurger', true);
+            if (this.menuOpen) {
+                this.$store.commit('setClickBurger', false);
+                this.menuText = 'Menu';
+            } else {
+                this.$store.commit('setClickBurger', true);
+                this.menuText = 'Fermer';
+            }
         },
         indicateMenu: function() {
             this.$store.commit('setHoverBurger', true);
@@ -55,7 +66,8 @@ export default {
     },
     data() {
         return {
-            menuOpen: false
+            menuOpen: false,
+            menuText: 'Menu'
         };
     }
 };
@@ -88,11 +100,13 @@ export default {
     max-width: $container;
     position: fixed;
     top: 0;
-    left: 10%;
-    margin: 0 0 0 $gutter;
+    left: 45%;
+    transform: translate(-50%);
     > ul {
-        height: 100%;
-        position: relative;
+        width: 100%;
+        height: 1200px;
+        position: absolute;
+        top: -10%;
         margin: 0;
     }
 }
@@ -130,6 +144,110 @@ export default {
     &:after {
         width: 19px;
         bottom: -6px;
+    }
+}
+
+.bg-menu,
+.bg-menu:after,
+.bg-menu:before {
+    height: 0;
+    position: absolute;
+    border: 1px solid #5675ae;
+}
+.bg-menu {
+    width: 1200px;
+    max-width: 100%;
+    padding: 0 0 100%;
+    top: -8%;
+    left: -3.4%;
+    border-radius: 50%;
+    opacity: 0;
+    transition: transform 1s ease-out, opacity $transition;
+    transform-origin: 50% 50%;
+    &.menuClicked {
+        opacity: 0.5;
+        transform: rotate(45deg);
+        .lines {
+            &:nth-of-type(2),
+            &:nth-of-type(3) {
+                transform: rotate(45deg);
+                &:before {
+                    transform: rotate(-22.5deg);
+                }
+                &:after {
+                    transform: rotate(22.5deg);
+                }
+            }
+            &:nth-of-type(3) {
+                transform: rotate(135deg);
+            }
+        }
+    }
+    &:before,
+    &:after {
+        content: '';
+        width: 780px;
+        max-width: 66%;
+        padding: 0 0 66%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        border-radius: 50%;
+        transform: translate3d(0, 0, 0);
+    }
+    &:after {
+        width: 390px;
+        max-width: 33%;
+        padding: 0 0 33%;
+    }
+}
+
+.lines,
+.lines:before,
+.lines:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.lines {
+    &:first-of-type {
+        &:before,
+        &:after {
+            content: '';
+            margin: auto;
+            background: #5675ae;
+        }
+        &:before {
+            width: 1px;
+        }
+        &:after {
+            height: 1px;
+        }
+    }
+    &:nth-of-type(2),
+    &:nth-of-type(3) {
+        width: 1px;
+        margin: auto;
+        background: #5675ae;
+        transform-origin: 50% 50%;
+        transition: 0.5s ease-out;
+        &:before,
+        &:after {
+            content: '';
+            width: 1px;
+            margin: auto;
+            background: #5675ae;
+            transform-origin: 50% 50%;
+            transition: 0.5s ease-out;
+        }
+    }
+    &:nth-of-type(3) {
+        transform-origin: 50% 50%;
     }
 }
 

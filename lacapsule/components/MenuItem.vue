@@ -38,7 +38,7 @@ export default {
     },
     mounted() {
         this.icons[this.item.ref] = new Vivus(this.item.ref, {
-            duration: 200,
+            duration: 100,
             animTimingFunction: Vivus.EASE_OUT,
             file: '/img/' + this.item.ref + '.svg',
             start: 'manual',
@@ -53,29 +53,36 @@ export default {
 
 <style lang='scss' scoped>
 .item {
+    padding: 0;
     position: absolute;
+    top: 50%;
+    transform: translate3d(0, -50%, 0);
     &:before {
         display: none;
     }
     &:nth-of-type(1) {
-        top: 20%;
+        top: 27%;
         left: $gutter * 2;
     }
     &:nth-of-type(2) {
-        top: 47%;
-        left: $gutter;
+        top: 59%;
+        left: 10%;
     }
     &:nth-of-type(3) {
-        top: 65%;
-        left: 50%;
+        top: 69%;
+        left: 41%;
     }
     &:nth-of-type(4) {
         top: 55%;
-        left: 70%;
+        left: 67%;
     }
     &:nth-of-type(5) {
-        top: 25%;
-        left: 70%;
+        top: 31%;
+        left: 58%;
+    }
+    &:nth-of-type(6) {
+        top: 45.4%;
+        left: 33.6%;
     }
 }
 
@@ -98,19 +105,46 @@ export default {
 }
 
 .arrow {
-    .link {
-        > span {
-            top: 60%;
-            left: 68%;
-        }
+    span {
+        top: 60%;
+        left: 68%;
     }
 }
 
 .question {
-    .link {
-        > span {
-            top: 55%;
-        }
+    div {
+        margin: 0 0 0 60px;
+    }
+    span {
+        top: 55%;
+    }
+}
+
+.star {
+    span {
+        top: 70%;
+        left: 100%;
+    }
+}
+
+.download {
+    span {
+        top: 35%;
+        left: 70%;
+    }
+}
+
+.postcard {
+    span {
+        top: 40%;
+        left: 115%;
+    }
+}
+
+.mail {
+    span {
+        top: 50%;
+        left: 100%;
     }
 }
 </style>
