@@ -4,7 +4,7 @@
             <div :id='item.ref'></div>
             <span>{{ item.label }}</span>
         </a>
-        <nuxt-link v-if='item.link.slug' :to='item.link.slug' :class='[{"menuClicked": isBurgerClicked}, "link"]'>
+        <nuxt-link v-if='item.link.slug' :to='item.link.slug' :class='[{"menuClicked": isBurgerClicked, "menuNotClicked": !isBurgerClicked}, "link"]'>
             <div :id='item.ref'></div>
             <span>{{ item.label }}</span>
         </nuxt-link>
@@ -36,9 +36,9 @@ export default {
             icons: []
         };
     },
-    mounted() {
+    beforeMount() {
         this.icons[this.item.ref] = new Vivus(this.item.ref, {
-            duration: 100,
+            duration: 30,
             animTimingFunction: Vivus.EASE_OUT,
             file: '/img/' + this.item.ref + '.svg',
             start: 'manual',
@@ -97,6 +97,9 @@ export default {
         > span {
             display: block;
         }
+    }
+    &.menuNotClicked{
+        pointer-events: none;
     }
     > span {
         display: none;

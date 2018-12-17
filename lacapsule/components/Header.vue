@@ -1,13 +1,15 @@
 <template>
     <header class='header'>
         <div class='header-container'>
-            <nuxt-link to='./' class='logo'>
+            <nuxt-link to='/' class='logo'>
                 <img :src='settings.logo.url' :alt='settings.logo.alt'>
             </nuxt-link>
 
-            <button class='menu-btn' @click='toggleMenu' @mouseover='indicateMenu' @mouseleave='hideIndicateMenu'>{{menuText}}<b class='burger'></b></button>
+            <button :class='[{"menuClicked": isBurgerClicked}, "menu-btn"]' @click='toggleMenu' @mouseover='indicateMenu' @mouseleave='hideIndicateMenu'>
+                {{menuText}}<b class='burger'><b class='b-on'></b><b class='b-off'></b></b>
+            </button>
 
-            <nav class='menu' id='menu'>
+            <nav :class='[{"menuClicked": isBurgerClicked}, "menu"]' id='menu'>
                 <ul>
                     <menuItem v-for='item in menu' v-if='!item.isBroken' :key='item.label' :item='item'/>
                 </ul>
@@ -41,13 +43,7 @@ export default {
     },
     methods: {
         toggleMenu: function() {
-            if (this.menuOpen) {
-                this.$store.commit('setClickBurger', false);
-                this.menuText = 'Menu';
-            } else {
-                this.$store.commit('setClickBurger', true);
-                this.menuText = 'Fermer';
-            }
+            this.menuOpen ? this.$store.commit('setClickBurger', false) : this.$store.commit('setClickBurger', true);
         },
         indicateMenu: function() {
             this.$store.commit('setHoverBurger', true);
@@ -61,7 +57,7 @@ export default {
     watch: {
         isBurgerClicked: function(val) {
             this.menuOpen = !this.menuOpen;
-            console.log('header ' + val);
+            this.menuText = this.menuOpen ? 'Fermer' : 'Menu';
         }
     },
     data() {
@@ -120,14 +116,24 @@ export default {
     align-items: center;
     font-family: $league;
 }
-.burger {
+.burger{
     display: block;
-    width: 19px;
-    height: 2px;
+    width: 20px;
     position: relative;
-    margin: 0 0 0 20px;
+    margin: 0 0 0 19px;
+}
+.b-on, .b-off{
+    height: 2px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.b-on {
+    width: 19px;
     border-radius: 2px;
     background: #fff;
+    transform-origin: 0 0;
+    transition: 0.15s $transition;
     &:before,
     &:after {
         content: '';
@@ -145,6 +151,48 @@ export default {
         width: 19px;
         bottom: -6px;
     }
+    .menuClicked &{
+        transform: scaleX(0);
+        transition: $transition;
+    }
+}
+.b-off{
+    width: 100%;
+    transform-origin: 50% 50%;
+    transform: rotate(45deg);
+    &:before, &:after{
+        content: '';
+        position: absolute;
+        left: 0;
+        border-radius: 2px;
+        background: #fff;
+        transform-origin: 0 0;
+        transition: $transition;
+    }
+    &:before{
+        height: 2px;
+        width: 20px;
+        top: 0;
+        transform: scaleX(0);
+    }
+    &:after{
+        width: 2px;
+        height: 20px;
+        top: -9px;
+        right: 0;
+        margin: auto;
+        transform: scaleY(0);
+    }
+    .menuClicked &{
+        &:before{
+            transform: scaleX(1);
+            transition: 0.15s $transition;
+        }
+        &:after{
+            transform: scaleY(1);
+            transition: 0.2s $transition;
+        }
+    }
 }
 
 .bg-menu,
@@ -160,13 +208,15 @@ export default {
     padding: 0 0 100%;
     top: -8%;
     left: -3.4%;
+    z-index: -1;
     border-radius: 50%;
     opacity: 0;
-    transition: transform 1s ease-out, opacity $transition;
+    transition: $transition;
     transform-origin: 50% 50%;
     &.menuClicked {
         opacity: 0.5;
         transform: rotate(45deg);
+        transition: 0.5s ease-out;
         .lines {
             &:nth-of-type(2),
             &:nth-of-type(3) {
@@ -252,7 +302,7 @@ export default {
 }
 
 // $container + 2*130
-@media (max-width: 1420px) {
+@media (max-width: $desktop-big) {
     .header-container {
         max-width: 1252px; // $container + 4*$gutter
         padding: 0 2 * $gutter;

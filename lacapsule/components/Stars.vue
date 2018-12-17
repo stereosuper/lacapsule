@@ -187,10 +187,7 @@ export default {
     bottom: 0;
     z-index: -1;
     transition: opacity $transition;
-    &.menuHovered {
-        opacity: 0.6;
-    }
-    &.menuClicked {
+    &.menuHovered, &.menuClicked {
         opacity: 0.5;
     }
 }

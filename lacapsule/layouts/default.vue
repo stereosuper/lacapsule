@@ -10,14 +10,11 @@
 import SiteHeader from '~/components/Header.vue';
 import Stars from '~/components/Stars.vue';
 
-import btn from '~/mixins/btn.js';
-
 export default {
     components: {
         SiteHeader,
         Stars
     },
-    mixins: [btn],
     computed: {
         isBurgerClicked: function() {
             return this.$store.state.menuHTML.clickBurger;
@@ -28,15 +25,23 @@ export default {
             this.$store.commit('setHoverBurger', false);
             this.$store.commit('setClickBurger', false);
         }
-    }
+    },
 };
 </script>
 
 <style lang='scss' scoped>
 .content {
-    transition: opacity $transition;
+    transition: $transition;
     &.menuClicked {
+        pointer-events: none;
         opacity: 0;
     }
+}
+
+.page-enter-active, .page-leave-active {
+    transition: $transition;
+}
+.page-enter, .page-leave-active {
+    opacity: 0;
 }
 </style>

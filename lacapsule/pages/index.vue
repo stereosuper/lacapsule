@@ -16,6 +16,8 @@
 import Prismic from 'prismic-javascript';
 import PrismicDOM from 'prismic-dom';
 
+import btn from '~/mixins/btn.js';
+
 export default {
     async asyncData() {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
@@ -30,6 +32,10 @@ export default {
         });
 
         return { home, homeText };
+    },
+    mixins: [btn],
+    mounted() {
+        this.setBtn();
     }
 };
 </script>
@@ -65,5 +71,23 @@ h1 {
     top: 25%;
     left: 54%;
     background: url(../static/img/ovni.png) no-repeat 0 0 / 100%;
+}
+
+@media (max-width: $desktop-big){
+    .ovni{
+        left: 45%;
+    }
+}
+
+@media (max-width: $tablet){
+    .container{
+        margin-top: 40vh;
+    }
+    .ovni{
+        top: 15%;
+    }
+    .text{
+        width: 61%;
+    }
 }
 </style>

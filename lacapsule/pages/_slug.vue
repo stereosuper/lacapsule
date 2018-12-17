@@ -11,6 +11,8 @@
 import Prismic from 'prismic-javascript';
 import PrismicDOM from 'prismic-dom';
 
+import btn from '~/mixins/btn.js';
+
 export default {
     async asyncData({ params }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
@@ -25,6 +27,10 @@ export default {
         });
 
         return { page, pageText };
+    },
+    mixins: [btn],
+    mounted() {
+        this.setBtn();
     }
 };
 </script>
