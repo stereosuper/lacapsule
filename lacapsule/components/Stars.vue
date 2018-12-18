@@ -5,10 +5,10 @@
 <script>
 export default {
     computed: {
-        isBurgerHovered: function() {
+        isBurgerHovered() {
             return this.$store.state.menuHTML.hoverBurger;
         },
-        isBurgerClicked: function() {
+        isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
         }
     },

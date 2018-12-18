@@ -22,12 +22,12 @@ export default {
         }
     },
     computed: {
-        isBurgerClicked: function() {
+        isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
         }
     },
     watch: {
-        isBurgerClicked: function(val) {
+        isBurgerClicked(val) {
             val ? this.icons[this.item.ref].stop().play() : this.icons[this.item.ref].stop().reset();
         }
     },
@@ -42,7 +42,7 @@ export default {
             animTimingFunction: Vivus.EASE_OUT,
             file: '/img/' + this.item.ref + '.svg',
             start: 'manual',
-            onReady: function(svg) {
+            onReady(svg) {
                 svg.el.setAttribute('height', svg.el.viewBox.baseVal.height);
                 svg.el.setAttribute('width', svg.el.viewBox.baseVal.width);
             }
@@ -93,6 +93,9 @@ export default {
     font-style: normal;
     color: #fff;
     text-decoration: none;
+    &:hover, &:focus{
+        opacity: 0.7;
+    }
     &.menuClicked {
         > span {
             display: block;

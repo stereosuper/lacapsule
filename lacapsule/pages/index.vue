@@ -73,6 +73,13 @@ h1 {
     background: url(../static/img/ovni.png) no-repeat 0 0 / 100%;
 }
 
+
+@media (max-height: 800px){
+    .container{
+        margin-top: 25vh;
+    }
+}
+
 @media (max-width: $desktop-big){
     .ovni{
         left: 45%;

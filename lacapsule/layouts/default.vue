@@ -16,7 +16,7 @@ export default {
         Stars
     },
     computed: {
-        isBurgerClicked: function() {
+        isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
         }
     },

@@ -5,7 +5,7 @@
                 <img :src='settings.logo.url' :alt='settings.logo.alt'>
             </nuxt-link>
 
-            <button :class='[{"menuClicked": isBurgerClicked}, "menu-btn"]' @click='toggleMenu' @mouseover='indicateMenu' @mouseleave='hideIndicateMenu'>
+            <button :class='[{"menuClicked": isBurgerClicked}, "menu-btn"]' @click='toggleMenu' @mouseover='indicateMenu' @mouseleave='hideIndicateMenu' ref='btn'>
                 {{menuText}}<b class='burger'><b class='b-on'></b><b class='b-off'></b></b>
             </button>
 
@@ -37,25 +37,29 @@ export default {
         menu() {
             return this.$store.state.menu.items;
         },
-        isBurgerClicked: function() {
+        isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
         }
     },
     methods: {
-        toggleMenu: function() {
+        toggleMenu() {
             this.menuOpen ? this.$store.commit('setClickBurger', false) : this.$store.commit('setClickBurger', true);
+            this.$refs.btn.blur();
         },
-        indicateMenu: function() {
+        indicateMenu() {
             this.$store.commit('setHoverBurger', true);
         },
-        hideIndicateMenu: function() {
+        hideIndicateMenu() {
             if (!this.menuOpen) {
                 this.$store.commit('setHoverBurger', false);
             }
+        },
+        closeMenu(e){
+            if (e.key === 'Escape' && this.menuOpen) this.toggleMenu();
         }
     },
     watch: {
-        isBurgerClicked: function(val) {
+        isBurgerClicked() {
             this.menuOpen = !this.menuOpen;
             this.menuText = this.menuOpen ? 'Fermer' : 'Menu';
         }
@@ -65,6 +69,9 @@ export default {
             menuOpen: false,
             menuText: 'Menu'
         };
+    },
+    mounted(){
+        window.addEventListener('keyup', this.closeMenu);
     }
 };
 </script>
@@ -115,6 +122,9 @@ export default {
     justify-content: space-between;
     align-items: center;
     font-family: $league;
+    &:hover, &:focus{
+        opacity: 0.7;
+    }
 }
 .burger{
     display: block;

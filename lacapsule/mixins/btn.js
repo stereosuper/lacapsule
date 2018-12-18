@@ -2,7 +2,7 @@ import { TweenMax } from 'gsap';
 
 export default {
     methods: {
-        setBtn: function(){
+        setBtn(){
             const btn = document.getElementsByClassName('button');
 
             if(!btn.length) return;
