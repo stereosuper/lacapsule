@@ -19,9 +19,12 @@ body {
     font: 1.5em / 1.7 $ibm;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: linear-gradient(179.94deg, rgba(0, 0, 0, 0.72) 0.1%, rgba(0, 0, 0, 0) 52%), radial-gradient(952.78px at 13.6% 31.4%, #254d94 0%, #14233e 100%) no-repeat;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0.1%, transparent 52%), radial-gradient(953px at 13.6% 31.4%, #254d94 0, #14233e 100%) no-repeat;
     background-attachment: fixed;
     color: #fff;
+    &.menuOpen{
+        overflow: hidden;
+    }
 }
 
 h1,
