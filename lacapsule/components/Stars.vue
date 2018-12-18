@@ -12,11 +12,22 @@ export default {
             return this.$store.state.menuHTML.clickBurger;
         }
     },
+    data(){
+        return {
+            routeChanging: false
+        }
+    },
+    watch: {
+        $route(){
+           this.routeChanging = true;
+        }
+    },
     mounted() {
         window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
-        const canvas = this.$refs.stars;
-        const ctx = canvas.getContext('2d');
+        const self = this,
+              canvas = this.$refs.stars,
+              ctx = canvas.getContext('2d');
 
         let windowW,
             windowH,
@@ -55,7 +66,9 @@ export default {
             }
         }
 
-        Star.prototype.draw = function() {
+        Star.prototype.draw = function(moving) {
+            this.x = moving ? this.x-10 : this.x;
+
             let halfSize = this.size / 2,
                 curve = this.size / 2.75,
                 maxX = this.x + halfSize,
@@ -132,9 +145,19 @@ export default {
         function drawSky() {
             ctx.clearRect(0, 0, windowW, windowH);
 
-            stars.forEach(elt => {
-                elt.draw();
-            });
+
+            if(self.routeChanging){
+                stars.forEach(elt => {
+                    elt.draw(true);
+                });
+                setTimeout(function(){
+                    self.routeChanging = false;
+                }, 1000);
+            }else{
+                stars.forEach(elt => {
+                    elt.draw();
+                });
+            }
 
             if (drawingComet) {
                 comets[currentComet].draw();
