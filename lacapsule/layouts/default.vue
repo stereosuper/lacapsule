@@ -27,6 +27,11 @@ export default {
             document.body.classList.remove('menuOpen');
         }
     },
+    // beforeRouteUpdate(to, from, next) {
+    //     alert('Parent: ' + JSON.stringify(to.query));
+    //     this.$refs.stars.routeUpdate(to, from);
+    //     next();
+    // },
 };
 </script>
 

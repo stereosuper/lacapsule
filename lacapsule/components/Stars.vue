@@ -22,7 +22,14 @@ export default {
            this.routeChanging = true;
         }
     },
+    // methods: {
+    //     routeUpdate(){
+    //         console.log('yo')
+    //         this.routeChanging = true;
+    //     }
+    // },
     mounted() {
+        console.log('yo');
         window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
         const self = this,
@@ -36,7 +43,8 @@ export default {
             comets,
             nbComets,
             currentComet = 0,
-            drawingComet = true;
+            drawingComet = true,
+            randomComet = 0;
 
         function Star() {
             this.x = Math.random() * windowW;
@@ -67,7 +75,39 @@ export default {
         }
 
         Star.prototype.draw = function(moving) {
-            this.x = moving ? this.x-10 : this.x;
+            if(moving){
+                if(this.size > 11){
+                    this.x -= 25;
+                    if(this.x > windowW/3*2){
+                        this.y -= 3;
+                    }else if(this.x < windowW/3){
+                        //this.y -= 1;
+                    }else{
+                        this.y -= 2;
+                    }
+                }else if(this.size < 5){
+                    this.x -= 65;
+                    if(this.x > windowW/3*2){
+                        this.y -= 9;
+                    }else if(this.x < windowW/3){
+                        //this.y -= 3;
+                    }else{
+                        this.y -= 5;
+                    }
+                }else{
+                    this.x -= 45;
+                    if(this.x > windowW/3*2){
+                        this.y -= 7;
+                    }else if(this.x < windowW/3){
+                        //this.y -= 2;
+                    }else{
+                        this.y -= 4;
+                    }
+                }
+            }
+            
+            this.x = this.x < 0 ? windowW : this.x;
+            this.y = this.y < 0 ? windowH : this.y;
 
             let halfSize = this.size / 2,
                 curve = this.size / 2.75,
@@ -87,7 +127,7 @@ export default {
                 }
                 this.opacity = this.clign ? this.opacity + speed : this.opacity - speed;
                 this.on = random > 0.005;
-            } else {
+            } else { 
                 this.opacity = this.opacity < 0 ? 0 : this.opacity - speed;
                 this.on = random > 0.5;
             }
@@ -152,17 +192,19 @@ export default {
                 });
                 setTimeout(function(){
                     self.routeChanging = false;
-                }, 1000);
+                }, 500);
             }else{
                 stars.forEach(elt => {
                     elt.draw();
                 });
             }
 
+            randomComet = self.routeChanging ? 0 : 0.9985;
+
             if (drawingComet) {
                 comets[currentComet].draw();
             } else {
-                if (Math.random() > 0.9985) {
+                if (Math.random() > randomComet) {
                     currentComet = currentComet === nbComets - 1 ? 0 : currentComet + 1;
                     comets[currentComet].draw();
                 }
@@ -180,6 +222,7 @@ export default {
 
             stars = [];
             nbStars = windowW / 5;
+            //nbStars = 50;
             for (let i = 0; i < nbStars; i++) {
                 stars[i] = new Star();
             }
