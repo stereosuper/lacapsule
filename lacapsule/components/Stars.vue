@@ -12,24 +12,28 @@ export default {
             return this.$store.state.menuHTML.clickBurger;
         }
     },
-    data(){
-        return {
-            routeChanging: false
-        }
-    },
     watch: {
         $route(){
-           this.routeChanging = true;
+            this.routeChanging = true;
+            this.transitionStart = Date.now();
+            this.isTransitioning = true;
         }
     },
-    // methods: {
-    //     routeUpdate(){
-    //         console.log('yo')
-    //         this.routeChanging = true;
-    //     }
-    // },
+    methods: {
+        pageMounted(){
+            this.routeChanging = false;
+        },
+    },
+    data(){
+        return {
+            routeChanging: false,
+            transitionStart: 0,
+            isTransitioning: false
+        }
+    },
     mounted() {
-        console.log('yo');
+        this.$busPageMounted.$on('newPageIsLoaded', this.pageMounted);
+
         window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
         const self = this,
@@ -44,7 +48,15 @@ export default {
             nbComets,
             currentComet = 0,
             drawingComet = true,
-            randomComet = 0;
+            randomComet = 0,
+            transitionDuration = 500,
+            movingSpeed = 0.002;
+
+        // function easeOut(n){
+        //     n *= 2;
+        //     if (n < 1) return 0.5 * n * n;
+        //     return - 0.5 * (--n * (n - 2) - 1);
+        // }
 
         function Star() {
             this.x = Math.random() * windowW;
@@ -74,36 +86,34 @@ export default {
             }
         }
 
-        Star.prototype.draw = function(moving) {
-            if(moving){
+        Star.prototype.draw = function() {
+            if(self.isTransitioning){
+                if (Date.now() - self.transitionStart >= transitionDuration) self.isTransitioning = false;
+                // movingSpeed = easeOut((Date.now() - self.transitionStart) / transitionDuration);
+
                 if(this.size > 11){
-                    this.x -= 25;
+                    this.x -= 25 - movingSpeed;
                     if(this.x > windowW/3*2){
                         this.y -= 3;
-                    }else if(this.x < windowW/3){
-                        //this.y -= 1;
-                    }else{
+                    }else if(this.x > windowW/3){
                         this.y -= 2;
                     }
-                }else if(this.size < 5){
+                }/*else if(this.size < 5){
                     this.x -= 65;
                     if(this.x > windowW/3*2){
                         this.y -= 9;
-                    }else if(this.x < windowW/3){
-                        //this.y -= 3;
-                    }else{
+                    }else if(this.x > windowW/3){
                         this.y -= 5;
                     }
                 }else{
                     this.x -= 45;
                     if(this.x > windowW/3*2){
                         this.y -= 7;
-                    }else if(this.x < windowW/3){
-                        //this.y -= 2;
-                    }else{
+                    }else if(this.x > windowW/3){
                         this.y -= 4;
                     }
-                }
+                }*/
+                movingSpeed += 0.002;
             }
             
             this.x = this.x < 0 ? windowW : this.x;
@@ -185,21 +195,9 @@ export default {
         function drawSky() {
             ctx.clearRect(0, 0, windowW, windowH);
 
+            stars.forEach(elt => { elt.draw(); });
 
-            if(self.routeChanging){
-                stars.forEach(elt => {
-                    elt.draw(true);
-                });
-                setTimeout(function(){
-                    self.routeChanging = false;
-                }, 500);
-            }else{
-                stars.forEach(elt => {
-                    elt.draw();
-                });
-            }
-
-            randomComet = self.routeChanging ? 0 : 0.9985;
+            randomComet = self.isTransitioning ? 0 : 0.9985;
 
             if (drawingComet) {
                 comets[currentComet].draw();
@@ -222,7 +220,6 @@ export default {
 
             stars = [];
             nbStars = windowW / 5;
-            //nbStars = 50;
             for (let i = 0; i < nbStars; i++) {
                 stars[i] = new Star();
             }

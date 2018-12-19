@@ -61,15 +61,15 @@ export default {
         display: none;
     }
     &:nth-of-type(1) {
-        top: 27%;
-        left: $gutter * 2;
+        top: 32%;
+        left: 8%;
     }
     &:nth-of-type(2) {
         top: 59%;
         left: 10%;
     }
     &:nth-of-type(3) {
-        top: 69%;
+        top: 66%;
         left: 41%;
     }
     &:nth-of-type(4) {
@@ -77,8 +77,8 @@ export default {
         left: 67%;
     }
     &:nth-of-type(5) {
-        top: 31%;
-        left: 58%;
+        top: 33%;
+        left: 53%;
     }
     &:nth-of-type(6) {
         top: 45.4%;
@@ -151,6 +151,81 @@ export default {
     span {
         top: 50%;
         left: 100%;
+    }
+}
+
+@media (max-height: 800px) {
+    .item{
+        &:nth-of-type(1){
+            top: 36%;
+            left: 9%;
+        }
+        &:nth-of-type(2){
+            top: 58%;
+        }
+        &:nth-of-type(3){
+            top: 65%;
+        }
+        &:nth-of-type(4){
+            top: 52%;
+        }
+    }
+}
+
+@media (max-width: $desktop){
+    .item{
+        &:nth-of-type(2){
+            left: 8%;
+        }
+        &:nth-of-type(3){
+            left: 44%;
+        }
+        &:nth-of-type(4){
+            left: 77%;
+        }
+        &:nth-of-type(5){
+            left: 65%;
+        }
+        &:nth-of-type(6){
+            left: 43%;
+        }
+    }
+}
+
+@media (max-height: 670px), (max-width: $tablet){
+    .item{
+        position: static;
+        margin: 5.5vh 0 0;
+        transform: none;
+        &:last-of-type{
+            margin-top: 10vh;
+            text-shadow: 0 0 24px rgba(255, 255, 255, 0.25), 0 0 15px rgba(255, 255, 255, 0.68);
+        }
+    }
+
+    .link{
+        text-transform: uppercase;
+        > div{
+            display: none;
+        }
+        > span{
+            position: static;
+        }
+    }
+}
+
+@media (max-height: 670px){
+    .item{
+        margin: 3vh 0 0;
+        &:last-of-type{
+            margin-top: 6vh;
+        }
+    }
+}
+
+@media (max-width: $phone){
+    .bg-menu{
+        left: -40%;
     }
 }
 </style>

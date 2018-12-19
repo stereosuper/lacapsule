@@ -20,18 +20,13 @@ export default {
             return this.$store.state.menuHTML.clickBurger;
         }
     },
-    watch: {
-        $route() {
-            this.$store.commit('setHoverBurger', false);
-            this.$store.commit('setClickBurger', false);
-            document.body.classList.remove('menuOpen');
-        }
-    },
-    // beforeRouteUpdate(to, from, next) {
-    //     alert('Parent: ' + JSON.stringify(to.query));
-    //     this.$refs.stars.routeUpdate(to, from);
-    //     next();
-    // },
+    // watch: {
+    //     $route() {
+    //         this.$store.commit('setHoverBurger', false);
+    //         this.$store.commit('setClickBurger', false);
+    //         document.body.classList.remove('menuOpen');
+    //     }
+    // }
 };
 </script>
 

@@ -3,12 +3,12 @@
         <div class='container'>
             <div class='text'>
                 <h1 class='title'>{{ home.title[0].text }}</h1>
-                <div v-html='intro'/>
+                <div v-html='intro' class='inner-text'/>
                 <div class='illu'>
                     <div class='earth'></div>
                     <div class='ovni'></div>
                 </div>
-                <div v-html='text'/>
+                <div v-html='text' class='inner-text'/>
             </div>
         </div>
     </div>
@@ -21,6 +21,7 @@ import PrismicDOM from 'prismic-dom';
 import btn from '~/mixins/btn.js';
 
 export default {
+    mixins: [btn],
     async asyncData() {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
@@ -37,8 +38,8 @@ export default {
 
         return { home, intro, text };
     },
-    mixins: [btn],
     mounted() {
+        this.$busPageMounted.$emit('newPageIsLoaded', true);
         this.setBtn();
     }
 };
@@ -46,6 +47,8 @@ export default {
 
 <style lang='scss' scoped>
 h1 {
+    position: relative;
+    z-index: 1;
     margin: 0 0 0.55em;
     text-align: left;
     text-shadow: none;
@@ -60,6 +63,11 @@ h1 {
 
 .text {
     width: 40%;
+}
+
+.inner-text{
+    position: relative;
+    z-index: 1;
 }
 
 .earth {

@@ -77,6 +77,11 @@ export default {
         },
         closeMenu(e){
             if (e.key === 'Escape' && this.menuOpen) this.toggleMenu();
+        },
+        pageMounted(){
+            this.$store.commit('setHoverBurger', false);
+            this.$store.commit('setClickBurger', false);
+            document.body.classList.remove('menuOpen');
         }
     },
     watch: {
@@ -92,6 +97,7 @@ export default {
         };
     },
     mounted(){
+        this.$busPageMounted.$on('newPageIsLoaded', this.pageMounted);
         window.addEventListener('keyup', this.closeMenu);
     }
 };
@@ -346,10 +352,9 @@ export default {
 }
 .bg-menu {
     width: 1200px;
-    max-width: 100%;
-    padding: 0 0 100%;
-    top: -80px;
-    left: -3.4%;
+    height: 1200px;
+    top: -100px;
+    left: -5%;
     z-index: -1;
     border-radius: 50%;
     opacity: 0;
@@ -378,9 +383,6 @@ export default {
     &:before,
     &:after {
         content: '';
-        width: 780px;
-        max-width: 66%;
-        padding: 0 0 66%;
         top: 0;
         left: 0;
         right: 0;
@@ -389,10 +391,13 @@ export default {
         border-radius: 50%;
         transform: translate3d(0, 0, 0);
     }
+    &:before{
+        width: 780px;
+        height: 780px;
+    }
     &:after {
         width: 390px;
-        max-width: 33%;
-        padding: 0 0 33%;
+        height: 390px;
     }
 }
 
@@ -480,21 +485,29 @@ export default {
     .menu{
         top: -100px;
     }
+}
 
-    .item{
-        &:nth-of-type(1){
-            top: 36%;
-            left: 9%;
-        }
-        &:nth-of-type(2){
-            top: 58%;
-        }
-        &:nth-of-type(3){
-            top: 65%;
-        }
-        &:nth-of-type(4){
-            top: 52%;
+@media (max-height: 670px), (max-width: $tablet){
+    .menu{
+        padding: 150px 0 0;
+        top: 0;
+        left: 0;
+        font-size: 1.8rem;
+        letter-spacing: 0.1em;
+        text-align: center;
+        transform: none;
+        > ul{
+            display: inline-block;
+            width: auto;
+            height: auto;
+            position: static;
         }
     }
+}
+
+@media (max-width: $tablet){
+    .bg-menu{
+        left: -225px;
+    }    
 }
 </style>
