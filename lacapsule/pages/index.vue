@@ -3,12 +3,14 @@
         <div class='container'>
             <div class='text'>
                 <h1 class='title'>{{ home.title[0].text }}</h1>
-                <div v-html='homeText'/>
+                <div v-html='intro'/>
+                <div class='illu'>
+                    <div class='earth'></div>
+                    <div class='ovni'></div>
+                </div>
+                <div v-html='text'/>
             </div>
         </div>
-
-        <div class='earth'></div>
-        <div class='ovni'></div>
     </div>
 </template>
 
@@ -24,14 +26,16 @@ export default {
         const api = await Prismic.getApi(apiEndpoint);
 
         let home = {},
-            homeText;
+            intro,
+            text;
 
         await api.query(Prismic.Predicates.at('document.type', 'frontpage')).then(function(response) {
             home = response.results[0].data;
-            homeText = PrismicDOM.RichText.asHtml(home.text);
+            intro = PrismicDOM.RichText.asHtml(home.intro);
+            text = PrismicDOM.RichText.asHtml(home.text);
         });
 
-        return { home, homeText };
+        return { home, intro, text };
     },
     mixins: [btn],
     mounted() {
@@ -42,7 +46,9 @@ export default {
 
 <style lang='scss' scoped>
 h1 {
-    margin-top: 0;
+    margin: 0 0 0.55em;
+    text-align: left;
+    text-shadow: none;
 }
 
 .container {
@@ -59,7 +65,7 @@ h1 {
 .earth {
     width: 358px;
     height: 357px;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 25%;
     background: url(../static/img/earth.png) no-repeat 0 0 / 100%;
@@ -67,7 +73,7 @@ h1 {
 .ovni {
     width: 1038px;
     height: 677px;
-    position: absolute;
+    position: fixed;
     top: 25%;
     left: 54%;
     background: url(../static/img/ovni.png) no-repeat 0 0 / 100%;
@@ -87,14 +93,50 @@ h1 {
 }
 
 @media (max-width: $tablet){
+    h1{
+        text-align: center;
+    }
+
     .container{
-        margin-top: 40vh;
+        margin-top: 5em;
+        text-align: center;
+    }
+
+    .text{
+        width: 100%;
+    }
+
+    .illu{
+        position: relative;
+        height: 330px;
+        margin: 100px 0 50px;
+    }
+
+    .ovni, .earth{
+        position: absolute;
+    }
+
+    .earth{
+        width: 200px;
+        height: 200px;
+        top: -80px;
+        left: -80px;
+    }
+
+    .ovni{
+        width: 600px;
+        height: 495px;
+        top: 0;
+        left: 40%;
+    }
+}
+
+@media (max-width: $phone){
+    .earth{
+        left: -120px;
     }
     .ovni{
-        top: 15%;
-    }
-    .text{
-        width: 61%;
+        left: 10%;
     }
 }
 </style>

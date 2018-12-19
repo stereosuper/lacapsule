@@ -140,10 +140,10 @@ export default {
     }
 }
 
-.postcard {
+.helmet {
     span {
         top: 40%;
-        left: 115%;
+        left: 100%;
     }
 }
 

@@ -117,7 +117,6 @@ export default {
     position: relative;
     z-index: 1;
     &:hover, &:focus{
-        
         .r{
             transform: scaleX(0);
         }
@@ -466,7 +465,8 @@ export default {
 
 @media (max-width: $tablet) {
     .menu-btn {
-        position: static;
+        position: relative;
+        right: 0;
     }
 }
 
