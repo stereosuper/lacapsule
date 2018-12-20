@@ -23,7 +23,7 @@
                 {{menuText}}<b class='burger'><b class='b-on'></b><b class='b-off'></b></b>
             </button>
 
-            <nav :class='[{"menuClicked": isBurgerClicked}, "menu"]' id='menu'>
+            <nav :class='[{"menuClicked": isBurgerClicked, "pageChanging": isPageChanging}, "menu"]' id='menu'>
                 <ul>
                     <menuItem v-for='item in menu' v-if='!item.isBroken' :key='item.label' :item='item'/>
                 </ul>
@@ -53,6 +53,9 @@ export default {
         },
         isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
+        },
+        isPageChanging() {
+            return this.$store.state.menuHTML.pageChanging;
         }
     },
     methods: {
@@ -243,6 +246,10 @@ export default {
     top: 0;
     left: 45%;
     transform: translate(-50%);
+    transition: $transition;
+    &.pageChanging{
+       opacity: 0;
+    }
     > ul {
         width: 100%;
         height: 1200px;

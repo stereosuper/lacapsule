@@ -1,8 +1,10 @@
 <template>
-    <div class='container'>
-        <div class='text'>
-            <h1 class='title'>{{ page.title[0].text }}</h1>
-            <div v-html='pageText'/>
+    <div>
+        <div class='container' :class='{"appear": isMounted}'>
+            <div class='text'>
+                <h1 class='title'>{{ page.title[0].text }}</h1>
+                <div v-html='pageText'/>
+            </div>
         </div>
     </div>
 </template>
@@ -14,6 +16,11 @@ import PrismicDOM from 'prismic-dom';
 import btn from '~/mixins/btn.js';
 
 export default {
+    data(){
+        return {
+            isMounted: false
+        }
+    },
     mixins: [btn],
     async asyncData({ params }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
@@ -31,7 +38,11 @@ export default {
     },
     mounted() {
         this.$busPageMounted.$emit('newPageIsLoaded', true);
+        this.$store.commit('setPageChanging', false);
         this.setBtn();
+        setTimeout(() => {
+            this.isMounted = true;
+        }, 300);
     }
 };
 </script>
@@ -39,6 +50,16 @@ export default {
 <style lang='scss' scoped>
 .text {
     margin: 0 $col;
+}
+
+.container{
+    opacity: 0;
+    transform: translateX(200px);
+    transition: 0.3s ease-out;
+    &.appear{
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 @media (max-width: $tablet) {

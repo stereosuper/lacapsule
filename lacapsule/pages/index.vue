@@ -1,17 +1,17 @@
-<template>
-    <div>        
+<template>  
+    <div>
         <div class='container'>
             <div class='text'>
-                <h1 class='title'>{{ home.title[0].text }}</h1>
-                <div v-html='intro' class='inner-text'/>
+                <h1 class='title to-anim' :class='{"appear": isMounted}'>{{ home.title[0].text }}</h1>
+                <div v-html='intro' :class='{"appear": isMounted}' class='inner-text to-anim'/>
                 <div class='illu'>
-                    <div class='earth'></div>
-                    <div class='ovni'></div>
+                    <div class='earth to-anim' :class='{"appear": isMounted}'></div>
+                    <div class='ovni to-anim' :class='{"appear": isMounted}'></div>
                 </div>
-                <div v-html='text' class='inner-text'/>
+                <div v-html='text' class='inner-text to-anim' :class='{"appear": isMounted}'/>
             </div>
         </div>
-    </div>
+    </div> 
 </template>
 
 <script>
@@ -21,6 +21,11 @@ import PrismicDOM from 'prismic-dom';
 import btn from '~/mixins/btn.js';
 
 export default {
+    data(){
+        return{
+            isMounted: false
+        }
+    },
     mixins: [btn],
     async asyncData() {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
@@ -40,7 +45,11 @@ export default {
     },
     mounted() {
         this.$busPageMounted.$emit('newPageIsLoaded', true);
+        this.$store.commit('setPageChanging', false);
         this.setBtn();
+        setTimeout(() => {
+            this.isMounted = true;
+        }, 300);
     }
 };
 </script>
@@ -59,6 +68,16 @@ h1 {
     top: -50%;
     margin-top: 35vh;
     z-index: 1;
+}
+
+.to-anim{
+    opacity: 0;
+    transform: translateX(200px);
+    transition: 0.3s ease-out;
+    &.appear{
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .text {

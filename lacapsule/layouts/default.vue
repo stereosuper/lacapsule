@@ -20,13 +20,11 @@ export default {
             return this.$store.state.menuHTML.clickBurger;
         }
     },
-    // watch: {
-    //     $route() {
-    //         this.$store.commit('setHoverBurger', false);
-    //         this.$store.commit('setClickBurger', false);
-    //         document.body.classList.remove('menuOpen');
-    //     }
-    // }
+    watch: {
+        $route() {
+            this.$store.commit('setPageChanging', true);
+        }
+    }
 };
 </script>
 
@@ -39,10 +37,13 @@ export default {
     }
 }
 
-.page-enter-active, .page-leave-active {
-    transition: $transition;
-}
-.page-enter, .page-leave-active {
+.page-leave-active{
+    transform: translateX(-200px);
     opacity: 0;
+}
+
+.page-leave, .page-leave-active {
+    transition: 0.3s ease-out;
+    
 }
 </style>
