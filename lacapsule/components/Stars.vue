@@ -14,26 +14,18 @@ export default {
     },
     watch: {
         $route(){
-            this.routeChanging = true;
             this.transitionStart = Date.now();
             this.isTransitioning = true;
+            this.$store.commit('setPageTransitioning', true);
         }
-    },
-    methods: {
-        pageMounted(){
-            this.routeChanging = false;
-        },
     },
     data(){
         return {
-            routeChanging: false,
             transitionStart: 0,
             isTransitioning: false
         }
     },
     mounted() {
-        this.$busPageMounted.$on('newPageIsLoaded', this.pageMounted);
-
         window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
         const self = this,
@@ -48,24 +40,18 @@ export default {
             nbComets,
             currentComet = 0,
             drawingComet = true,
-            randomComet = 0,
-            transitionDuration = 500,
-            movingSpeed = 0.002;
-
-        // function easeOut(n){
-        //     n *= 2;
-        //     if (n < 1) return 0.5 * n * n;
-        //     return - 0.5 * (--n * (n - 2) - 1);
-        // }
+            randomComet = 0;
 
         function Star() {
             this.x = Math.random() * windowW;
             this.y = Math.random() * windowH;
             this.on = Math.random() > 0.1;
-            this.size = Math.random() * (13 - 1) + 1;
+            this.size = Math.round((Math.random() * (13 - 1) + 1)*10)/10;
+            this.oSize = this.size;
             this.opacity = this.on ? Math.random() * 0.7 : 0;
             this.clign = Math.random() > 0.5;
             this.satellite = Math.random() > 0.98;
+            this.distanceDone = 0; 
         }
 
         function CometElt(i, x, y, speed) {
@@ -86,36 +72,44 @@ export default {
             }
         }
 
+        function rangeMap(val, in_min, in_max, out_min, out_max) {
+            return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        }
+
         Star.prototype.draw = function() {
             if(self.isTransitioning){
-                if (Date.now() - self.transitionStart >= transitionDuration) self.isTransitioning = false;
-                // movingSpeed = easeOut((Date.now() - self.transitionStart) / transitionDuration);
+                if(this.distanceDone >= 1000){
+                    self.isTransitioning = false;
+                    self.$store.commit('setPageTransitioning', false);
+                }
 
-                if(this.size > 11){
-                    this.x -= 25 - movingSpeed;
-                    if(this.x > windowW/3*2){
-                        this.y -= 3;
-                    }else if(this.x > windowW/3){
-                        this.y -= 2;
-                    }
-                }/*else if(this.size < 5){
-                    this.x -= 65;
-                    if(this.x > windowW/3*2){
-                        this.y -= 9;
-                    }else if(this.x > windowW/3){
-                        this.y -= 5;
-                    }
+                let movingSpeedX, movingSpeedY, movingSize;
+
+                if(this.x > windowW/2){
+                    movingSpeedX = Math.floor(rangeMap(this.x, windowW/2, windowW, 25, 15)); 
+                    movingSpeedY = Math.floor(rangeMap(this.y, windowW/2, windowW, 15, 35)); 
+                    movingSize = -rangeMap(this.x, windowW/2, windowW, 0.1, 0.3);
                 }else{
-                    this.x -= 45;
-                    if(this.x > windowW/3*2){
-                        this.y -= 7;
-                    }else if(this.x > windowW/3){
-                        this.y -= 4;
-                    }
-                }*/
-                movingSpeed += 0.002;
+                    movingSpeedX = Math.floor(rangeMap(this.x, 0, windowW/2, 15, 25));        
+                    movingSpeedY = Math.floor(rangeMap(this.y, 0, windowW/2, 15, 5));
+                    movingSize = rangeMap(this.x, 0, windowW/2, 0.3, 0.1);       
+                }
+                
+                this.x -= movingSpeedX;
+                this.y -= movingSpeedY/10;
+                this.size += movingSize;
+
+                this.distanceDone += movingSpeedX;
+            }else{
+                if(this.size > this.oSize){
+                    this.size -= 0.1;
+                }else if(this.size < this.oSize){
+                    this.size += 0.1;
+                }
+                this.distanceDone = 0;
             }
-            
+
+            this.size = this.size < 0 ? 0 : this.size;
             this.x = this.x < 0 ? windowW : this.x;
             this.y = this.y < 0 ? windowH : this.y;
 
@@ -248,7 +242,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -1;
+    //z-index: -1;
     transition: opacity $transition;
     &.menuHovered, &.menuClicked {
         opacity: 0.5;

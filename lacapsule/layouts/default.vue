@@ -1,7 +1,7 @@
 <template>
     <div class='wrapper' id='wrapper'>
         <siteHeader/>
-        <div id='content' :class='[{"menuClicked": isBurgerClicked}, "content"]'><nuxt/></div>
+        <div :class='[{"menuClicked": isBurgerClicked}, "content"]'><nuxt/></div>
         <stars/>
     </div>
 </template>
@@ -19,19 +19,14 @@ export default {
         isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
         }
-    },
-    // watch: {
-    //     $route() {
-    //         this.$store.commit('setHoverBurger', false);
-    //         this.$store.commit('setClickBurger', false);
-    //         document.body.classList.remove('menuOpen');
-    //     }
-    // }
+    }
 };
 </script>
 
 <style lang='scss' scoped>
 .content {
+    position: relative;
+    z-index: 1;
     transition: $transition;
     &.menuClicked {
         pointer-events: none;
@@ -39,10 +34,13 @@ export default {
     }
 }
 
-.page-enter-active, .page-leave-active {
-    transition: $transition;
-}
-.page-enter, .page-leave-active {
+.page-leave-active{
+    transform: translateX(-200px);
     opacity: 0;
+}
+
+.page-leave, .page-leave-active {
+    transition: 0.3s ease-out;
+    
 }
 </style>

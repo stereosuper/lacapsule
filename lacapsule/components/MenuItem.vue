@@ -192,7 +192,7 @@ export default {
     }
 }
 
-@media (max-height: 670px), (max-width: $tablet){
+@media (max-height: 600px), (max-width: $tablet){
     .item{
         position: static;
         margin: 5.5vh 0 0;
@@ -214,7 +214,7 @@ export default {
     }
 }
 
-@media (max-height: 670px){
+@media (max-height: 600px){
     .item{
         margin: 3vh 0 0;
         &:last-of-type{
