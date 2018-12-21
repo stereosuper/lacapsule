@@ -37,8 +37,10 @@ export default {
         return { page, pageText };
     },
     mounted() {
-        this.$busPageMounted.$emit('newPageIsLoaded', true);
-        this.$store.commit('setPageChanging', false);
+        this.$store.commit('setHoverBurger', false);
+        this.$store.commit('setClickBurger', false);
+        document.body.classList.remove('menuOpen');
+        
         this.setBtn();
         setTimeout(() => {
             this.isMounted = true;

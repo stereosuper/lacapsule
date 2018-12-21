@@ -14,26 +14,18 @@ export default {
     },
     watch: {
         $route(){
-            this.routeChanging = true;
             this.transitionStart = Date.now();
             this.isTransitioning = true;
+            this.$store.commit('setPageTransitioning', true);
         }
-    },
-    methods: {
-        pageMounted(){
-            this.routeChanging = false;
-        },
     },
     data(){
         return {
-            routeChanging: false,
             transitionStart: 0,
             isTransitioning: false
         }
     },
     mounted() {
-        this.$busPageMounted.$on('newPageIsLoaded', this.pageMounted);
-
         window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
         const self = this,
@@ -48,8 +40,7 @@ export default {
             nbComets,
             currentComet = 0,
             drawingComet = true,
-            randomComet = 0/*,
-            transitionDuration = 500*/;
+            randomComet = 0;
 
         function Star() {
             this.x = Math.random() * windowW;
@@ -87,9 +78,10 @@ export default {
 
         Star.prototype.draw = function() {
             if(self.isTransitioning){
-                //if (Date.now() - self.transitionStart >= transitionDuration) self.isTransitioning = false;
-
-                if(this.distanceDone >= 1000) self.isTransitioning = false;
+                if(this.distanceDone >= 1000){
+                    self.isTransitioning = false;
+                    self.$store.commit('setPageTransitioning', false);
+                }
 
                 let movingSpeedX, movingSpeedY, movingSize;
 
@@ -97,7 +89,6 @@ export default {
                     movingSpeedX = Math.floor(rangeMap(this.x, windowW/2, windowW, 25, 15)); 
                     movingSpeedY = Math.floor(rangeMap(this.y, windowW/2, windowW, 15, 35)); 
                     movingSize = -rangeMap(this.x, windowW/2, windowW, 0.1, 0.3);
-                    //console.log(movingSize);
                 }else{
                     movingSpeedX = Math.floor(rangeMap(this.x, 0, windowW/2, 15, 25));        
                     movingSpeedY = Math.floor(rangeMap(this.y, 0, windowW/2, 15, 5));
@@ -110,7 +101,6 @@ export default {
 
                 this.distanceDone += movingSpeedX;
             }else{
-                //this.size = this.oSize;
                 if(this.size > this.oSize){
                     this.size -= 0.1;
                 }else if(this.size < this.oSize){

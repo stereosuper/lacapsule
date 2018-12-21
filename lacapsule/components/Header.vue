@@ -23,7 +23,7 @@
                 {{menuText}}<b class='burger'><b class='b-on'></b><b class='b-off'></b></b>
             </button>
 
-            <nav :class='[{"menuClicked": isBurgerClicked, "pageChanging": isPageChanging}, "menu"]' id='menu'>
+            <nav :class='[{"menuClicked": isBurgerClicked, "pageChanging": isPageTransitioning}, "menu"]' id='menu' ref='menu'>
                 <ul>
                     <menuItem v-for='item in menu' v-if='!item.isBroken' :key='item.label' :item='item'/>
                 </ul>
@@ -54,8 +54,8 @@ export default {
         isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
         },
-        isPageChanging() {
-            return this.$store.state.menuHTML.pageChanging;
+        isPageTransitioning() {
+            return this.$store.state.pageTransitioning;
         }
     },
     methods: {
@@ -81,11 +81,6 @@ export default {
         closeMenu(e){
             if (e.key === 'Escape' && this.menuOpen) this.toggleMenu();
         },
-        pageMounted(){
-            this.$store.commit('setHoverBurger', false);
-            this.$store.commit('setClickBurger', false);
-            document.body.classList.remove('menuOpen');
-        }
     },
     watch: {
         isBurgerClicked() {
@@ -100,7 +95,6 @@ export default {
         };
     },
     mounted(){
-        this.$busPageMounted.$on('newPageIsLoaded', this.pageMounted);
         window.addEventListener('keyup', this.closeMenu);
     }
 };
@@ -494,7 +488,13 @@ export default {
     }
 }
 
-@media (max-height: 670px), (max-width: $tablet){
+@media (max-height: 670px){
+    .menu{
+        top: -150px;
+    }
+}
+
+@media (max-height: 600px), (max-width: $tablet){
     .menu{
         padding: 150px 0 0;
         top: 0;

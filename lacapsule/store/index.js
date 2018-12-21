@@ -6,10 +6,10 @@ const createStore = () => {
         state: () => ({
             settings: {},
             menu: {},
+            pageTransitioning: false,
             menuHTML: {
                 hoverBurger: false,
                 clickBurger: false,
-                pageChanging: false
             }
         }),
         mutations: {
@@ -25,8 +25,8 @@ const createStore = () => {
             setClickBurger(state, value) {
                 state.menuHTML.clickBurger = value;
             },
-            setPageChanging(state, value) {
-                state.menuHTML.pageChanging = value;
+            setPageTransitioning(state, value) {
+                state.pageTransitioning = value;
             }
         },
         actions: {

@@ -19,11 +19,6 @@ export default {
         isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
         }
-    },
-    watch: {
-        $route() {
-            this.$store.commit('setPageChanging', true);
-        }
     }
 };
 </script>
