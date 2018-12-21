@@ -19,6 +19,8 @@ export default {
                 btnH;
 
             for (i; i < nbBtn; i++) {
+                if(!btn[i].querySelector('a').length) return;
+
                 glowWrapper = document.createElement('i');
                 glowWrapper.className = 'glow-wrapper';
                 glow = document.createElement('i');
