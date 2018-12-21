@@ -5,7 +5,7 @@ export default {
         setBtn(){
             const btn = document.getElementsByClassName('button');
 
-            if(!btn.length) return;
+            if(!btn) return;
 
             let glow,
                 glowWrapper,
@@ -19,7 +19,7 @@ export default {
                 btnH;
 
             for (i; i < nbBtn; i++) {
-                if(!btn[i].querySelector('a').length) return;
+                if(!btn[i].querySelector('a')) return;
 
                 glowWrapper = document.createElement('i');
                 glowWrapper.className = 'glow-wrapper';
