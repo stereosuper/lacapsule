@@ -1,7 +1,7 @@
 <template>
     <div class='wrapper' id='wrapper'>
         <siteHeader/>
-        <div id='content' :class='[{"menuClicked": isBurgerClicked}, "content"]'><nuxt/></div>
+        <div :class='[{"menuClicked": isBurgerClicked}, "content"]'><nuxt/></div>
         <stars/>
     </div>
 </template>
@@ -25,6 +25,8 @@ export default {
 
 <style lang='scss' scoped>
 .content {
+    position: relative;
+    z-index: 1;
     transition: $transition;
     &.menuClicked {
         pointer-events: none;
