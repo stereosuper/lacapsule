@@ -8,7 +8,17 @@
                     <div class='earth to-anim' :class='{"appear": isMounted}'></div>
                     <div class='ovni to-anim' :class='{"appear": isMounted}'></div>
                 </div>
-                <div v-html='text' class='inner-text to-anim' :class='{"appear": isMounted}'/>
+                <div class='inner-text to-anim' :class='{"appear": isMounted}'>
+                    <div v-html='text'/>
+                    <div v-if='home.btn && !home.btn.isBroken' class='button'>
+                        <a v-if='!home.btn.slug' :href='home.btn.url' :target='home.btn.target'>
+                            {{home.btn_label}}
+                        </a>
+                        <nuxt-link v-if='home.btn.slug' :to='`/${home.btn.slug}`'>
+                            {{home.btn_label}}
+                        </nuxt-link>
+                    </div>
+                </div>
             </div>
         </div>
     </div> 
@@ -70,16 +80,6 @@ h1 {
     top: -50%;
     margin-top: 35vh;
     z-index: 1;
-}
-
-.to-anim{
-    opacity: 0;
-    transform: translateX(200px);
-    transition: 0.3s ease-out;
-    &.appear{
-        opacity: 1;
-        transform: translateX(0);
-    }
 }
 
 .text {

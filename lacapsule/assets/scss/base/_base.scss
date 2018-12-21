@@ -272,6 +272,25 @@ a {
     transition: none !important;
 }
 
+.to-anim{
+    opacity: 0;
+    transform: translateX(200px);
+    &.appear{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.page-leave, .page-leave-active, .to-anim{
+    transition: 0.3s ease-out;
+}
+
+.page-leave-active{
+    .to-anim{
+        transform: translateX(-200px);
+        opacity: 0;
+    }
+}
 
 @media (max-width: $phone){
     h1{

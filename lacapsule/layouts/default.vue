@@ -33,14 +33,4 @@ export default {
         opacity: 0;
     }
 }
-
-.page-leave-active{
-    transform: translateX(-200px);
-    opacity: 0;
-}
-
-.page-leave, .page-leave-active {
-    transition: 0.3s ease-out;
-    
-}
 </style>

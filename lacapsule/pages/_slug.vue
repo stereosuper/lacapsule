@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class='container' :class='{"appear": isMounted}'>
+        <div :class='[{"appear": isMounted}, "to-anim", "container"]'>
             <div class='text'>
                 <h1 class='title'>{{ page.title[0].text }}</h1>
                 <div v-html='pageText'/>
@@ -52,16 +52,6 @@ export default {
 <style lang='scss' scoped>
 .text {
     margin: 0 $col;
-}
-
-.container{
-    opacity: 0;
-    transform: translateX(200px);
-    transition: 0.3s ease-out;
-    &.appear{
-        opacity: 1;
-        transform: translateX(0);
-    }
 }
 
 @media (max-width: $tablet) {
