@@ -1,10 +1,19 @@
 <template>
     <div>
         <div :class='[{"appear": isMounted}, "to-anim", "container"]'>
-            <div class='text'>
-                <h1 class='title'>{{ page.title[0].text }}</h1>
-                <div v-html='pageText'/>
+            <div class='small-content'>
+                <div class='title'>
+                    <nuxt-link to='/' class='breadcrumb'>Accueil</nuxt-link>
+                    <h1 class='title'>{{ page.title }}</h1>
+                </div>
+                <div v-if='page.text' v-html='page.text'/>
             </div>
+            <ul v-if='page.blocks' class='blocks'>
+                <listItem v-for='item in page.blocks' :key='item.item_title[0].text' :item='item'/>
+            </ul>
+            <ul v-if='page.logos' class='logos'>
+                <listLogo v-for='logo in page.logos' :key='logo.logo_title[0].text' :logo='logo'/>
+            </ul>
         </div>
     </div>
 </template>
@@ -15,6 +24,9 @@ import PrismicDOM from 'prismic-dom';
 
 import btn from '~/mixins/btn.js';
 
+import ListItem from '~/components/ListItem.vue';
+import ListLogo from '~/components/ListLogo.vue';
+
 export default {
     data(){
         return {
@@ -22,19 +34,31 @@ export default {
         }
     },
     mixins: [btn],
+    components: {
+        ListItem,
+        ListLogo
+    },
     async asyncData({ params }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
 
-        let page = {},
-            pageText;
+        let page = {}, data = {};
 
         await api.query(Prismic.Predicates.at('my.page.uid', params.slug)).then(function(response) {
-            page = response.results[0].data;
-            pageText = PrismicDOM.RichText.asHtml(page.text);
+            if( !response.results.length ) return;
+
+            data = response.results[0].data;
+
+            page = {
+                'type': response.results[0].type,
+                'title': data.title ? data.title[0].text : '',
+                'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
+                'blocks': data.blocks[0] ? data.blocks : '',
+                'logos': data.logos[0] ? data.logos : ''
+            }
         });
 
-        return { page, pageText };
+        return { page };
     },
     mounted() {
         this.$store.commit('setHoverBurger', false);
@@ -42,20 +66,39 @@ export default {
         document.body.classList.remove('menuOpen');
         
         this.setBtn();
-        setTimeout(() => {
-            this.isMounted = true;
-        }, 300);
+        setTimeout(() => { this.isMounted = true; }, 300);
     }
 };
 </script>
 
 <style lang='scss' scoped>
-.text {
+.small-content {
     margin: 0 $col;
 }
 
+.title{
+    text-align: center;
+    h1{
+        margin-top: 0.5em;
+    }
+}
+
+.breadcrumb{
+    display: inline-block;
+    margin: 1em 0 0;
+    font-style: normal;
+    color: $lightGrey;
+    text-decoration: none;
+}
+
+.blocks{
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
 @media (max-width: $tablet) {
-    .text {
+    .small-content {
         margin: 0;
     }
 }

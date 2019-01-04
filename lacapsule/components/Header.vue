@@ -244,6 +244,9 @@ export default {
     &.pageChanging{
        opacity: 0;
     }
+    &:not(.menuClicked){
+        pointer-events: none;
+    }
     > ul {
         width: 100%;
         height: 1200px;
