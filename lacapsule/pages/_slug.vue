@@ -99,6 +99,12 @@ export default {
     text-align: center;
 }
 
+.logos{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
 @media (max-width: $tablet) {
     .small-content {
         margin: 0;
