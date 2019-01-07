@@ -51,7 +51,7 @@ export default {
 
             page = {
                 'type': response.results[0].type,
-                'title': data.title ? data.title[0].text : '',
+                'title': data.title[0] ? data.title[0].text : '',
                 'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
                 'blocks': data.blocks[0] ? data.blocks : '',
                 'logos': data.logos[0] ? data.logos : ''
@@ -93,7 +93,9 @@ export default {
 
 .blocks{
     display: flex;
-    align-items: center;
+    padding: 4vh 0 80px;
+    margin: 0 $gutter*-2;
+    justify-content: space-between;
     text-align: center;
 }
 
