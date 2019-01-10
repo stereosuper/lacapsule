@@ -24,12 +24,14 @@ export default {
     },
     data() {
         return {
-            content: ''
+            content: '',
+            form: false
         };
     },
     created() {
         this.content = this.file.file_text ? PrismicDOM.RichText.asHtml(this.file.file_text) : '';
-    }
+    },
+    methods: {}
 };
 </script>
 
@@ -57,8 +59,11 @@ h2{
 }
 
 form{
-    display: flex;
+    display: none;
     align-items: center;
+    &.on{
+        display: flex;
+    }
 }
 
 input{
@@ -74,6 +79,9 @@ input{
     font-style: italic;
     color: $primary;
     text-decoration: underline;
+    &.off{
+        display: none;
+    }
 }
 
 .ok{
