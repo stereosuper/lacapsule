@@ -1,10 +1,10 @@
 <template>
     <li :class='[item.ref, "item"]'>
-        <a v-if='!item.link.slug' :href='item.link.url' :target='item.link.target' :class='[{"menuClicked": isBurgerClicked}, "link"]'>
+        <a v-if='!item.link.uid' :href='item.link.url' :target='item.link.target' :class='[{"menuClicked": isBurgerClicked}, "link"]'>
             <div :id='item.ref'></div>
             <span>{{ item.label }}</span>
         </a>
-        <nuxt-link v-if='item.link.slug' :to='item.link.slug' :class='[{"menuClicked": isBurgerClicked, "menuNotClicked": !isBurgerClicked}, "link"]'>
+        <nuxt-link v-if='item.link.uid' :to='item.link.uid' :class='[{"menuClicked": isBurgerClicked, "menuNotClicked": !isBurgerClicked}, "link"]'>
             <div :id='item.ref'></div>
             <span>{{ item.label }}</span>
         </nuxt-link>
