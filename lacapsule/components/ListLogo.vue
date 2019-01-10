@@ -1,10 +1,10 @@
 <template>
-    <li>
+    <li :class='[{"has-logo": logo.logo.url}]'>
         <div v-if='!logo.link.url' class='logo'>
-            <img v-if='logo.logo' :src='logo.logo.url' :alt='logo.logo.alt'/>
+            <img v-if='logo.logo.url' :src='logo.logo.url' :alt='logo.logo.alt'/>
         </div>
-        <a v-if='logo.link.url' :href='logo.link.url' :target='logo.link.target'>
-            <img v-if='logo.logo' :src='logo.logo.url' :alt='logo.logo.alt'/>
+        <a v-if='logo.link.url' :href='logo.link.url' :target='logo.link.target' class='logo'>
+            <img v-if='logo.logo.url' :src='logo.logo.url' :alt='logo.logo.alt'/>
         </a>
         <h2>{{logo.logo_title[0].text}}</h2>
     </li>
@@ -34,9 +34,18 @@ export default {
 
 <style lang='scss' scoped>
 li{
+    width: 25%;
+    padding: 0;
+    margin: 0 0 20px;
     text-align: center;
     &:before{
         content: none;
+    }
+    &:nth-child(4n-2), &:nth-child(4n-1){
+        margin-top: 50px;
+    }
+    &:last-child{
+        margin-right: auto;
     }
 }
 
@@ -53,11 +62,14 @@ h2{
     width: 185px;
     height: 185px;
     position: relative;
-    margin: 0 0 20px;
+    margin: 0 auto 20px;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: #fff;
+    background: rgba(0, 0, 0, 0.25);
+    .has-logo &{
+        background: #fff;
+    }
     &:after{
         content: '';
         position: absolute;
@@ -67,6 +79,36 @@ h2{
         bottom: -18px;
         background: rgba(0, 0, 0, 0.1);
         border-radius: 50%;
+    }
+}
+
+img{
+    max-width: 80%;
+}
+
+
+@media (max-width: $desktop){
+    li{
+        width: 33%;
+        &:nth-child(4n-1){
+            margin-top: 0;
+        }
+    }
+}
+
+@media (max-width: $tablet){
+    li{
+        width: 50%;
+        margin: 0 0 50px;
+        &:nth-child(4n-2){
+            margin-top: 0;
+        }
+    }
+}
+
+@media (max-width: $phone){
+    li{
+        width: 100%;
     }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <li>
+    <li class='list-item'>
         <h2>{{item.item_title[0].text}}</h2>
         <div v-if='content' v-html='content'/>
     </li>
@@ -26,6 +26,14 @@ export default {
     }
 };
 </script>
+
+<style lang='scss'>
+.list-item{
+    ul{
+        text-align: left;
+    }
+}
+</style>
 
 <style lang='scss' scoped>
 li{
@@ -56,5 +64,24 @@ h2{
     margin: 0 auto 2em;
     font-size: 2.2rem;
     line-height: 1.3;
+}
+
+@media (max-width: $desktop){
+    li{
+        width: calc(50% - #{$gutter/2});
+        margin: 0 0 70px;
+        &:after{
+            height: 140%;
+        }
+        &:nth-child(2), &:nth-child(3){
+            margin: 0 0 70px;
+        }
+    }
+}
+
+@media (max-width: $phone){
+    li{
+        width: 100%;
+    }
 }
 </style>
