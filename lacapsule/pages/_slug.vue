@@ -17,6 +17,11 @@
             <ul v-if='page.files' class='files'>
                 <listFile v-for='file in page.files' :key='file.file_title[0].text' :file='file'/>
             </ul>
+            <div v-if='page.contact' class='contact'>
+                
+                <h2>{{page.contact}}</h2>
+                <a v-if='page.contact_mail' :href='"mailto:"+page.contact_mail'>{{page.contact_mail}}</a>
+            </div>
         </div>
     </div>
 </template>
@@ -60,8 +65,11 @@ export default {
                 'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
                 'blocks': data.blocks[0] ? data.blocks : '',
                 'logos': data.logos[0] ? data.logos : '',
-                'files': data.files[0] ? data.files : ''
-            }
+                'files': data.files[0] ? data.files : '',
+                'contact': data.contact_name[0] ? data.contact_name : '',
+                'contact_mail': data.contact_email[0] ? data.contact_email : '',
+                'contact_img': data.contact_img[0] ? data.contact_img : ''
+            };
         });
 
         return { page };
@@ -110,6 +118,20 @@ export default {
 
 .blocks{
     padding: 4vh 0 80px;
+}
+
+.contact{
+    max-width: 250px;
+    margin: 0 auto;
+    text-align: center;
+    h2{
+        margin: 0;
+        font-size: 2.1rem;
+    }
+    a{
+        font-weight: 600;
+        font-style: normal;
+    }
 }
 
 
