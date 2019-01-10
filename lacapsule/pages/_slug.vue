@@ -14,6 +14,9 @@
             <ul v-if='page.logos' class='logos'>
                 <listLogo v-for='logo in page.logos' :key='logo.logo_title[0].text' :logo='logo'/>
             </ul>
+            <ul v-if='page.files' class='files'>
+                <listFile v-for='file in page.files' :key='file.file_title[0].text' :file='file'/>
+            </ul>
         </div>
     </div>
 </template>
@@ -26,6 +29,7 @@ import btn from '~/mixins/btn.js';
 
 import ListItem from '~/components/ListItem.vue';
 import ListLogo from '~/components/ListLogo.vue';
+import ListFile from '~/components/ListFile.vue';
 
 export default {
     data(){
@@ -36,7 +40,8 @@ export default {
     mixins: [btn],
     components: {
         ListItem,
-        ListLogo
+        ListLogo,
+        ListFile
     },
     async asyncData({ params }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
@@ -54,7 +59,8 @@ export default {
                 'title': data.title[0] ? data.title[0].text : '',
                 'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
                 'blocks': data.blocks[0] ? data.blocks : '',
-                'logos': data.logos[0] ? data.logos : ''
+                'logos': data.logos[0] ? data.logos : '',
+                'files': data.files[0] ? data.files : ''
             }
         });
 
@@ -91,23 +97,60 @@ export default {
     text-decoration: none;
 }
 
-.blocks{
+.blocks, .logos, .files{
     display: flex;
-    padding: 4vh 0 80px;
     margin: 0 $gutter*-2;
     justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.blocks, .logos{
     text-align: center;
 }
 
-.logos{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+.blocks{
+    padding: 4vh 0 80px;
+}
+
+
+@media (max-width: 1252px){
+    .blocks{
+        margin: 0 $gutter*-1;
+    }
+}
+
+@media (max-width: $container){
+    .logos{
+        margin: 0 $gutter*-1;
+    }
+}
+
+@media (max-width: $desktop){
+    .logos{
+        margin: 0 $gutter*-2;
+    }
+
+    .blocks{
+        margin: 0;
+    }
 }
 
 @media (max-width: $tablet) {
     .small-content {
         margin: 0;
+    }
+}
+
+@media (max-width: $phone){
+    .logos{
+        margin: 10vh $gutter*-1 0;
+    }
+}
+
+@media (max-width: $phone-small){
+    .logos{
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 </style>
