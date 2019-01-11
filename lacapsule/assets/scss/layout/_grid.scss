@@ -12,3 +12,10 @@
     padding: 0 $gutter * 2;
     margin: 0 auto;
 }
+
+
+@media (max-width: $phone-small){
+    .container{
+        padding: 0 35px;
+    }
+}

@@ -522,6 +522,9 @@ export default {
 }
 
 @media (max-width: $phone-small){
+    .header-container{
+        padding: 0 35px;
+    }
     .logo{
         width: 150px;
         svg{
