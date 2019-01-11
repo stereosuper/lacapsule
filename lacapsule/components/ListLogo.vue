@@ -79,6 +79,15 @@ h2{
         bottom: -18px;
         background: rgba(0, 0, 0, 0.1);
         border-radius: 50%;
+        transition: $transition;
+    }
+}
+
+a{
+    &:hover, &:focus{
+        &:after{
+            transform: scale(0.95);
+        }
     }
 }
 
