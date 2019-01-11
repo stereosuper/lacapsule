@@ -148,7 +148,7 @@ export default {
 
 
 @media (max-width: 1252px){
-    .blocks{
+    .blocks, .files{
         margin: 0 $gutter*-1;
     }
 }
@@ -156,6 +156,10 @@ export default {
 @media (max-width: $container){
     .logos{
         margin: 0 $gutter*-1;
+    }
+
+    .files{
+        display: block;
     }
 }
 

@@ -32,12 +32,24 @@ textarea {
 }
 
 input {
+    width: 100%;
+    padding: 4px 10px;
+    border: 1px solid #fff;
+    margin: 0 10px 0 15px;
+    border-radius: 5px;
+    color: #fff;
     // hide the symbols of input search
     &[type='search'] {
         &::-webkit-search-cancel-button,
         &::-webkit-search-decoration {
             display: none;
         }
+    }
+    &:hover{
+        border-color: rgba(#fff, 0.7);
+    }
+    &:focus{
+        border-color: $primary;
     }
 }
 

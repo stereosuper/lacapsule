@@ -1,13 +1,26 @@
 <template>
     <li>
-        <h2>{{file.file_title[0].text}}</h2>
-        <div v-if='content' v-html='content'/>
-        <button class='download'>Télécharger</button>
-        <form method='post' action=''>
-            <label>Email</label>
-            <input type='email'/>
-            <button type='submit' class='ok'>OK</button>
-        </form>
+        <img v-if='file.file_img.url' :src='file.file_img.url' :alt='file.file_img.alt'/>
+        <div>
+            <h2>{{file.file_title[0].text}}</h2>
+            <div v-if='content' v-html='content'/>
+            <button :class='[{"off": form}, "download"]' @click='displayForm'>
+                <svg width="11" height="14" viewBox="0 0 11 14" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.541016 13.1653H10.4577V11.7487H0.541016V13.1653ZM10.4577 4.37363H7.62435V0.123632H3.37435V4.37363H0.541016L5.49935 9.33199L10.4577 4.37363Z"/>
+                </svg>
+                Télécharger
+            </button>
+            <form method='post' action='' :class='[{"on": form}]'>
+                <label>Email</label>
+                <input type='email'/>
+                <button type='submit' class='ok'>
+                    OK
+                    <svg width="11" height="14" viewBox="0 0 11 14" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.541016 13.1653H10.4577V11.7487H0.541016V13.1653ZM10.4577 4.37363H7.62435V0.123632H3.37435V4.37363H0.541016L5.49935 9.33199L10.4577 4.37363Z"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
     </li>
 </template>
 
@@ -31,14 +44,20 @@ export default {
     created() {
         this.content = this.file.file_text ? PrismicDOM.RichText.asHtml(this.file.file_text) : '';
     },
-    methods: {}
+    methods: {
+        displayForm(){
+            this.form = true;
+        }
+    }
 };
 </script>
 
 <style lang='scss' scoped>
 li{
+    display: flex;
     width: calc(50% - #{$gutter/2});
-    padding: 30px 35px;
+    padding: 30px;
+    align-items: flex-start;
     margin: 0 0 35px;
     background: rgba(0, 0, 0, 0.15);
     border-radius: 10px;
@@ -51,11 +70,18 @@ li{
     &:nth-child(2n){
         margin: 85px 0 -50px;
     }
+    > div{
+        padding: 0 0 0 25px;
+    }
 }
 
 h2{
     margin: 0;
     font-size: 2.1rem;
+}
+
+img{
+    margin: 10px 0 0;
 }
 
 form{
@@ -66,29 +92,63 @@ form{
     }
 }
 
-input{
-    width: 100%;
-    padding: 4px 10px;
-    border: 1px solid #fff;
-    margin: 0 10px 0 15px;
-    border-radius: 5px;
-    color: #fff;
-}
-
 .download{
+    padding: 0 0 0 20px;
+    position: relative;
+    line-height: 1;
     font-style: italic;
     color: $primary;
     text-decoration: underline;
     &.off{
         display: none;
     }
+    &:hover, &:focus{
+        color: #fff;
+    }
+    svg{
+        position: absolute;
+        top: 2px;
+        left: 0;
+    }
+}
+svg{
+    fill: currentColor;
 }
 
 .ok{
     padding: 9px 10px 8px;
     font-family: $league;
     font-size: 1.1rem;
+    white-space: nowrap;
     border-radius: 5px;
     background: $primary;
+    &:hover, &:focus{
+        background: #fff;
+        color: $primary;
+    }
+    svg{
+        margin: -4px 0 0 3px;
+    }
+}
+
+
+@media (max-width: $container){
+    li{
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto 35px;
+        &:nth-child(2), &:nth-child(2n) {
+            margin: 0 auto 35px;
+        }
+    }
+}
+
+@media (max-width: $phone){
+    li{
+        display: block;
+        > div{
+            padding: 30px 0 0;
+        }
+    }
 }
 </style>
