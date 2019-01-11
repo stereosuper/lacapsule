@@ -17,10 +17,10 @@
             <ul v-if='page.files' class='files'>
                 <listFile v-for='file in page.files' :key='file.file_title[0].text' :file='file'/>
             </ul>
-            <div v-if='page.contact' class='contact'>
-                
-                <h2>{{page.contact}}</h2>
-                <a v-if='page.contact_mail' :href='"mailto:"+page.contact_mail'>{{page.contact_mail}}</a>
+            <div v-if='page.contact.contact_name' class='contact'>
+                <div v-if='page.contact.contact_img' class='contact_img'><img :src='page.contact.contact_img.url' :alt='page.contact.contact_img.alt'/></div>
+                <h2>{{page.contact.contact_name}}</h2>
+                <a v-if='page.contact.contact_email' :href='"mailto:"+page.contact.contact_email'>{{page.contact.contact_email}}</a>
             </div>
         </div>
     </div>
@@ -66,9 +66,7 @@ export default {
                 'blocks': data.blocks[0] ? data.blocks : '',
                 'logos': data.logos[0] ? data.logos : '',
                 'files': data.files[0] ? data.files : '',
-                'contact': data.contact_name[0] ? data.contact_name : '',
-                'contact_mail': data.contact_email[0] ? data.contact_email : '',
-                'contact_img': data.contact_img[0] ? data.contact_img : ''
+                'contact': data.contact[0] ? data.contact[0] : '',
             };
         });
 
@@ -132,6 +130,13 @@ export default {
         font-weight: 600;
         font-style: normal;
     }
+}
+.contact_img{
+    display: inline-block;
+    padding: 20px;
+    margin: 0 0 30px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
 }
 
 
