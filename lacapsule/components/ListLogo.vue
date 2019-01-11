@@ -1,9 +1,9 @@
 <template>
     <li :class='[{"has-logo": logo.logo.url}]'>
-        <div v-if='!logo.link.url' class='logo'>
+        <div v-if='!logo.link.url' class='logo' :style='"background-color:"+logo.bd'>
             <img v-if='logo.logo.url' :src='logo.logo.url' :alt='logo.logo.alt'/>
         </div>
-        <a v-if='logo.link.url' :href='logo.link.url' :target='logo.link.target' class='logo'>
+        <a v-if='logo.link.url' :href='logo.link.url' :target='logo.link.target' class='logo' :style='"background-color:"+logo.bd'>
             <img v-if='logo.logo.url' :src='logo.logo.url' :alt='logo.logo.alt'/>
         </a>
         <h2>{{logo.logo_title[0].text}}</h2>
