@@ -18,7 +18,9 @@
                 <listFile v-for='file in page.files' :key='file.file_title[0].text' :file='file'/>
             </ul>
             <div v-if='page.contact.contact_name' class='contact'>
-                <div v-if='page.contact.contact_img' class='contact_img'><img :src='page.contact.contact_img.url' :alt='page.contact.contact_img.alt'/></div>
+                <div v-if='page.contact.contact_img' class='contact_img'>
+                    <div><img :src='page.contact.contact_img.url' :alt='page.contact.contact_img.alt'/></div>
+                </div>
                 <h2>{{page.contact.contact_name}}</h2>
                 <a v-if='page.contact.contact_email' :href='"mailto:"+page.contact.contact_email'>{{page.contact.contact_email}}</a>
             </div>
@@ -137,6 +139,11 @@ export default {
     margin: 0 0 30px;
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.1);
+    > div{
+        border: 5px solid #fff;
+        border-radius: 50%;
+        overflow: hidden;
+    }
 }
 
 
