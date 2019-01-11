@@ -104,7 +104,7 @@ export default {
 .header {
     padding: $gutter 0;
     position: relative;
-    z-index: 10;
+    z-index: 20;
 }
 
 .header-container {
@@ -519,5 +519,14 @@ export default {
     .bg-menu{
         left: -225px;
     }    
+}
+
+@media (max-width: $phone-small){
+    .logo{
+        width: 150px;
+        svg{
+            width: 100%;
+        }
+    }
 }
 </style>
