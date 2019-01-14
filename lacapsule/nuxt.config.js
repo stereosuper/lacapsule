@@ -86,6 +86,11 @@ module.exports = {
     },
 
     /*
+  ** Server Middleware
+  */
+    serverMiddleware: ['~/api/contact.js'],
+
+    /*
   ** Build configuration
   */
     build: {

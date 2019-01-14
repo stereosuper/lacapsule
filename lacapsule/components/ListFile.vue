@@ -10,16 +10,17 @@
                 </svg>
                 Télécharger
             </button>
-            <form method='post' action='' :class='[{"on": form}]'>
+            <form method='post' action='/api/contact' :class='[{"on": form}]' @submit='checkForm'>
                 <label>Email</label>
-                <input type='email'/>
-                <button type='submit' class='ok'>
+                <input type='email' name='email' v-model='email'/>
+                <button type='submit' class='ok' name='submit'>
                     OK
                     <svg width="11" height="14" viewBox="0 0 11 14" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0.541016 13.1653H10.4577V11.7487H0.541016V13.1653ZM10.4577 4.37363H7.62435V0.123632H3.37435V4.37363H0.541016L5.49935 9.33199L10.4577 4.37363Z"/>
                     </svg>
                 </button>
             </form>
+            <p v-if='formError' class='error'>{{formError}}</p>
         </div>
     </li>
 </template>
@@ -27,6 +28,7 @@
 <script>
 import Prismic from 'prismic-javascript';
 import PrismicDOM from 'prismic-dom';
+import validator from 'validator';
 
 export default {
     props: {
@@ -38,7 +40,9 @@ export default {
     data() {
         return {
             content: '',
-            form: false
+            form: false,
+            formError: '',
+            email: ''
         };
     },
     created() {
@@ -47,6 +51,27 @@ export default {
     methods: {
         displayForm(){
             this.form = true;
+        },
+        async checkForm(e){
+            e.preventDefault();
+
+            if (this.email) {
+                if(validator.isEmail(this.email)){
+                    await this.$axios.$post('/api/contact', this.email)
+                        .then(res => res.json())
+                        .then(res => {
+                            if (res.error) {
+                                this.formError = "Désolé, un problème est survenu!"; 
+                            } else {
+                                this.formError = "Bien envoyé! Vérifiez votre boîte mail :)"; 
+                            }
+                        });
+                }else{
+                    this.formError = "L'adresse email semble invalide..."; 
+                }
+            }else{
+                this.formError = "L'adresse email est requise!";
+            }
         }
     }
 };
@@ -131,6 +156,12 @@ svg{
     }
 }
 
+.error{
+    margin: 10px 0 0;
+    font-size: 1.2rem;
+    color: $primary;
+}
+
 
 @media (max-width: $container){
     li{
@@ -152,3 +183,4 @@ svg{
     }
 }
 </style>
+ 
