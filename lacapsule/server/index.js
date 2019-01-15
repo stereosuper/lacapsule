@@ -5,7 +5,7 @@ const {
   Builder
 } = require('nuxt');
 const app = express();
-const host = process.env.ALWAYSDATA_HTTPD_IP || '127.0.0.1';
+const host = process.env.ALWAYSDATA_HTTPD_IP || 'localhost';
 const port = process.env.ALWAYSDATA_HTTPD_PORT || 3000;
 
 app.set('port', port);

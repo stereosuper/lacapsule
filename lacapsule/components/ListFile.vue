@@ -55,22 +55,20 @@ export default {
         async checkForm(e){
             e.preventDefault();
 
-            if (this.email) {
-                if(validator.isEmail(this.email)){
-                    await this.$axios.$post('/api/contact', this.email)
+            const self = this;
+
+            if (self.email) {
+                if(validator.isEmail(self.email)){
+                    self.$axios.$post('/api/contact', 'email='+self.email+'&title='+self.file.file_title[0].text)
                         .then(res => res.json())
-                        .then(res => {
-                            if (res.error) {
-                                this.formError = "Désolé, un problème est survenu!"; 
-                            } else {
-                                this.formError = "Bien envoyé! Vérifiez votre boîte mail :)"; 
-                            }
+                        .catch(error => {
+                            self.formError = error.response ? "Désolé, un problème est survenu!" : "Bien envoyé! La ressource vous sera envoyée par mail :)";
                         });
                 }else{
-                    this.formError = "L'adresse email semble invalide..."; 
+                    self.formError = "L'adresse email semble invalide..."; 
                 }
             }else{
-                this.formError = "L'adresse email est requise!";
+                self.formError = "L'adresse email est requise!";
             }
         }
     }
