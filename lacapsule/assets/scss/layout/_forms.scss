@@ -33,6 +33,8 @@ textarea {
 
 input {
     width: 100%;
+    min-width: 0;
+    // fix firefox bug input min-width https://bugzilla.mozilla.org/show_bug.cgi?id=1088586
     padding: 4px 10px;
     border: 1px solid #fff;
     margin: 0 10px 0 15px;
