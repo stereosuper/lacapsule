@@ -11,10 +11,10 @@
                 <div class='inner-text to-anim' :class='{"appear": isMounted}'>
                     <div v-html='text'/>
                     <div v-if='home.btn && !home.btn.isBroken' class='button'>
-                        <a v-if='!home.btn.slug' :href='home.btn.uid' :target='home.btn.target'>
+                        <a v-if='!home.btn.slug' :href='home.btn.url' :target='home.btn.target'>
                             {{home.btn_label}}
                         </a>
-                        <nuxt-link v-if='home.btn.slug' :to='`/${home.btn.slug}`'>
+                        <nuxt-link v-if='home.btn.uid' :to='`/${home.btn.uid}`'>
                             {{home.btn_label}}
                         </nuxt-link>
                     </div>
