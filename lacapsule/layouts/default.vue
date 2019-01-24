@@ -19,6 +19,12 @@ export default {
         isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
         }
+    },
+    head: {
+        titleTemplate: '%s - La Capsule',
+        htmlAttrs: {
+            lang: 'fr',
+        }
     }
 };
 </script>

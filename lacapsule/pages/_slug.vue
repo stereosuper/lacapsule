@@ -64,6 +64,7 @@ export default {
             page = {
                 'type': response.results[0].type,
                 'title': data.title[0] ? data.title[0].text : '',
+                'desc': data.desc ? data.desc : '',
                 'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
                 'blocks': data.blocks[0] ? data.blocks : '',
                 'logos': data.logos[0] ? data.logos : '',
@@ -81,7 +82,15 @@ export default {
         
         this.setBtn();
         setTimeout(() => { this.isMounted = true; }, 300);
-    }
+    },
+    head() {
+        return{
+            title: this.page.title,
+            meta: [
+                { hid: 'description', name: 'description', content: this.page.desc }
+            ]
+        }
+    },
 };
 </script>
 

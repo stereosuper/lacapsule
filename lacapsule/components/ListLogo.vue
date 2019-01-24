@@ -11,23 +11,12 @@
 </template>
 
 <script>
-// import Prismic from 'prismic-javascript';
-// import PrismicDOM from 'prismic-dom';
-
 export default {
     props: {
         logo: {
             type: Object,
             required: true
         }
-    },
-    data() {
-        return {
-            //img: ''
-        };
-    },
-    created() {
-        //this.img = this.logo.logo.url ? PrismicDOM.RichText.asHtml(this.logo.logo) : '';
     }
 };
 </script>

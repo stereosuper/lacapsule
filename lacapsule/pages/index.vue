@@ -62,6 +62,15 @@ export default {
         setTimeout(() => {
             this.isMounted = true;
         }, 300);
+    },
+    head() {
+        return{
+            titleTemplate: null,
+            title: 'La Capsule',
+            meta: [
+                { hid: 'description', name: 'description', content: this.home.desc ? this.home.desc : '' }
+            ]
+        }
     }
 };
 </script>
