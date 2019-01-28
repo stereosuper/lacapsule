@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import ranger, { Range } from '@zadvorsky/ranger';
+
 export default {
     computed: {
         isBurgerHovered() {
@@ -44,6 +46,7 @@ export default {
 
         function Star() {
             this.x = Math.random() * windowW;
+            this.afterSmooth = 0;
             this.y = Math.random() * windowH;
             this.on = Math.random() > 0.1;
             this.size = Math.round((Math.random() * (13 - 1) + 1)*10)/10;
@@ -51,7 +54,7 @@ export default {
             this.opacity = this.on ? Math.random() * 0.7 : 0;
             this.clign = Math.random() > 0.5;
             this.satellite = Math.random() > 0.98;
-            this.distanceDone = 0; 
+            this.distanceDone = 0;
         }
 
         function CometElt(i, x, y, speed) {
@@ -62,45 +65,58 @@ export default {
         }
 
         function Comet() {
+            let i = 0;
+
             this.elts = [];
             this.x = Math.random() * windowW;
             this.y = Math.random() * (windowH / 2);
             this.speed = Math.random() * (15 - 10) + 10;
 
-            for (let i = 0; i < 30; i++) {
+            for (i; i < 30; i++) {
                 this.elts[i] = new CometElt(i, this.x, this.y, this.speed);
             }
         }
 
-        function rangeMap(val, in_min, in_max, out_min, out_max) {
-            return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        function easeOutCubic(t) {
+            return (--t)*t*t+1;
+        }
+
+        function lerp(value1, value2, amount) {
+            amount = amount < 0 ? 0 : amount;
+            amount = amount > 1 ? 1 : amount;
+            return value1 + (value2 - value1) * amount;
         }
 
         Star.prototype.draw = function() {
             if(self.isTransitioning){
-                if(this.distanceDone >= 1000){
-                    self.isTransitioning = false;
-                    self.$store.commit('setPageTransitioning', false);
-                }
-
                 let movingSpeedX, movingSpeedY, movingSize;
 
+                self.isTransitioning = this.distanceDone < 1000;
+
                 if(this.x > windowW/2){
-                    movingSpeedX = Math.floor(rangeMap(this.x, windowW/2, windowW, 25, 15)); 
-                    movingSpeedY = Math.floor(rangeMap(this.y, windowW/2, windowW, 15, 35)); 
-                    movingSize = -rangeMap(this.x, windowW/2, windowW, 0.1, 0.3);
+                    movingSpeedX = Math.floor(ranger.mapFloat(this.x, windowW/2, windowW, 25, 15, easeOutCubic));
+                    movingSpeedY = Math.floor(ranger.mapFloat(this.y, windowW/2, windowW, 0, 1, easeOutCubic)); 
+                    movingSize = -ranger.mapFloat(this.x, windowW/2, windowW, 0.1, 0.3, easeOutCubic);
                 }else{
-                    movingSpeedX = Math.floor(rangeMap(this.x, 0, windowW/2, 15, 25));        
-                    movingSpeedY = Math.floor(rangeMap(this.y, 0, windowW/2, 15, 5));
-                    movingSize = rangeMap(this.x, 0, windowW/2, 0.3, 0.1);       
+                    movingSpeedX = Math.floor(ranger.mapFloat(this.x, 0, windowW/2, 15, 25, easeOutCubic));
+                    movingSpeedY = Math.floor(ranger.mapFloat(this.y, 0, windowW/2, 1, 0, easeOutCubic));
+                    movingSize = ranger.mapFloat(this.x, 0, windowW/2, 0.3, 0.1, easeOutCubic);       
                 }
                 
                 this.x -= movingSpeedX;
-                this.y -= movingSpeedY/10;
+                this.y += movingSpeedY/10;
                 this.size += movingSize;
 
                 this.distanceDone += movingSpeedX;
+                this.afterSmooth = movingSpeedX;
             }else{
+                this.afterSmooth = lerp(this.afterSmooth, 0, 0.097);
+                this.x -= this.afterSmooth;
+
+                if(this.afterSmooth < 0.4){
+                    self.$store.commit('setPageTransitioning', false);
+                }
+
                 if(this.size > this.oSize){
                     this.size -= 0.1;
                 }else if(this.size < this.oSize){
@@ -112,7 +128,7 @@ export default {
             this.size = this.size < 0 ? 0 : this.size;
             this.x = this.x < 0 ? windowW : this.x;
             this.y = this.y < 0 ? windowH : this.y;
-
+            
             let halfSize = this.size / 2,
                 curve = this.size / 2.75,
                 maxX = this.x + halfSize,
@@ -207,7 +223,7 @@ export default {
 
         function init() {
             windowW = window.outerWidth;
-            windowH = window.outerHeight;
+            windowH = window.innerHeight;
 
             canvas.width = windowW;
             canvas.height = windowH;

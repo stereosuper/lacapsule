@@ -240,9 +240,10 @@ export default {
     top: 0;
     left: 45%;
     transform: translate(-50%);
-    transition: $transition;
+    transition: 0.5s ease-out;
     &.pageChanging{
        opacity: 0;
+       transition: 0.2s ease-out;
     }
     &:not(.menuClicked){
         pointer-events: none;
