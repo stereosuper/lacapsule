@@ -34,7 +34,7 @@
 <script>
 import Prismic from 'prismic-javascript';
 import PrismicDOM from 'prismic-dom';
-import validator from 'validator';
+//import validator from 'validator';
 
 export default {
     props: {

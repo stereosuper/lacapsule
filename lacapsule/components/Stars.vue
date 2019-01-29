@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ranger, { Range } from '@zadvorsky/ranger';
+import ranger from '@zadvorsky/ranger';
 
 export default {
     computed: {
