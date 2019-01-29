@@ -37,7 +37,7 @@ export default {
         }
     },
     mixins: [btn],
-    async asyncData() {
+    async asyncData({ params, error }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
 
@@ -49,6 +49,8 @@ export default {
             home = response.results[0].data;
             intro = PrismicDOM.RichText.asHtml(home.intro);
             text = PrismicDOM.RichText.asHtml(home.text);
+        }, function(error){
+            error({ statusCode: error.response.status, message: error.message });
         });
 
         return { home, intro, text };
@@ -57,6 +59,7 @@ export default {
         this.$store.commit('setHoverBurger', false);
         this.$store.commit('setClickBurger', false);
         document.body.classList.remove('menuOpen');
+        document.body.classList.remove('content-under');
         
         this.setBtn();
         setTimeout(() => {

@@ -17,7 +17,7 @@
             <ul v-if='page.files' class='files'>
                 <listFile v-for='file in page.files' :key='file.file_title[0].text' :file='file'/>
             </ul>
-            <div v-if='page.contact.contact_name' class='contact'>
+            <div v-if='page.contact' class='contact'>
                 <div v-if='page.contact.contact_img' class='contact_img'>
                     <div><img :src='page.contact.contact_img.url' :alt='page.contact.contact_img.alt'/></div>
                 </div>
@@ -50,7 +50,7 @@ export default {
         ListLogo,
         ListFile
     },
-    async asyncData({ params }) {
+    async asyncData({ params, error }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
 
@@ -71,7 +71,13 @@ export default {
                 'files': data.files[0] ? data.files : '',
                 'contact': data.contact[0] ? data.contact[0] : '',
             };
+        }, function(error){
+            error({ statusCode: error.response.status, message: error.message });
         });
+
+        if(Object.keys(page).length === 0 && page.constructor === Object){
+            error({ statusCode: '404', message: 'Page not found' });
+        }
 
         return { page };
     },
@@ -79,6 +85,8 @@ export default {
         this.$store.commit('setHoverBurger', false);
         this.$store.commit('setClickBurger', false);
         document.body.classList.remove('menuOpen');
+
+        this.page.blocks ? document.body.classList.add('content-under') : document.body.classList.remove('content-under');
         
         this.setBtn();
         setTimeout(() => { this.isMounted = true; }, 300);
@@ -97,21 +105,6 @@ export default {
 <style lang='scss' scoped>
 .small-content {
     margin: 0 $col;
-}
-
-.title{
-    text-align: center;
-    h1{
-        margin-top: 0.5em;
-    }
-}
-
-.breadcrumb{
-    display: inline-block;
-    margin: 1em 0 0;
-    font-style: normal;
-    color: $lightGrey;
-    text-decoration: none;
 }
 
 .blocks, .logos, .files{

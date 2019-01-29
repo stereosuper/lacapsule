@@ -32,7 +32,7 @@ export default {
 <style lang='scss' scoped>
 .content {
     position: relative;
-    z-index: 10;
+    z-index: 30;
     transition: $transition;
     &.menuClicked {
         pointer-events: none;
