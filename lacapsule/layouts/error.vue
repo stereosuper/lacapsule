@@ -4,13 +4,16 @@
             <div class='title'>
                 <nuxt-link to='/' class='breadcrumb'>Accueil</nuxt-link>
                 <h1 class='title'>{{ error.statusCode }}</h1>
-                <img src='../static/img/blackhole.png' alt='Black Hole'/>
+                <img src='../static/img/blackhole.png' alt='Black Hole' class='hole' @mouseenter='animCursor' @mouseleave='resetCursor' ref='hole'/>
             </div>
         </div>
+        <img src='../static/img/cursor.png' alt='' width='16' class='cursor' ref='cursor'/>
     </div>
 </template>
 
 <script>
+import { TweenMax, CSSPlugin, Expo } from 'gsap';
+
 export default {
     props: {
         error: {
@@ -35,6 +38,18 @@ export default {
             title: '404',
         }
     },
+    methods: {
+        animCursor(e){
+            if(TweenMax.isTweening(this.$refs.cursor)) return;
+
+            let holeY = this.$refs.hole.getBoundingClientRect().top + this.$refs.hole.height / 2;
+
+            TweenMax.fromTo(this.$refs.cursor, 0.6, {top: e.clientY + 'px', left: e.clientX + 'px', opacity: 1, scale: 1}, {top: holeY + 'px', left: '50%', opacity: 0, scaleX: 2, scaleY: 0.2, ease: Expo.easeIn});
+        },
+        resetCursor(e){
+            this.$refs.cursor.style.opacity = 0;
+        }
+    }
 };
 </script>
 
@@ -43,6 +58,7 @@ h1{
     position: relative;
     z-index: 1;
     font-size: 21.9rem;
+    pointer-events: none;
 }
 
 .title{
@@ -51,13 +67,21 @@ h1{
     }
 }
 
-img{
+.hole{
     width: 650px;
     position: absolute;
     top: 25%;
     left: 0;
     right: 0;
     margin: auto;
+    &:hover{
+        cursor: none;
+    }
+}
+
+.cursor{
+    position: fixed;
+    opacity: 0;
 }
 
 @media (max-width: $phone){
