@@ -222,7 +222,7 @@ export default {
         }
 
         function init() {
-            windowW = window.outerWidth;
+            windowW = window.innerWidth;
             windowH = window.innerHeight;
 
             canvas.width = windowW;
