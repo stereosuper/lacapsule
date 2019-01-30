@@ -35,11 +35,6 @@ module.exports = {
         ],
         link: [
             {
-                rel: 'icon',
-                type: 'image/x-icon',
-                href: '/favicon.ico'
-            },
-            {
                 rel: 'stylesheet',
                 href: 'https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600,600i'
             },
@@ -51,7 +46,49 @@ module.exports = {
                 rel: 'preconnect',
                 href: 'https://fonts.gstatic.com',
                 crossorigin: ''
-            }
+            },
+            {
+                rel: 'apple-touch-icon',
+                sizes: '180x180',
+                href: '/apple-touch-icon.png'
+            },
+            {
+                rel: 'icon',
+                type: 'image/png',
+                sizes: '32x32',
+                href: '/favicon-32x32.png'
+            },
+            {
+                rel: 'icon',
+                type: 'image/png',
+                sizes: '16x16',
+                href: '/favicon-16x16.png'
+            },
+            {
+                rel: 'manifest',
+                href: '/site.webmanifest'
+            },
+            {
+                rel: 'mask-icon',
+                href: '/safari-pinned-tab.svg',
+                color: '#ff438a'
+            },
+            {
+                name: 'apple-mobile-web-app-title',
+                content: 'La Capsule'
+            },
+            {
+                name: 'application-name',
+                content: 'La Capsule'
+            },
+            {
+                name: 'msapplication-TileColor',
+                content: '#ffffff'
+            },
+            {
+                name: 'theme-color',
+                content: '#ffffff'
+            },
         ]
     },
 
