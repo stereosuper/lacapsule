@@ -78,7 +78,7 @@ export default {
                 this.$store.commit('setHoverBurger', false);
             }
         },
-        closeMenu(e){
+        closeMenuEsc(e){
             if (e.key === 'Escape' && this.menuOpen) this.toggleMenu();
         },
     },
@@ -95,7 +95,7 @@ export default {
         };
     },
     mounted(){
-        window.addEventListener('keyup', this.closeMenu);
+        window.addEventListener('keyup', this.closeMenuEsc);
     }
 };
 </script>

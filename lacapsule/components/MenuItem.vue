@@ -4,7 +4,7 @@
             <div :id='item.ref'></div>
             <span>{{ item.label }}</span>
         </a>
-        <nuxt-link v-if='item.link.uid' :to='item.link.uid' :class='[{"menuClicked": isBurgerClicked, "menuNotClicked": !isBurgerClicked}, "link"]'>
+        <nuxt-link v-if='item.link.uid' :to='item.link.uid' :class='[{"menuClicked": isBurgerClicked, "menuNotClicked": !isBurgerClicked}, "link"]' @click.native='closeMenu'>
             <div :id='item.ref'></div>
             <span>{{ item.label }}</span>
         </nuxt-link>
@@ -47,6 +47,14 @@ export default {
                 svg.el.setAttribute('width', svg.el.viewBox.baseVal.width);
             }
         });
+    },
+    methods: {
+        closeMenu(e){
+            if(e.target.attributes[0].nodeValue == this.$nuxt.$route.path){
+                this.$store.commit('setClickBurger', false);
+                document.body.classList.remove('menuOpen');
+            }
+        }
     }
 };
 </script>
