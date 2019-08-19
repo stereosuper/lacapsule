@@ -6,10 +6,11 @@ const createStore = () => {
         state: () => ({
             settings: {},
             menu: {},
+            footer: {},
             pageTransitioning: false,
             menuHTML: {
                 hoverBurger: false,
-                clickBurger: false,
+                clickBurger: false
             }
         }),
         mutations: {
@@ -18,6 +19,9 @@ const createStore = () => {
             },
             setMenu(state, menu) {
                 state.menu = menu.results[0].data;
+            },
+            setFooter(state, footer) {
+                state.footer = footer.results[0].data;
             },
             setHoverBurger(state, value) {
                 state.menuHTML.hoverBurger = value;
@@ -37,6 +41,8 @@ const createStore = () => {
                 commit('setSettings', await api.query(Prismic.Predicates.at('document.type', 'settings')));
 
                 commit('setMenu', await api.query(Prismic.Predicates.at('document.type', 'menu')));
+
+                commit('setFooter', await api.query(Prismic.Predicates.at('document.type', 'footer')));
             }
         }
     });

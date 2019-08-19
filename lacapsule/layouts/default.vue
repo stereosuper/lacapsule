@@ -2,17 +2,20 @@
     <div class='wrapper' id='wrapper'>
         <siteHeader/>
         <div :class='[{"menuClicked": isBurgerClicked}, "content"]'><nuxt/></div>
+        <siteFooter/>
         <stars/>
     </div>
 </template>
 
 <script>
 import SiteHeader from '~/components/Header.vue';
+import SiteFooter from '~/components/Footer.vue';
 import Stars from '~/components/Stars.vue';
 
 export default {
     components: {
         SiteHeader,
+        SiteFooter,
         Stars
     },
     computed: {
