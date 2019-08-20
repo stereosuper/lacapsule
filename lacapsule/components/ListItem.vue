@@ -37,15 +37,23 @@ export default {
 
 <style lang='scss' scoped>
 li{
-    width: calc(25% - #{$gutter*3/4});
+    width: calc(25% - 14px);
+    margin: 0 15px 110px;
     padding: 0 $gutter 20px;
     z-index: 1;
+    .circle &{
+        margin-left: 0;
+        margin-right: 0;
+        &:nth-child(2), &:nth-child(3){
+            margin: 50px 0 -50px;
+        }
+    }
     &:before{
         content: none;
     }
     &:after{
         content: '';
-        height: 1000px;
+        height: 130%;
         position: absolute;
         left: 0;
         right: 0;
@@ -53,9 +61,6 @@ li{
         z-index: -1;
         border-radius: 18px;
         background: linear-gradient(360deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0) 71.6%);
-    }
-    &:nth-child(2), &:nth-child(3){
-        margin: 50px 0 -50px;
     }
 }
 
@@ -68,13 +73,12 @@ h2{
 
 @media (max-width: $desktop){
     li{
-        width: calc(50% - #{$gutter/2});
-        margin: 0 0 70px;
-        &:after{
-            height: 140%;
-        }
+        width: calc(50% - 30px);
+        margin-bottom: 0 0 80px;
         &:nth-child(2), &:nth-child(3){
-            margin: 0 0 70px;
+            .circle &{
+                margin: 0 0 70px;
+            }
         }
     }
 }
@@ -82,6 +86,8 @@ h2{
 @media (max-width: $phone){
     li{
         width: 100%;
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 </style>

@@ -8,7 +8,7 @@
                 </div>
                 <div v-if='page.text' v-html='page.text'/>
             </div>
-            <ul v-if='page.blocks' class='blocks'>
+            <ul v-if='page.blocks' :class='[{"circle": page.blocks.length === 4}, "blocks"]'>
                 <listItem v-for='item in page.blocks' :key='item.item_title[0].text' :item='item'/>
             </ul>
             <ul v-if='page.logos' class='logos'>
@@ -110,8 +110,11 @@ export default {
 .blocks, .logos, .files{
     display: flex;
     margin: 0 $gutter*-2;
-    justify-content: space-between;
     flex-wrap: wrap;
+}
+
+.logos, .files{
+    justify-content: space-between;
 }
 
 .blocks, .logos{
@@ -120,6 +123,10 @@ export default {
 
 .blocks{
     padding: 4vh 0 80px;
+    justify-content: center;
+    &.circle{
+        justify-content: space-between;
+    }
 }
 
 .contact{
