@@ -36,7 +36,7 @@
                     <ul v-if='footer.docs' class='list-simple'>
                         <li v-for='doc in footer.docs' :key='doc.link.url'>
                             <nuxt-link v-if='doc.link.url' :to='doc.link.url'>
-                                {{doc.link.name}}
+                                {{doc.text}}
                             </nuxt-link>
                         </li>
                     </ul>
@@ -199,6 +199,7 @@ h3{
 }
 
 .social{
+    height: 220px;
     position: relative;
     margin: 0;
     > li{
@@ -300,6 +301,60 @@ input{
         text-align: left;
         &:hover, &:focus{
             color: #fff;
+        }
+    }
+}
+
+@media (max-width: $desktop){
+    .col-1{
+        width: 50%;
+    }
+
+    .col-2, .col-3{
+        width: 100%;
+    }
+
+    .col-3{
+        margin: 0;
+    }
+}
+
+@media (max-width: $tablet){
+    .addresses{
+        > li{
+            width: 50%;
+        }
+    }
+}
+
+@media (max-width: $phone){
+    .footer-title{
+        display: block;
+        &:before, &:after{
+            content: none;
+        }
+        span{
+            padding: 0;
+        }
+    }
+
+    .addresses{
+        > li{
+            width: 100%;
+        }
+    }
+
+    .col-1{
+        width: 100%;
+    }
+
+    form > div{
+        display: block;
+    }
+
+    input{
+        &[type=submit]{
+            margin: 20px 0 0;
         }
     }
 }
