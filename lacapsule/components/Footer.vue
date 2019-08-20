@@ -22,10 +22,10 @@
             </h2>
 
             <div class='footer-galaxies'>
-                <ul class='col-1'>
-                    <li v-if='footer.linkedin.url'><a :href='footer.linkedin.url' :target='footer.linkedin.target'>LinkedIn</a></li>
-                    <li v-if='footer.fb.url'><a :href='footer.fb.url' :target='footer.fb.target'>Facebook</a></li>
-                    <li v-if='footer.medium.url'><a :href='footer.medium.url' :target='footer.medium.target'>Medium</a></li>
+                <ul class='col-1 social'>
+                    <li v-if='footer.twitter.url' class='twitter'><a :href='footer.twitter.url' :target='footer.twitter.target'>Twitter</a></li>
+                    <li v-if='footer.linkedin.url' class='linkedin'><a :href='footer.linkedin.url' :target='footer.linkedin.target'>LinkedIn</a></li>
+                    <li v-if='footer.medium.url' class='medium'><a :href='footer.medium.url' :target='footer.medium.target'>Medium</a></li>
                 </ul>
 
                 <div class='col-1'>
@@ -71,7 +71,13 @@
             </div>
 
             <div class='footer-bottom'>
-                <p v-if='footer.text_footer'>{{footer.text_footer}}</p>
+                <p v-if='footer.text_footer'>
+                    {{footer.text_footer}}
+                    <span v-if='footer.legal_link.url'> - </span>
+                    <nuxt-link v-if='footer.legal_link.url' :to='footer.legal_link.url'>
+                        {{footer.legal_link.name}}
+                    </nuxt-link>
+                </p>
             </div>
         </div>
     </footer>
@@ -118,11 +124,15 @@ h3{
         }
     }
     a{
+        font-style: normal;
         color: inherit;
         text-decoration: none;
         &:before{
             content: '› ';
             position: static;
+        }
+        &:hover, &:focus{
+            color: $primary;
         }
     }
 }
@@ -137,7 +147,7 @@ h3{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0.85em 0;
+    margin: 1.5em 0;
     > span{
         padding: 0 $gutter;
         flex-shrink: 0;
@@ -188,9 +198,71 @@ h3{
     margin: 0 0 0 auto;
 }
 
+.social{
+    position: relative;
+    margin: 0;
+    > li{
+        position: absolute;
+        padding: 0;
+        &:before{
+            content: none;
+        }
+        &:nth-child(2):before, &:nth-child(3):before, &:nth-child(3):after{
+            content: '';
+            width: 145px;
+            height: 2px;
+            position: absolute;
+            z-index: -1;
+            background: #fff;
+            border-radius: 0;
+            box-shadow: 0 0 24px rgba(#fff, 0.25), 0 0 15px rgba(#fff, 0.68);
+        }
+        &:nth-child(2){
+            top: 20px;
+            left: 135px;
+            &:before{
+                left: -85px;
+                top: 27px;
+                transform: rotate(13deg);
+            }
+        }
+        &:nth-child(3){
+            top: 105px;
+            left: 55px;
+            &:before{
+                left: -50px;
+                top: -15px;
+                transform: rotate(73deg);
+            }
+            &:after{
+                right: -74px;
+                top: 0;
+                transform: rotate(-45deg);
+            }
+        }
+    }
+    a{
+        display: block;
+        width: 72px;
+        height: 72px;
+        text-decoration: none;
+        font-size: 0;
+    }
+}
+
+.linkedin{
+    background: url(../static/img/linkedin.png);
+}
+.twitter{
+    background: url(../static/img/twitter.png);
+}
+.medium{
+    background: url(../static/img/medium.png);
+}
+
 .footer-bottom{
     padding: $gutter;
-    margin: 50px 0 0;
+    margin: 60px 0 0;
     background: linear-gradient(360deg, rgba(#000, 0.25) 0%, rgba(#000, 0.25) 72%);
     border-radius: 18px;
     font-size: 1.7rem;
@@ -199,6 +271,9 @@ h3{
     text-align: center;
     p{
         margin: 0;
+    }
+    a{
+        font-weight: 400;
     }
 }
 
@@ -223,6 +298,9 @@ input{
         text-decoration: underline;
         font-style: italic;
         text-align: left;
+        &:hover, &:focus{
+            color: #fff;
+        }
     }
 }
 </style>
