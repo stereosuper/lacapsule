@@ -25,6 +25,15 @@
                 <h2>{{page.contact.contact_name}}</h2>
                 <a v-if='page.contact.contact_email' :href='"mailto:"+page.contact.contact_email'>{{page.contact.contact_email}}</a>
             </div>
+            <div v-if='page.cta' class='cta'>
+                <div v-for='item in page.cta' :key='item.link_text'>
+                    <div :class='[{"inverted": item.style === "transparent"}, "button"]'>
+                        <nuxt-link :to='item.link'>
+                            {{item.link_text}}
+                        </nuxt-link>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -68,6 +77,7 @@ export default {
                 'desc': data.desc ? data.desc : '',
                 'intro': data.intro ? PrismicDOM.RichText.asHtml(data.intro) : '',
                 'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
+                'cta': data.cta[0] ? data.cta : '',
                 'blocks': data.blocks[0] ? data.blocks : '',
                 'logos': data.logos[0] ? data.logos : '',
                 'files': data.files[0] ? data.files : '',
@@ -132,6 +142,13 @@ export default {
     }
     &:after{
         right: 0;
+    }
+}
+
+.cta{
+    text-align: center;
+    > div{
+        margin: 50px 0 0;
     }
 }
 
@@ -201,6 +218,14 @@ export default {
 }
 
 @media (max-width: $desktop){
+    .cta{
+        > div{
+            &:first-child{
+                margin: 0;
+            }
+        }
+    }
+
     .logos{
         margin: 0 $gutter*-2;
     }

@@ -21,6 +21,18 @@
             transform: scale(1.01);
         }
     }
+    &.inverted{
+        > a, &:after{
+            background: none;
+        }
+        > a{
+            border: 1px solid #fff;
+            &:hover,
+            &:focus {
+                background: none;
+            }
+        }
+    }
     > a {
         display: inherit;
         padding: 15px 27px 13px;
