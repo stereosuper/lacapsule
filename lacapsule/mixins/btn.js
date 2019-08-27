@@ -2,10 +2,10 @@ import { TweenMax } from 'gsap';
 
 export default {
     methods: {
-        setBtn(){
+        setBtn() {
             const btn = document.getElementsByClassName('button');
 
-            if(!btn) return;
+            if (!btn) return;
 
             let glow,
                 glowWrapper,
@@ -19,7 +19,7 @@ export default {
                 btnH;
 
             for (i; i < nbBtn; i++) {
-                if(!btn[i].querySelector('a')) return;
+                if (!btn[i].querySelector('a')) return;
 
                 glowWrapper = document.createElement('i');
                 glowWrapper.className = 'glow-wrapper';
@@ -30,6 +30,7 @@ export default {
                 btn[i].querySelector('.glow-wrapper').appendChild(glow);
 
                 btn[i].addEventListener('mouseenter', function() {
+                    glow = this.querySelector('.glow');
                     btnCoordinates = this.getBoundingClientRect();
                     btnW = this.offsetWidth;
                     btnH = this.offsetHeight;
@@ -37,10 +38,13 @@ export default {
                 });
 
                 btn[i].addEventListener('mouseleave', function() {
+                    glow = this.querySelector('.glow');
                     TweenMax.to(glow, 0.3, { opacity: 0 });
                 });
 
                 btn[i].addEventListener('mousemove', function(e) {
+                    glow = this.querySelector('.glow');
+
                     // inverted cursor position in btn
                     glowX = btnW - (e.clientX - btnCoordinates.x);
                     glowY = btnH - (e.clientY - btnCoordinates.y);
