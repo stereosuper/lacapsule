@@ -59,7 +59,7 @@ export default {
         this.$store.commit('setHoverBurger', false);
         this.$store.commit('setClickBurger', false);
         document.body.classList.remove('menuOpen');
-        document.body.classList.remove('content-under');
+        //document.body.classList.remove('content-under');
         
         this.setBtn();
         setTimeout(() => {

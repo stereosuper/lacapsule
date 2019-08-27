@@ -98,7 +98,7 @@ export default {
         this.$store.commit('setClickBurger', false);
         document.body.classList.remove('menuOpen');
 
-        this.page.blocks ? document.body.classList.add('content-under') : document.body.classList.remove('content-under');
+        //this.page.blocks ? document.body.classList.add('content-under') : document.body.classList.remove('content-under');
         
         this.setBtn();
         setTimeout(() => { this.isMounted = true; }, 300);

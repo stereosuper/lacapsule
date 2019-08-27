@@ -104,7 +104,7 @@ export default {
 .header {
     padding: $gutter 0;
     position: relative;
-    z-index: 20;
+    z-index: 40;
 }
 
 .header-container {

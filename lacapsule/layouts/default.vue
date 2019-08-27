@@ -1,8 +1,10 @@
 <template>
     <div class='wrapper' id='wrapper'>
         <siteHeader/>
-        <div :class='[{"menuClicked": isBurgerClicked}, "content"]'><nuxt/></div>
-        <siteFooter/>
+        <div :class='[{"menuClicked": isBurgerClicked}, "content"]'>
+            <nuxt/>
+            <siteFooter/>
+        </div>
         <stars/>
     </div>
 </template>

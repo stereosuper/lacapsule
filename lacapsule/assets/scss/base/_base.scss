@@ -26,11 +26,11 @@ body {
     &.menuOpen{
         overflow: hidden;
     }
-    &.content-under{
-        .content{
-            z-index: 10;
-        }
-    }
+    // &.content-under{
+    //     .content{
+    //         z-index: 10;
+    //     }
+    // }
 }
 
 h1,
