@@ -4,13 +4,13 @@
         <div>
             <h2>{{file.file_title[0].text}}</h2>
             <div v-if='content' v-html='content'/>
-            <a :href='file.file.url' class='download'>
+            <!--<a :href='file.file.url' class='download'>
                 <svg width="11" height="14" viewBox="0 0 11 14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.541016 13.1653H10.4577V11.7487H0.541016V13.1653ZM10.4577 4.37363H7.62435V0.123632H3.37435V4.37363H0.541016L5.49935 9.33199L10.4577 4.37363Z"/>
                 </svg>
                 Télécharger
-            </a>
-            <!--<button :class='[{"off": form}, "download"]' @click='displayForm'>
+            </a>-->
+            <button :class='[{"off": form}, "download"]' @click='displayForm'>
                 <svg width="11" height="14" viewBox="0 0 11 14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.541016 13.1653H10.4577V11.7487H0.541016V13.1653ZM10.4577 4.37363H7.62435V0.123632H3.37435V4.37363H0.541016L5.49935 9.33199L10.4577 4.37363Z"/>
                 </svg>
@@ -26,7 +26,7 @@
                     </svg>
                 </button>
             </form>
-            <p v-if='formError' class='error'>{{formError}}</p>-->
+            <p v-if='formError' class='error'>{{formError}}</p>
         </div>
     </li>
 </template>
@@ -34,7 +34,7 @@
 <script>
 import Prismic from 'prismic-javascript';
 import PrismicDOM from 'prismic-dom';
-//import validator from 'validator';
+import validator from 'validator';
 
 export default {
     props: {
@@ -46,38 +46,38 @@ export default {
     data() {
         return {
             content: '',
-            /*form: false,
+            form: false,
             formError: '',
-            email: ''*/
+            email: ''
         };
     },
     created() {
         this.content = this.file.file_text ? PrismicDOM.RichText.asHtml(this.file.file_text) : '';
     },
-    // methods: {
-    //     displayForm(){
-    //         this.form = true;
-    //     },
-    //     async checkForm(e){
-    //         e.preventDefault();
+    methods: {
+        displayForm(){
+            this.form = true;
+        },
+        async checkForm(e){
+            e.preventDefault();
 
-    //         const self = this;
+            const self = this;
 
-    //         if (self.email) {
-    //             if(validator.isEmail(self.email)){
-    //                 self.$axios.$post('/api/contact', 'email='+self.email+'&title='+self.file.file_title[0].text)
-    //                     .then(res => res.json())
-    //                     .catch(error => {
-    //                         self.formError = error.response ? "Désolé, un problème est survenu!" : "Bien envoyé! La ressource vous sera envoyée par mail :)";
-    //                     });
-    //             }else{
-    //                 self.formError = "L'adresse email semble invalide..."; 
-    //             }
-    //         }else{
-    //             self.formError = "L'adresse email est requise!";
-    //         }
-    //     }
-    // }
+            if (self.email) {
+                if(validator.isEmail(self.email)){
+                    self.$axios.$post('/api/contact', 'email='+self.email+'&title='+self.file.file_title[0].text)
+                        .then(res => res.json())
+                        .catch(error => {
+                            self.formError = error.response ? "Désolé, un problème est survenu!" : "Bien envoyé! La ressource vous sera envoyée par mail :)";
+                        });
+                }else{
+                    self.formError = "L'adresse email semble invalide..."; 
+                }
+            }else{
+                self.formError = "L'adresse email est requise!";
+            }
+        }
+    }
 };
 </script>
 
@@ -187,4 +187,3 @@ svg{
     }
 }
 </style>
- 

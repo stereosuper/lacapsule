@@ -7,7 +7,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.post('/', urlencodedParser, (req, res) => {
     if (!req.body.email) {
-        return res.status(422).json({ 'error': 'Désolé, un problème est survenu!' })
+        return res.status(422).json({ error: 'Désolé, un problème est survenu!' });
     }
 
     const transporter = nodemailer.createTransport({
@@ -25,7 +25,7 @@ app.post('/', urlencodedParser, (req, res) => {
         text: req.body.email + " a demandé l'accès à " + req.body.title
     });
 
-    return res.status(200).json({ 'message': 'Message sent!' });
+    return res.status(200).json({ message: 'Message sent!' });
 });
 
 // export the server middleware
