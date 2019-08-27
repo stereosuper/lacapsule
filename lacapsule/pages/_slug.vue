@@ -6,6 +6,7 @@
                     <nuxt-link to='/' class='breadcrumb'>Accueil</nuxt-link>
                     <h1 class='title'>{{ page.title }}</h1>
                 </div>
+                <div class='intro' v-if='page.intro' v-html='page.intro'/>
                 <div v-if='page.text' v-html='page.text'/>
             </div>
             <ul v-if='page.blocks' :class='[{"circle": page.blocks.length === 4}, "blocks"]'>
@@ -65,6 +66,7 @@ export default {
                 'type': response.results[0].type,
                 'title': data.title[0] ? data.title[0].text : '',
                 'desc': data.desc ? data.desc : '',
+                'intro': data.intro ? PrismicDOM.RichText.asHtml(data.intro) : '',
                 'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
                 'blocks': data.blocks[0] ? data.blocks : '',
                 'logos': data.logos[0] ? data.logos : '',
@@ -105,6 +107,32 @@ export default {
 <style lang='scss' scoped>
 .small-content {
     margin: 0 $col;
+}
+
+.intro{
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 #{$gutter + 10px};
+    position: relative;
+    font-size: 1.7rem;
+    font-style: italic;
+    text-align: center;
+    &:before, &:after{
+        content: '';
+        width: $gutter;
+        height: 3px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        background: $primary;
+    }
+    &:before{
+        left: 0;
+    }
+    &:after{
+        right: 0;
+    }
 }
 
 .blocks, .logos, .files{
@@ -195,6 +223,13 @@ export default {
 }
 
 @media (max-width: $phone-small){
+    .intro{
+        padding: 0;
+        &:before, &:after{
+            content: none;
+        }
+    }
+
     .logos{
         margin-left: 0;
         margin-right: 0;
