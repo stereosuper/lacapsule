@@ -83,6 +83,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "./assets/scss/abstracts/_variables.scss";
+
 h1 {
     position: relative;
     z-index: 1;

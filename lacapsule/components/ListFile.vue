@@ -91,6 +91,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "./assets/scss/abstracts/_variables.scss";
+
 li{
     display: flex;
     width: calc(50% - #{$gutter/2});

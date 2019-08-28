@@ -38,6 +38,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "./assets/scss/abstracts/_variables.scss";
+
 .content {
     position: relative;
     z-index: 30;

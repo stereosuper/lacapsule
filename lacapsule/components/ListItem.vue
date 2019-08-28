@@ -36,6 +36,8 @@ export default {
 </style>
 
 <style lang='scss' scoped>
+@import "./assets/scss/abstracts/_variables.scss";
+
 li{
     width: calc(25% - 14px);
     margin: 0 15px 110px;

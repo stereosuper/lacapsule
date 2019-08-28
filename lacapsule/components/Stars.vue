@@ -252,6 +252,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "./assets/scss/abstracts/_variables.scss";
+
 .stars {
     position: fixed;
     top: 0;

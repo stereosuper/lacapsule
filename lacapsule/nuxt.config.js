@@ -113,7 +113,7 @@ module.exports = {
     modules: [
         // Doc: https://github.com/nuxt-community/axios-module#usage
         '@nuxtjs/axios',
-        ['nuxt-sass-resources-loader', ['~/assets/scss/abstracts/_functions.scss', '~/assets/scss/abstracts/_mixins.scss', '~/assets/scss/abstracts/_placeholders.scss', '~/assets/scss/abstracts/_variables.scss']],
+        //['nuxt-sass-resources-loader', ['./assets/scss/abstracts/_functions.scss', './assets/scss/abstracts/_mixins.scss', './assets/scss/abstracts/_placeholders.scss', './assets/scss/abstracts/_variables.scss']],
         [
             '@nuxtjs/google-analytics',
             {

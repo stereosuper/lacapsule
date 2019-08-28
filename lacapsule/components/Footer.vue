@@ -109,6 +109,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "./assets/scss/abstracts/_variables.scss";
+
 h3{
     font-size: 1.8rem;
     &.no-top{

@@ -101,6 +101,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "./assets/scss/abstracts/_variables.scss";
+
 .header {
     padding: $gutter 0;
     position: relative;

@@ -22,6 +22,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "./assets/scss/abstracts/_variables.scss";
+
 li{
     width: 25%;
     padding: 0;

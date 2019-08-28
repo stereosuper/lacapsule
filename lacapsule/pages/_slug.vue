@@ -9,9 +9,11 @@
                 <div class='intro' v-if='page.intro' v-html='page.intro'/>
                 <div v-if='page.text' v-html='page.text'/>
             </div>
+
             <ul v-if='page.blocks' :class='[{"circle": page.blocks.length === 4}, "blocks"]'>
                 <listItem v-for='item in page.blocks' :key='item.item_title[0].text' :item='item'/>
             </ul>
+
             <ul v-if='page.logos' class='logos'>
                 <listLogo v-for='logo in page.logos' :key='logo.logo_title[0].text' :logo='logo'/>
             </ul>
@@ -33,6 +35,7 @@
                 <h2>{{page.contact.contact_name}}</h2>
                 <a v-if='page.contact.contact_email' :href='"mailto:"+page.contact.contact_email'>{{page.contact.contact_email}}</a>
             </div>
+
             <div v-if='page.cta' class='cta'>
                 <div v-for='item in page.cta' :key='item.link_text'>
                     <div :class='[{"inverted": item.style === "transparent"}, "button"]'>
@@ -128,6 +131,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "./assets/scss/abstracts/_variables.scss";
+
 .small-content {
     margin: 0 $col;
 }
