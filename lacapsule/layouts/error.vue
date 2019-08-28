@@ -28,6 +28,7 @@ export default {
     },
     mounted() {
         this.$store.commit('setHoverBurger', false);
+        this.$store.commit('setHasFooter', false);
         this.$store.commit('setClickBurger', false);
         document.body.classList.remove('menuOpen');
         
