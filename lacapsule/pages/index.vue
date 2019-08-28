@@ -31,13 +31,14 @@ import PrismicDOM from 'prismic-dom';
 import btn from '~/mixins/btn.js';
 
 export default {
-    data(){
-        return{
+    layout: 'footerless',
+    data() {
+        return {
             isMounted: false
-        }
+        };
     },
     mixins: [btn],
-    async asyncData({ params, error }) {
+    async asyncData({ params, error, store }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
 
@@ -45,13 +46,18 @@ export default {
             intro,
             text;
 
-        await api.query(Prismic.Predicates.at('document.type', 'frontpage')).then(function(response) {
-            home = response.results[0].data;
-            intro = PrismicDOM.RichText.asHtml(home.intro);
-            text = PrismicDOM.RichText.asHtml(home.text);
-        }, function(error){
-            error({ statusCode: error.response.status, message: error.message });
-        });
+        await api.query(Prismic.Predicates.at('document.type', 'frontpage')).then(
+            function(response) {
+                home = response.results[0].data;
+                intro = PrismicDOM.RichText.asHtml(home.intro);
+                text = PrismicDOM.RichText.asHtml(home.text);
+            },
+            function(error) {
+                error({ statusCode: error.response.status, message: error.message });
+            }
+        );
+
+        store.commit('setHasFooter', false);
 
         return { home, intro, text };
     },
@@ -60,20 +66,18 @@ export default {
         this.$store.commit('setClickBurger', false);
         document.body.classList.remove('menuOpen');
         //document.body.classList.remove('content-under');
-        
+
         this.setBtn();
         setTimeout(() => {
             this.isMounted = true;
         }, 300);
     },
     head() {
-        return{
+        return {
             titleTemplate: null,
             title: 'La Capsule',
-            meta: [
-                { hid: 'description', name: 'description', content: this.home.desc ? this.home.desc : '' }
-            ]
-        }
+            meta: [{ hid: 'description', name: 'description', content: this.home.desc ? this.home.desc : '' }]
+        };
     }
 };
 </script>
@@ -98,7 +102,7 @@ h1 {
     width: 40%;
 }
 
-.inner-text{
+.inner-text {
     position: relative;
     z-index: 1;
 }
@@ -120,51 +124,51 @@ h1 {
     background: url(../static/img/ovni.png) no-repeat 0 0 / 100%;
 }
 
-
-@media (max-height: 800px){
-    .container{
+@media (max-height: 800px) {
+    .container {
         margin-top: 25vh;
     }
 }
 
-@media (max-width: $desktop-big){
-    .ovni{
+@media (max-width: $desktop-big) {
+    .ovni {
         left: 45%;
     }
 }
 
-@media (max-width: $tablet){
-    h1{
+@media (max-width: $tablet) {
+    h1 {
         text-align: center;
     }
 
-    .container{
+    .container {
         margin-top: 5em;
         text-align: center;
     }
 
-    .text{
+    .text {
         width: 100%;
     }
 
-    .illu{
+    .illu {
         position: relative;
         height: 330px;
         margin: 100px 0 50px;
     }
 
-    .ovni, .earth{
+    .ovni,
+    .earth {
         position: absolute;
     }
 
-    .earth{
+    .earth {
         width: 200px;
         height: 200px;
         top: -80px;
         left: -80px;
     }
 
-    .ovni{
+    .ovni {
         width: 600px;
         height: 495px;
         top: 0;
@@ -172,11 +176,11 @@ h1 {
     }
 }
 
-@media (max-width: $phone){
-    .earth{
+@media (max-width: $phone) {
+    .earth {
         left: -120px;
     }
-    .ovni{
+    .ovni {
         left: 10%;
     }
 }

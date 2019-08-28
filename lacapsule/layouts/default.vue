@@ -3,7 +3,7 @@
         <siteHeader/>
         <div :class='[{"menuClicked": isBurgerClicked}, "content"]'>
             <nuxt/>
-            <siteFooter/>
+            <siteFooter v-if='hasFooter'/>
         </div>
         <stars/>
     </div>
@@ -23,6 +23,9 @@ export default {
     computed: {
         isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
+        },
+        hasFooter(){
+            return this.$store.state.hasFooter;
         }
     },
     head: {
