@@ -88,7 +88,7 @@ module.exports = {
             {
                 name: 'theme-color',
                 content: '#ffffff'
-            },
+            }
         ]
     },
 
@@ -114,22 +114,25 @@ module.exports = {
         // Doc: https://github.com/nuxt-community/axios-module#usage
         '@nuxtjs/axios',
         ['nuxt-sass-resources-loader', ['~/assets/scss/abstracts/_functions.scss', '~/assets/scss/abstracts/_mixins.scss', '~/assets/scss/abstracts/_placeholders.scss', '~/assets/scss/abstracts/_variables.scss']],
-        ['@nuxtjs/google-analytics', {
-          id: 'UA-133182494-1'
-        }]
+        [
+            '@nuxtjs/google-analytics',
+            {
+                id: 'UA-133182494-1'
+            }
+        ]
     ],
     /*
   ** Axios module configuration
   */
     axios: {
         // See https://github.com/nuxt-community/axios-module#options
-        baseURL: 'http://localhost:3000'
+        baseURL: process.env.AXIOS_BASE_URL || 'http://localhost:3000'
     },
 
     /*
   ** Server Middleware
   */
-    serverMiddleware: ['~/api/contact.js'],
+    serverMiddleware: ['~/api/form.js'],
 
     /*
   ** Build configuration
