@@ -11,7 +11,8 @@ const createStore = () => {
             menuHTML: {
                 hoverBurger: false,
                 clickBurger: false
-            }
+            },
+            hasFooter: true
         }),
         mutations: {
             setSettings(state, settings) {
@@ -19,6 +20,9 @@ const createStore = () => {
             },
             setMenu(state, menu) {
                 state.menu = menu.results[0].data;
+            },
+            setHasFooter(state, hasFooter) {
+                state.hasFooter = hasFooter;
             },
             setFooter(state, footer) {
                 state.footer = footer.results[0].data;

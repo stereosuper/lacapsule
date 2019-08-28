@@ -49,10 +49,10 @@ import ListLogo from '~/components/ListLogo.vue';
 import ListFile from '~/components/ListFile.vue';
 
 export default {
-    data(){
+    data() {
         return {
             isMounted: false
-        }
+        };
     },
     mixins: [btn],
     components: {
@@ -64,30 +64,34 @@ export default {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
 
-        let page = {}, data = {};
+        let page = {},
+            data = {};
 
-        await api.query(Prismic.Predicates.at('my.page.uid', params.slug)).then(function(response) {
-            if( !response.results.length ) return;
+        await api.query(Prismic.Predicates.at('my.page.uid', params.slug)).then(
+            function(response) {
+                if (!response.results.length) return;
 
-            data = response.results[0].data;
+                data = response.results[0].data;
 
-            page = {
-                'type': response.results[0].type,
-                'title': data.title[0] ? data.title[0].text : '',
-                'desc': data.desc ? data.desc : '',
-                'intro': data.intro ? PrismicDOM.RichText.asHtml(data.intro) : '',
-                'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
-                'cta': data.cta[0] ? data.cta : '',
-                'blocks': data.blocks[0] ? data.blocks : '',
-                'logos': data.logos[0] ? data.logos : '',
-                'files': data.files[0] ? data.files : '',
-                'contact': data.contact[0] ? data.contact[0] : '',
-            };
-        }, function(error){
-            error({ statusCode: error.response.status, message: error.message });
-        });
+                page = {
+                    type: response.results[0].type,
+                    title: data.title[0] ? data.title[0].text : '',
+                    desc: data.desc ? data.desc : '',
+                    intro: data.intro ? PrismicDOM.RichText.asHtml(data.intro) : '',
+                    text: data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
+                    cta: data.cta[0] ? data.cta : '',
+                    blocks: data.blocks[0] ? data.blocks : '',
+                    logos: data.logos[0] ? data.logos : '',
+                    files: data.files[0] ? data.files : '',
+                    contact: data.contact[0] ? data.contact[0] : ''
+                };
+            },
+            function(error) {
+                error({ statusCode: error.response.status, message: error.message });
+            }
+        );
 
-        if(Object.keys(page).length === 0 && page.constructor === Object){
+        if (Object.keys(page).length === 0 && page.constructor === Object) {
             error({ statusCode: '404', message: 'Page not found' });
         }
 
@@ -99,18 +103,18 @@ export default {
         document.body.classList.remove('menuOpen');
 
         //this.page.blocks ? document.body.classList.add('content-under') : document.body.classList.remove('content-under');
-        
+
         this.setBtn();
-        setTimeout(() => { this.isMounted = true; }, 300);
+        setTimeout(() => {
+            this.isMounted = true;
+        }, 300);
     },
     head() {
-        return{
+        return {
             title: this.page.title,
-            meta: [
-                { hid: 'description', name: 'description', content: this.page.desc }
-            ]
-        }
-    },
+            meta: [{ hid: 'description', name: 'description', content: this.page.desc }]
+        };
+    }
 };
 </script>
 
@@ -119,7 +123,7 @@ export default {
     margin: 0 $col;
 }
 
-.intro{
+.intro {
     max-width: 560px;
     margin: 0 auto;
     padding: 0 #{$gutter + 10px};
@@ -127,7 +131,8 @@ export default {
     font-size: 1.7rem;
     font-style: italic;
     text-align: center;
-    &:before, &:after{
+    &:before,
+    &:after {
         content: '';
         width: $gutter;
         height: 3px;
@@ -137,100 +142,104 @@ export default {
         margin: auto;
         background: $primary;
     }
-    &:before{
+    &:before {
         left: 0;
     }
-    &:after{
+    &:after {
         right: 0;
     }
 }
 
-.cta{
+.cta {
     text-align: center;
-    > div{
+    > div {
         margin: 50px 0 0;
     }
 }
 
-.blocks, .logos, .files{
+.blocks,
+.logos,
+.files {
     display: flex;
-    margin: 0 $gutter*-2;
+    margin: 0 $gutter * -2;
     flex-wrap: wrap;
 }
 
-.logos, .files{
+.logos,
+.files {
     justify-content: space-between;
 }
 
-.blocks, .logos{
+.blocks,
+.logos {
     text-align: center;
 }
 
-.blocks{
+.blocks {
     padding: 4vh 0 80px;
     justify-content: center;
-    &.circle{
+    &.circle {
         justify-content: space-between;
     }
 }
 
-.contact{
+.contact {
     max-width: 250px;
     margin: 0 auto;
     text-align: center;
-    h2{
+    h2 {
         margin: 0;
         font-size: 2.1rem;
     }
-    a{
+    a {
         font-weight: 600;
         font-style: normal;
     }
 }
-.contact_img{
+.contact_img {
     display: inline-block;
     padding: 20px;
     margin: 0 0 30px;
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.1);
-    > div{
+    > div {
         border: 5px solid #fff;
         border-radius: 50%;
         overflow: hidden;
     }
 }
 
-
-@media (max-width: 1252px){
-    .blocks, .files{
-        margin: 0 $gutter*-1;
+@media (max-width: 1252px) {
+    .blocks,
+    .files {
+        margin: 0 $gutter * -1;
     }
 }
 
-@media (max-width: $container){
-    .logos{
-        margin: 0 $gutter*-1;
+@media (max-width: $container) {
+    .logos {
+        margin: 0 $gutter * -1;
     }
 
-    .files{
+    .files {
         display: block;
     }
 }
 
-@media (max-width: $desktop){
-    .cta{
-        > div{
-            &:first-child{
+@media (max-width: $desktop) {
+    .cta {
+        > div {
+            &:first-child {
                 margin: 0;
             }
         }
     }
 
-    .logos{
-        margin: 0 $gutter*-2;
+    .logos {
+        margin: 0 $gutter * -2;
     }
 
-    .blocks{
+    .blocks {
         margin: 0;
     }
 }
@@ -241,21 +250,22 @@ export default {
     }
 }
 
-@media (max-width: $phone){
-    .logos{
-        margin: 10vh $gutter*-1 0;
+@media (max-width: $phone) {
+    .logos {
+        margin: 10vh $gutter * -1 0;
     }
 }
 
-@media (max-width: $phone-small){
-    .intro{
+@media (max-width: $phone-small) {
+    .intro {
         padding: 0;
-        &:before, &:after{
+        &:before,
+        &:after {
             content: none;
         }
     }
 
-    .logos{
+    .logos {
         margin-left: 0;
         margin-right: 0;
     }
