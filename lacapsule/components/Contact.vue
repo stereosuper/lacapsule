@@ -71,22 +71,34 @@ export default {
 
             const self = this;
 
-            if (self.email) {
-                if(validator.isEmail(self.email)){
-                    self.$axios.$post('/api/contact', 'email='+self.email+'&title='+self.file.file_title[0].text)
-                        .then(res => {
-                            console.log(res);
-                            self.formError = "Bien envoyé! Nous répondons à votre message dans les plus brefs délais :)";
-                        }, err => {
-                            console.log(err);
-                            self.formError = "Désolé, un problème est survenu!";
-                        });
-                }else{
-                    self.formError = "L'adresse email semble invalide..."; 
-                }
-            }else{
-                self.formError = "L'adresse email est requise!";
+            if (!self.name){
+                self.formError = "Le nom est requis!";
+                return;
             }
+
+            if (!self.email){
+                self.formError = "L'adresse email est requise!";
+                return;
+            }
+
+            if(!validator.isEmail(self.email)){
+               self.formError = "L'adresse email semble invalide..."; 
+               return;
+            }
+
+            if (!self.rgpd){
+                self.formError = "Vous devez accepter les conditions d'utilisation!";
+                return;
+            }
+
+            self.$axios.$post('/api/contact', 'email='+self.email+'&name='+self.name+'&object='+self.object+'&message='+self.message+'&rgpd='+self.rgpd)
+                .then(res => {
+                    console.log(res);
+                    self.formError = "Bien envoyé! Nous répondons à votre message dans les plus brefs délais :)";
+                }, err => {
+                    console.log(err);
+                    self.formError = "Désolé, un problème est survenu! Veulliez réessayer plus tard.";
+                });
         }
     }
 };

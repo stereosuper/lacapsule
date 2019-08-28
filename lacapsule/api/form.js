@@ -6,7 +6,7 @@ const app = express();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.post('/contact', urlencodedParser, (req, res) => {
-    if (!req.body.email) {
+    if (!req.body.email || !req.body.name || !req.body.rgpd) {
         return res.status(422).json({ error: 'Désolé, un problème est survenu!' });
     }
 
@@ -19,10 +19,10 @@ app.post('/contact', urlencodedParser, (req, res) => {
     });
 
     transporter.sendMail({
-        from: req.body.email,
+        from: req.body.name + ' <' + req.body.email + '>',
         to: 'elisabethhamel@outlook.com',
-        subject: 'Demande de ressource - La Capsule',
-        text: req.body.email + " a demandé l'accès à " + req.body.title
+        subject: req.body.object + ' - La Capsule',
+        text: req.body.message
     });
 
     return res.status(200).json({ message: 'Message sent!' });
