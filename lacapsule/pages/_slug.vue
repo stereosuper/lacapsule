@@ -28,13 +28,7 @@
                 <listFile v-for='file in page.files' :key='file.file_title[0].text' :file='file' :cat='currentCat' v-if='currentCat == "all" || currentCat == file.cat'/>
             </ul>
 
-            <div v-if='page.contact' class='contact'>
-                <div v-if='page.contact.contact_img' class='contact_img'>
-                    <div><img :src='page.contact.contact_img.url' :alt='page.contact.contact_img.alt'/></div>
-                </div>
-                <h2>{{page.contact.contact_name}}</h2>
-                <a v-if='page.contact.contact_email' :href='"mailto:"+page.contact.contact_email'>{{page.contact.contact_email}}</a>
-            </div>
+            <contact v-if='page.contact' :content='page.contact'></contact>
 
             <div v-if='page.cta' class='cta'>
                 <div v-for='item in page.cta' :key='item.link_text'>
@@ -58,19 +52,21 @@ import btn from '~/mixins/btn.js';
 import ListItem from '~/components/ListItem.vue';
 import ListLogo from '~/components/ListLogo.vue';
 import ListFile from '~/components/ListFile.vue';
+import Contact from '~/components/Contact.vue';
 
 export default {
     data() {
         return {
             isMounted: false,
-            currentCat: 'all'
+            currentCat: 'all',
         };
     },
     mixins: [btn],
     components: {
         ListItem,
         ListLogo,
-        ListFile
+        ListFile,
+        Contact
     },
     async asyncData({ params, error }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
@@ -96,7 +92,7 @@ export default {
                     'logos': data.logos[0] ? data.logos : '',
                     'cats': data.cats ? data.cats.split(',') : '',
                     'files': data.files[0] ? data.files : '',
-                    'contact': data.contact[0] ? data.contact[0] : '',
+                    'contact': data.contact[0] ? data.contact[0] : ''
                 };
             }, function(error){
                 error({ statusCode: error.response.status, message: error.message });
@@ -203,32 +199,6 @@ export default {
 
 .cats{
     margin: 90px 0 40px;
-}
-
-.contact {
-    max-width: 250px;
-    margin: 0 auto;
-    text-align: center;
-    h2 {
-        margin: 0;
-        font-size: 2.1rem;
-    }
-    a {
-        font-weight: 600;
-        font-style: normal;
-    }
-}
-.contact_img {
-    display: inline-block;
-    padding: 20px;
-    margin: 0 0 30px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.1);
-    > div {
-        border: 5px solid #fff;
-        border-radius: 50%;
-        overflow: hidden;
-    }
 }
 
 @media (max-width: 1252px) {
