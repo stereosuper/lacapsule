@@ -4,19 +4,25 @@
         <div>
             <h2>{{file.file_title[0].text}}</h2>
             <div v-if='content' v-html='content'/>
-            <!--<a :href='file.file.url' class='download'>
+            <a :href='file.file.url' class='download' v-if='file.file.url && !file.mailto.url'>
                 <svg width="11" height="14" viewBox="0 0 11 14" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0.541016 13.1653H10.4577V11.7487H0.541016V13.1653ZM10.4577 4.37363H7.62435V0.123632H3.37435V4.37363H0.541016L5.49935 9.33199L10.4577 4.37363Z"/>
+                    <path d="M0.541016 13.1653H10.4577V11.7487H0.541016V13.1653ZM10.4577 4.37363H7.62435V0.123632H3.37435V4.37363H0.541016L5.49935 9.33199L10.4577 4.37363Z"/>
                 </svg>
                 Télécharger
-            </a>-->
-            <button :class='[{"off": form}, "download"]' @click='displayForm'>
+            </a>
+            <a :href='file.mailto.url' class='download' v-if='file.mailto.url'>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.2918 2.13477H2.54785V11.3743H15.2918V2.13477ZM3.54785 3.8483V9.67323L6.7786 6.44256L3.54785 3.8483ZM13.6217 10.3743H4.26094L7.56298 7.0724L9.22511 8.40708L10.4945 7.24708L13.6217 10.3743ZM14.2918 9.63021V3.77716L11.2335 6.57182L14.2918 9.63021ZM13.5124 3.13477H4.25641L9.18309 7.09085L13.5124 3.13477Z" fill="#FF438A"/>
+                </svg>
+                Demander le document
+            </a>
+            <!--<button :class='[{"off": form}, "download"]' @click='displayForm'>
                 <svg width="11" height="14" viewBox="0 0 11 14" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.541016 13.1653H10.4577V11.7487H0.541016V13.1653ZM10.4577 4.37363H7.62435V0.123632H3.37435V4.37363H0.541016L5.49935 9.33199L10.4577 4.37363Z"/>
                 </svg>
                 Télécharger
             </button>
-            <form method='post' action='/api/contact' :class='[{"on": form}]' @submit='checkForm'>
+            <form method='post' action='/api/ressource' :class='[{"on": form}]' @submit='checkForm'>
                 <label>Email</label>
                 <input type='email' name='email' v-model='email'/>
                 <button type='submit' class='ok' name='submit'>
@@ -26,7 +32,7 @@
                     </svg>
                 </button>
             </form>
-            <p v-if='formError' class='error'>{{formError}}</p>
+            <p v-if='formError' class='error'>{{formError}}</p>-->
         </div>
     </li>
 </template>
@@ -46,38 +52,41 @@ export default {
     data() {
         return {
             content: '',
-            form: false,
-            formError: '',
-            email: ''
+            // form: false,
+            // formError: '',
+            // email: ''
         };
     },
     created() {
         this.content = this.file.file_text ? PrismicDOM.RichText.asHtml(this.file.file_text) : '';
     },
-    methods: {
-        displayForm(){
-            this.form = true;
-        },
-        async checkForm(e){
-            e.preventDefault();
+    // methods: {
+    //     displayForm(){
+    //         this.form = true;
+    //     },
+    //     async checkForm(e){
+    //         e.preventDefault();
 
-            const self = this;
+    //         const self = this;
 
-            if (self.email) {
-                if(validator.isEmail(self.email)){
-                    self.$axios.$post('/api/contact', 'email='+self.email+'&title='+self.file.file_title[0].text)
-                        .then(res => res.json())
-                        .catch(error => {
-                            self.formError = error.response ? "Désolé, un problème est survenu!" : "Bien envoyé! La ressource vous sera envoyée par mail :)";
-                        });
-                }else{
-                    self.formError = "L'adresse email semble invalide..."; 
-                }
-            }else{
-                self.formError = "L'adresse email est requise!";
-            }
-        }
-    }
+    //         if (self.email) {
+    //             if(validator.isEmail(self.email)){
+    //                 self.$axios.$post('/api/ressource', 'email='+self.email+'&title='+self.file.file_title[0].text)
+    //                     .then(res => {
+    //                         console.log(res);
+    //                         self.formError = "Bien envoyé! La ressource vous sera envoyée par mail :)";
+    //                     }, err => {
+    //                         console.log(err);
+    //                         self.formError = "Désolé, un problème est survenu!";
+    //                     });
+    //             }else{
+    //                 self.formError = "L'adresse email semble invalide..."; 
+    //             }
+    //         }else{
+    //             self.formError = "L'adresse email est requise!";
+    //         }
+    //     }
+    // }
 };
 </script>
 
@@ -136,7 +145,7 @@ form{
     }
     svg{
         position: absolute;
-        top: 2px;
+        top: 4px;
         left: 0;
     }
 }
