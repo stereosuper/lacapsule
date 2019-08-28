@@ -35,9 +35,9 @@
                     <h3 v-if='footer.title_docs[0]'>{{footer.title_docs[0].text}}</h3>
                     <ul v-if='footer.docs' class='list-simple'>
                         <li v-for='doc in footer.docs' :key='doc.link.url'>
-                            <nuxt-link v-if='doc.link.url' :to='doc.link.url'>
+                            <a v-if='doc.link.url' :href='doc.link.url'>
                                 {{doc.text}}
-                            </nuxt-link>
+                            </a>
                         </li>
                     </ul>
                 </div>

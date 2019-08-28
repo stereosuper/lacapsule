@@ -28,9 +28,9 @@
             <div v-if='page.cta' class='cta'>
                 <div v-for='item in page.cta' :key='item.link_text'>
                     <div :class='[{"inverted": item.style === "transparent"}, "button"]'>
-                        <nuxt-link :to='item.link'>
+                        <a :href='item.link.url'>
                             {{item.link_text}}
-                        </nuxt-link>
+                        </a>
                     </div>
                 </div>
             </div>
