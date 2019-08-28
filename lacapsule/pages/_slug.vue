@@ -15,9 +15,17 @@
             <ul v-if='page.logos' class='logos'>
                 <listLogo v-for='logo in page.logos' :key='logo.logo_title[0].text' :logo='logo'/>
             </ul>
+
+            <form v-if='page.cats' class='cats'>
+                <select v-model='currentCat'>
+                    <option value='all' selected>Toutes les ressources</option>
+                    <option v-for='cat in page.cats' :key='cat' :value='cat'>{{cat}}</option>
+                </select>
+            </form>
             <ul v-if='page.files' class='files'>
-                <listFile v-for='file in page.files' :key='file.file_title[0].text' :file='file'/>
+                <listFile v-for='file in page.files' :key='file.file_title[0].text' :file='file' :cat='currentCat' v-if='currentCat == "all" || currentCat == file.cat'/>
             </ul>
+
             <div v-if='page.contact' class='contact'>
                 <div v-if='page.contact.contact_img' class='contact_img'>
                     <div><img :src='page.contact.contact_img.url' :alt='page.contact.contact_img.alt'/></div>
@@ -51,7 +59,8 @@ import ListFile from '~/components/ListFile.vue';
 export default {
     data() {
         return {
-            isMounted: false
+            isMounted: false,
+            currentCat: 'all'
         };
     },
     mixins: [btn],
@@ -74,19 +83,19 @@ export default {
                 data = response.results[0].data;
 
                 page = {
-                    type: response.results[0].type,
-                    title: data.title[0] ? data.title[0].text : '',
-                    desc: data.desc ? data.desc : '',
-                    intro: data.intro ? PrismicDOM.RichText.asHtml(data.intro) : '',
-                    text: data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
-                    cta: data.cta[0] ? data.cta : '',
-                    blocks: data.blocks[0] ? data.blocks : '',
-                    logos: data.logos[0] ? data.logos : '',
-                    files: data.files[0] ? data.files : '',
-                    contact: data.contact[0] ? data.contact[0] : ''
+                    'type': response.results[0].type,
+                    'title': data.title[0] ? data.title[0].text : '',
+                    'desc': data.desc ? data.desc : '',
+                    'intro': data.intro ? PrismicDOM.RichText.asHtml(data.intro) : '',
+                    'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
+                    'cta': data.cta[0] ? data.cta : '',
+                    'blocks': data.blocks[0] ? data.blocks : '',
+                    'logos': data.logos[0] ? data.logos : '',
+                    'cats': data.cats ? data.cats.split(',') : '',
+                    'files': data.files[0] ? data.files : '',
+                    'contact': data.contact[0] ? data.contact[0] : '',
                 };
-            },
-            function(error) {
+            }, function(error){
                 error({ statusCode: error.response.status, message: error.message });
             }
         );
@@ -170,6 +179,10 @@ export default {
     justify-content: space-between;
 }
 
+.files{
+    margin-bottom: 200px;
+}
+
 .blocks,
 .logos {
     text-align: center;
@@ -181,6 +194,10 @@ export default {
     &.circle {
         justify-content: space-between;
     }
+}
+
+.cats{
+    margin: 90px 0 40px;
 }
 
 .contact {
@@ -223,6 +240,7 @@ export default {
 
     .files {
         display: block;
+        margin-bottom: 150px;
     }
 }
 
