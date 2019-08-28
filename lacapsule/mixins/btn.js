@@ -16,17 +16,19 @@ export default {
                 glowY,
                 distance,
                 btnW,
-                btnH;
+                btnH,
+                btnLink;
 
             for (i; i < nbBtn; i++) {
-                if (!btn[i].querySelector('a')) return;
+                btnLink = btn[i].querySelector('a') || btn[i].querySelector('button');
+                if (!btnLink) return;
 
                 glowWrapper = document.createElement('i');
                 glowWrapper.className = 'glow-wrapper';
                 glow = document.createElement('i');
                 glow.className = 'glow';
 
-                btn[i].querySelector('a').appendChild(glowWrapper);
+                btnLink.appendChild(glowWrapper);
                 btn[i].querySelector('.glow-wrapper').appendChild(glow);
 
                 btn[i].addEventListener('mouseenter', function() {
