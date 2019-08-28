@@ -26,6 +26,7 @@
             <nav :class='[{"menuClicked": isBurgerClicked, "pageChanging": isPageTransitioning}, "menu"]' id='menu' ref='menu'>
                 <ul>
                     <menuItem v-for='item in menu' v-if='!item.isBroken' :key='item.label' :item='item'/>
+                    <menuItem :item='{ref: "blog", label:"Blog", link : {url: "https://www.google.com", target: "_blank"}}'/>
                 </ul>
                 <div :class='[{"menuClicked": isBurgerClicked}, "bg-menu"]'>
                     <div class='lines'></div>
