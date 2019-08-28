@@ -91,7 +91,7 @@ export default {
                     'cta': data.cta[0] ? data.cta : '',
                     'blocks': data.blocks[0] ? data.blocks : '',
                     'logos': data.logos[0] ? data.logos : '',
-                    'cats': data.cats[0] ? data.cats.split(',') : '',
+                    'cats': data.cats ? data.cats.split(',') : '',
                     'files': data.files[0] ? data.files : '',
                     'contact': data.contact[0] ? data.contact[0] : '',
                 };
