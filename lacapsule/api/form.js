@@ -18,10 +18,13 @@ app.post('/contact', urlencodedParser, (req, res) => {
         }
     });
 
+    let object = req.body.object;
+    object = object ? ' - ' + object : '';
+
     transporter.sendMail({
         from: req.body.name + ' <' + req.body.email + '>',
         to: 'elisabethhamel@outlook.com',
-        subject: req.body.object + ' - La Capsule',
+        subject: 'Message du site La Capsule ' + object,
         text: req.body.message
     });
 

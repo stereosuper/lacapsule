@@ -1,13 +1,16 @@
 /* Forms */
 
 ::-webkit-input-placeholder {
+    font-style: italic;
+    color: rgba(#fff, 0.3);
 }
 ::-moz-placeholder {
+    font-style: italic;
+    color: rgba(#fff, 0.3);
 }
 :-ms-input-placeholder {
-}
-
-fieldset {
+    font-style: italic;
+    color: rgba(#fff, 0.3);
 }
 
 input,
@@ -43,9 +46,8 @@ textarea {
 }
 
 input {
-    min-width: 0;
     // fix firefox bug input min-width https://bugzilla.mozilla.org/show_bug.cgi?id=1088586
-    margin: 0 10px 0 15px;
+    min-width: 0;
     // hide the symbols of input search
     &[type='search'] {
         &::-webkit-search-cancel-button,

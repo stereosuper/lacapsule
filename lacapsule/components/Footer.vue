@@ -343,7 +343,13 @@ input{
     .addresses{
         > li{
             width: 100%;
+            padding-left: 0;
+            padding-right: 0;
         }
+    }
+
+    .col-1, .col-2, .col-3{
+        padding: 0;
     }
 
     .col-1{
