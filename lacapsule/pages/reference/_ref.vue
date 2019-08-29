@@ -14,6 +14,19 @@
                 <h1>{{page.data.title[0].text}}</h1>
             </div>
             <div v-html='contentText'></div>
+            <div class="quote" v-for='(q, i) in page.data.quotes' :key='i'>
+                <blockquote>
+                    <span>
+                        {{q.citation}}
+                    </span>
+                    <cite>
+                        {{q.author}}
+                    </cite>
+                    <span>
+                        {{q.position}}
+                    </span>
+                </blockquote>
+            </div>
         </div>
     </div>
 </template>
