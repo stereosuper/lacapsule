@@ -157,8 +157,10 @@ export default {
     border-radius: 10px;
 }
 h2{
+    padding: 0 0 0 15px;
     margin: 0 0 20px 21%;
     + div{
+        padding: 0 0 0 15px;
         margin: 0 0 0 21%;
     }
 }
@@ -222,8 +224,10 @@ p.error{
 
 @media (max-width: $tablet){
     h2{
+        padding: 0;
         margin-left: 0;
         + div{
+            padding: 0;
             margin: 0;
         }
     }
