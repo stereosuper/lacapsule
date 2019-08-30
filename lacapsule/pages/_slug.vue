@@ -30,6 +30,8 @@
 
             <contact v-if='page.contact' :content='page.contact'></contact>
 
+            <who v-if='page.who' :content='page.who'></who>
+
             <div v-if='page.cta' class='cta'>
                 <div v-for='item in page.cta' :key='item.link_text'>
                     <div :class='[{"inverted": item.style === "transparent"}, "button"]'>
@@ -53,6 +55,7 @@ import ListItem from '~/components/ListItem.vue';
 import ListLogo from '~/components/ListLogo.vue';
 import ListFile from '~/components/ListFile.vue';
 import Contact from '~/components/Contact.vue';
+import Who from '~/components/Who.vue';
 
 export default {
     data() {
@@ -66,7 +69,8 @@ export default {
         ListItem,
         ListLogo,
         ListFile,
-        Contact
+        Contact,
+        Who
     },
     async asyncData({ params, error }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
@@ -92,7 +96,8 @@ export default {
                     'logos': data.logos[0] ? data.logos : '',
                     'cats': data.cats ? data.cats.split(',') : '',
                     'files': data.files[0] ? data.files : '',
-                    'contact': data.contact[0] ? data.contact[0] : ''
+                    'contact': data.contact[0] ? data.contact[0] : '',
+                    'who': data.who[0] ? data.who[0] : '',
                 };
             }, function(error){
                 error({ statusCode: error.response.status, message: error.message });
