@@ -1,13 +1,17 @@
 <template>
-    <div>
+    <div class="container reference">
         <aside>
             <h3>{{page.data.sidebar_title}}</h3>
+            <svg class='top-stars' viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M31.905 29.37l2.752.784-2.87.337-.79 2.769-.33-2.824-2.78-.756 2.833-.426.752-2.764.433 2.88zM9.814 8.328l4.243 2.929-5.092-1.083-2.946 4.27 1.065-5.01-4.305-2.896 5.079.909 2.88-4.283-.924 5.164z" fill="#FF438A"/></svg>
             <div v-for='detail in page.data.sidebar_details' :key='detail.title_detail'>
-                <h4>{{detail.title_detail}}</h4>
-                <span>{{detail.text_detail}}</span>
+                <div class='detail'>
+                    <h4>{{detail.title_detail}}</h4>
+                    <span>{{detail.text_detail}}</span>
+                </div>
             </div>
+            <svg class='bottom-stars' viewBox="0 0 63 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.84 4.614l3.727-.173L7.16 6.05l.174 3.749-1.582-3.351-3.747.22 3.322-1.703-.218-3.728 1.73 3.378zM53.083 14.555l7.576-.351-6.924 3.268.353 7.622-3.215-6.813-7.62.446 6.755-3.46-.443-7.58 3.518 6.868z" fill="#FF438A"/></svg>
         </aside>
-        <div>
+        <div class='content'>
             <div>
                 <img :src='page.data.logo.url' :alt='page.data.logo.alt'>
                 <span>{{page.data.company}}</span>
@@ -104,138 +108,63 @@ export default {
 <style lang='scss' scoped>
 @import "./assets/scss/abstracts/_variables.scss";
 
-.small-content {
-    margin: 0 $col;
-}
-
-.intro {
-    max-width: 560px;
-    margin: 0 auto;
-    padding: 0 #{$gutter + 10px};
-    position: relative;
-    font-size: 1.7rem;
-    font-style: italic;
-    text-align: center;
-    &:before,
-    &:after {
-        content: '';
-        width: $gutter;
-        height: 3px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        background: $primary;
-    }
-    &:before {
-        left: 0;
-    }
-    &:after {
-        right: 0;
-    }
-}
-
-.cta {
-    text-align: center;
-    > div {
-        margin: 50px 0 0;
-    }
-}
-
-.blocks,
-.logos,
-.files {
+.reference{
     display: flex;
-    margin: 0 $gutter * -2;
-    flex-wrap: wrap;
-}
-
-.logos,
-.files {
-    justify-content: space-between;
-}
-
-.files{
-    margin-bottom: 200px;
-}
-
-.blocks,
-.logos {
-    text-align: center;
-}
-
-.blocks {
-    padding: 4vh 0 80px;
-    justify-content: center;
-    &.circle {
-        justify-content: space-between;
-    }
-}
-
-.cats{
-    margin: 90px 0 40px;
-}
-
-@media (max-width: 1252px) {
-    .blocks,
-    .files {
-        margin: 0 $gutter * -1;
-    }
-}
-
-@media (max-width: $container) {
-    .logos {
-        margin: 0 $gutter * -1;
-    }
-
-    .files {
-        display: block;
-        margin-bottom: 150px;
-    }
-}
-
-@media (max-width: $desktop) {
-    .cta {
+    align-items: flex-start;
+    aside{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 25%;
+        flex-shrink: 0;
+        padding: 0 $gutter $gutter;
+        border-radius: 18px;
+        background: linear-gradient(360deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0) 71.6%);
+        h3{
+            margin-bottom: 60px;
+        }
         > div {
-            &:first-child {
-                margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 50px;
+            &:last-of-type{
+                margin-bottom: 0;
+            }
+            &:before, &:after{
+                content: '';
+                display: block;
+                flex-shrink: 0;
+                height: 3px;
+                width: 25px;
+                background-color: $primary;
             }
         }
-    }
-
-    .logos {
-        margin: 0 $gutter * -2;
-    }
-
-    .blocks {
-        margin: 0;
-    }
-}
-
-@media (max-width: $tablet) {
-    .small-content {
-        margin: 0;
-    }
-}
-
-@media (max-width: $phone) {
-    .logos {
-        margin: 10vh $gutter * -1 0;
-    }
-}
-
-@media (max-width: $phone-small) {
-    .intro {
-        padding: 0;
-        &:before,
-        &:after {
-            content: none;
+        .detail{
+            display: flex;
+            flex-grow: 1;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 8px;
+        }
+        h4{
+            margin: 0;
+        }
+        .top-stars{
+            width: 34px;
+            height: 32px;
+        }
+        .bottom-stars{
+            margin-top: 15px;
+            width: 62px;
+            height: 28px;
         }
     }
-
-    .logos {
-        margin-left: 0;
-        margin-right: 0;
+    .content{
+        padding: 0 $gutter;
     }
 }
+
 </style>
