@@ -12,6 +12,9 @@ export default {
         },
         isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
+        },
+        isPageTransitioning(){
+            return this.$store.state.pageTransitioning;
         }
     },
     watch: {
@@ -113,7 +116,7 @@ export default {
                 this.afterSmooth = lerp(this.afterSmooth, 0, 0.097);
                 this.x -= this.afterSmooth;
 
-                if(this.afterSmooth < 0.4){
+                if(this.afterSmooth < 0.4 && self.isPageTransitioning){
                     self.$store.commit('setPageTransitioning', false);
                 }
 
