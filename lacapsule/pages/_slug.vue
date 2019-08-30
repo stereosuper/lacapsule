@@ -142,33 +142,6 @@ export default {
     margin: 0 $col;
 }
 
-.intro {
-    max-width: 560px;
-    margin: 0 auto;
-    padding: 0 #{$gutter + 10px};
-    position: relative;
-    font-size: 1.7rem;
-    font-style: italic;
-    text-align: center;
-    &:before,
-    &:after {
-        content: '';
-        width: $gutter;
-        height: 3px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        background: $primary;
-    }
-    &:before {
-        left: 0;
-    }
-    &:after {
-        right: 0;
-    }
-}
-
 .cta {
     text-align: center;
     > div {
@@ -259,14 +232,6 @@ export default {
 }
 
 @media (max-width: $phone-small) {
-    .intro {
-        padding: 0;
-        &:before,
-        &:after {
-            content: none;
-        }
-    }
-
     .logos {
         margin-left: 0;
         margin-right: 0;

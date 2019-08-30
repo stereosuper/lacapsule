@@ -1,7 +1,7 @@
 <template>
     <footer class='footer'>
         <div class='container'>
-            <h2 v-if='footer.addresses_title[0]' class='footer-title'>
+            <h2 v-if='footer.addresses_title[0]' class='title-line'>
                 <span>{{footer.addresses_title[0].text}}</span>
             </h2>
 
@@ -17,7 +17,7 @@
                 </li>
             </ul>
 
-            <h2 v-if='footer.title_other[0]' class='footer-title'>
+            <h2 v-if='footer.title_other[0]' class='title-line'>
                 <span>{{footer.title_other[0].text}}</span>
             </h2>
 
@@ -143,24 +143,6 @@ h3{
     position: relative;
     margin: 100px 0 0;
     z-index: 10;
-}
-
-.footer-title{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1.5em 0;
-    > span{
-        padding: 0 $gutter;
-        flex-shrink: 0;
-    }
-    &:before, &:after{
-        content: '';
-        display: block;
-        width: 100%;
-        height: 2px;
-        background: #fff;
-    }
 }
 
 .addresses{
@@ -330,16 +312,6 @@ input{
 }
 
 @media (max-width: $phone){
-    .footer-title{
-        display: block;
-        &:before, &:after{
-            content: none;
-        }
-        span{
-            padding: 0;
-        }
-    }
-
     .addresses{
         > li{
             width: 100%;
