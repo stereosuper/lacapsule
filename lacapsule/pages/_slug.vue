@@ -30,7 +30,7 @@
 
             <contact v-if='page.contact' :content='page.contact'></contact>
 
-            <who v-if='page.who' :content='page.who'></who>
+            <who v-if='page.who' :content='page.who' :team='page.team' :story='page.story' :dimensions='page.dimensions' :video='page.video'></who>
 
             <div v-if='page.cta' class='cta'>
                 <div v-for='item in page.cta' :key='item.link_text'>
@@ -98,6 +98,10 @@ export default {
                     'files': data.files[0] ? data.files : '',
                     'contact': data.contact[0] ? data.contact[0] : '',
                     'who': data.who[0] ? data.who[0] : '',
+                    'team': data.team ? data.team : '',
+                    'story': data.story_group[0] ? data.story_group[0] : '',
+                    'dimensions': data.dimensions ? data.dimensions : '',
+                    'video': data.video_group[0] ? data.video_group[0] : ''
                 };
             }, function(error){
                 error({ statusCode: error.response.status, message: error.message });
