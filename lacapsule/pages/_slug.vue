@@ -14,8 +14,13 @@
                 <listItem v-for='item in page.blocks' :key='item.item_title[0].text' :item='item'/>
             </ul>
 
+            <!--
             <ul v-if='page.logos' class='logos'>
                 <listLogo v-for='logo in page.logos' :key='logo.logo_title[0].text' :logo='logo'/>
+            </ul> -->
+
+            <ul v-if='page.custom_post === "references" && refs[0]' class='logos'>
+                <listRef v-for='ref in refs' :key='ref.title' :reference='ref'/>
             </ul>
 
             <form v-if='page.cats' class='cats'>
@@ -52,7 +57,8 @@ import PrismicDOM from 'prismic-dom';
 import btn from '~/mixins/btn.js';
 
 import ListItem from '~/components/ListItem.vue';
-import ListLogo from '~/components/ListLogo.vue';
+//import ListLogo from '~/components/ListLogo.vue';
+import ListRef from '~/components/ListRef.vue';
 import ListFile from '~/components/ListFile.vue';
 import Contact from '~/components/Contact.vue';
 import Who from '~/components/Who.vue';
@@ -67,7 +73,8 @@ export default {
     mixins: [btn],
     components: {
         ListItem,
-        ListLogo,
+        //ListLogo,
+        ListRef,
         ListFile,
         Contact,
         Who
@@ -77,7 +84,9 @@ export default {
         const api = await Prismic.getApi(apiEndpoint);
 
         let page = {},
-            data = {};
+            data = {},
+            refData = false,
+            refs = [];
 
         await api.query(Prismic.Predicates.at('my.page.uid', params.slug)).then(
             function(response) {
@@ -91,9 +100,10 @@ export default {
                     'desc': data.desc ? data.desc : '',
                     'intro': data.intro ? PrismicDOM.RichText.asHtml(data.intro) : '',
                     'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
+                    'custom_post': data.custom_post ? data.custom_post : '',
                     'cta': data.cta[0] ? data.cta : '',
                     'blocks': data.blocks[0] ? data.blocks : '',
-                    'logos': data.logos[0] ? data.logos : '',
+                    //'logos': data.logos[0] ? data.logos : '',
                     'cats': data.cats ? data.cats.split(',') : '',
                     'files': data.files[0] ? data.files : '',
                     'contact': data.contact[0] ? data.contact[0] : '',
@@ -112,7 +122,29 @@ export default {
             error({ statusCode: '404', message: 'Page not found' });
         }
 
-        return { page };
+        await api.query(Prismic.Predicates.at('document.type', 'references')).then(
+            function(response) {
+                if (!response.results.length) return;
+
+                refData = response.results;
+                
+            }, function(error){
+                error({ statusCode: error.response.status, message: error.message });
+            }
+        );
+
+        if( refData ){
+            refData.forEach((ref, i) => {
+                refs[i] = {
+                    'url': ref.uid ? '/reference/' + ref.uid : '',
+                    'title': ref.data.title[0] ? ref.data.title[0].text : '',
+                    'company': ref.data.company ? ref.data.company : '',
+                    'logo': ref.data.logo ? ref.data.logo : '',
+                };
+            });
+        }
+
+        return { page, refs };
     },
     mounted() {
         this.$store.commit('setHoverBurger', false);
