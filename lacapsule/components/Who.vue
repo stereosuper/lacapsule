@@ -217,4 +217,127 @@ export default {
         font-size: 1.8rem;
     }
 }
+
+
+@media (max-width: $container){
+    .header-text{
+        width: 40%;
+        margin: 0;
+    }
+
+    .team-wrapper{
+        > div{
+            &:first-child{
+                width: 50%;
+                margin: 0;
+            }
+        }
+    }
+
+    .team-list{
+        > li{
+            width: 180px;
+            height: 180px;
+            &:first-child{
+                margin: 0 5% 0 0;
+            }
+        }
+    }
+
+    .story{
+        width: 60%;
+    }
+
+    .dimensions{
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .video{
+        display: block;
+        text-align: center;
+    }
+    .video-text{
+        margin: 30px auto 0;
+        width: 60%;
+    }
+}
+
+@media (max-width: $desktop){
+    .header{
+        display: block;
+        img{
+            margin: 30px 0 0;
+        }
+    }
+
+    .header-text{
+        width: 100%;
+    }
+
+    .team-wrapper{
+        display: block;
+        > div{
+            &:first-child, &:last-child{
+                width: 100%;
+            }
+        }
+    }
+
+    .team-list{
+        margin: 30px 0;
+        justify-content: space-between;
+        > li{
+            &:first-child, &:nth-child(2){
+                margin: 0;
+            }
+        }
+    }
+
+    .dimensions{
+        margin-top: 0;
+        ul{
+            display: block;
+            margin: 0;
+        }
+        li{
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 20px;
+        }
+    }
+
+    .video-text, .story{
+        width: 80%;
+    }
+}
+
+@media (max-width: $tablet){
+    .header-text{
+        padding: 0;
+    }
+
+    .team-wrapper{
+        > div{
+            padding: 0;
+        }
+    }
+
+    .team-list{
+        margin-bottom: 0;
+        > li{
+            width: 150px;
+            height: 150px;
+            margin: 0 0 20px;
+            &:first-child, &:nth-child(2){
+                margin: 0 0 30px;
+            }
+        }
+    }
+
+    .story, .video-text{
+        width: 100%;
+        padding: 0;
+    }
+}
 </style>
