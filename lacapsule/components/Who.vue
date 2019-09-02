@@ -2,7 +2,8 @@
     <div>
         <div class='header' v-if='text'>
             <div class='header-text' v-html='text'/>
-            <img v-if='content.who_img.url' :src='content.who_img.url' :alt='content.who_img.alt' :whidth='content.who_img.dimensions.width' :height='content.who_img.dimensions.height'>
+            <!--<img v-if='content.who_img.url' :src='content.who_img.url' :alt='content.who_img.alt' :whidth='content.who_img.dimensions.width' :height='content.who_img.dimensions.height'>
+            --><div id='galaxy' class='galaxy' ref='galaxy'></div>
         </div>
 
         <h2 class='title-line'><span>{{content.team_title[0].text}}</span></h2>
@@ -48,6 +49,7 @@
 <script>
 import Prismic from 'prismic-javascript';
 import PrismicDOM from 'prismic-dom';
+import lottie from 'lottie-web';
 
 export default {
     props: {
@@ -90,6 +92,15 @@ export default {
         this.dimensions.forEach((dim, i) => {
             this.dimensionTexts[i] = dim.dimension_text ? PrismicDOM.RichText.asHtml(dim.dimension_text) : '';
         });
+    },
+    mounted() {
+        lottie.loadAnimation({
+            container: this.$refs.galaxy,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: '/planets.json'
+        })
     }
 };
 </script>
@@ -99,20 +110,23 @@ export default {
 
 .header{
     display: flex;
-    padding: 40px 0 0;
+    padding: 40px 0;
     justify-content: space-between;
     align-items: flex-start;
     /deep/ h2{
         margin-top: 20px;
     }
-    img{
-        margin: 0 $gutter * -2 0 0;
-    }
+    // img{
+    //     margin: 0 $gutter * -2 0 0;
+    // }
 }
 .header-text{
     width: 36%;
     padding: 0 $gutter;
     margin: 0 0 0 10%;
+}
+.galaxy{
+    margin: -80px -100px 0 -80px;
 }
 
 .team-wrapper{
@@ -225,6 +239,10 @@ export default {
         margin: 0;
     }
 
+    .galaxy{
+        margin: -50px -50px 0;
+    }
+
     .team-wrapper{
         > div{
             &:first-child{
@@ -266,9 +284,9 @@ export default {
 @media (max-width: $desktop){
     .header{
         display: block;
-        img{
-            margin: 30px 0 0;
-        }
+        // img{
+        //     margin: 30px 0 0;
+        // }
     }
 
     .header-text{
