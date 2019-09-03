@@ -21,6 +21,7 @@
 
             <ul v-if='page.custom_post === "references" && refs[0]' class='logos'>
                 <listRef v-for='ref in refs' :key='ref.title' :reference='ref'/>
+                <listRef key='contact' :reference='{"contact": true}'/>
             </ul>
 
             <form v-if='page.cats' class='cats'>
