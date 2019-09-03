@@ -189,18 +189,19 @@ export default {
     flex-wrap: wrap;
 }
 
-.logos,
 .files {
     justify-content: space-between;
-}
-
-.files{
     margin-bottom: 200px;
 }
 
 .blocks,
 .logos {
     text-align: center;
+}
+
+.logos{
+    justify-content: center;
+    margin-top: -30px;
 }
 
 .blocks {

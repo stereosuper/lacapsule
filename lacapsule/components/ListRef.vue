@@ -26,9 +26,12 @@ export default {
 @import "./assets/scss/abstracts/_variables.scss";
 
 li{
-    width: calc(25% - 14px);
-    padding: 0 30px 25px;
-    margin: 0 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    width: calc(25% - 15px);
+    padding: 90px 30px 25px;
+    margin: 0 7px;
     text-align: center;
     z-index: 1;
     &:before{
@@ -49,25 +52,22 @@ li{
         margin-top: 50px;
         margin-bottom: -50px;
     }
-    &:last-child{
-        margin-right: auto;
-    }
 }
 
 h2{
+    width: 100%;
     font-size: 2.4rem;
-    margin: 2em 0 0;
-    // margin: 0;
-    // font-family: $ibm;
-    // font-weight: 400;
-    // font-style: italic;
-    // font-size: 1.6rem;
+    margin: 1em 0 0;
+}
+
+p{
+    width: 100%;
 }
 
 .logo{
     display: flex;
-    width: 225px;
-    height: 225px;
+    width: 100%;
+    max-width: 250px;
     position: relative;
     margin: 0 auto 20px;
     align-items: center;
@@ -75,28 +75,51 @@ h2{
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.25);
     background: #fff;
+    &:before{
+        content: '';
+        display: block;
+        padding: 0 0 100%;
+    }
+    img{
+        position: absolute;
+    }
 }
 
 img{
     max-width: 80%;
 }
 
+.button{
+    width: 100%;
+    align-self: flex-end;
+}
+
+
+@media (max-width: $container){
+    li{
+        padding: 90px 15px 15px;
+        &:nth-child(2n){
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+}
 
 @media (max-width: $desktop){
     li{
-        width: 33%;
-        &:nth-child(4n-1){
-            margin-top: 0;
-        }
+        width: calc(33% - 14px);
+        margin: 0 7px;
+        padding: 90px 20px 20px;
     }
 }
 
 @media (max-width: $tablet){
     li{
-        width: 50%;
-        margin: 0 0 50px;
-        &:nth-child(4n-2){
-            margin-top: 0;
+        width: calc(50% - 20px);
+        margin: 0 10px 50px;
+        padding-top: 50px;
+        &:nth-child(2n){
+            margin-bottom: 50px;
         }
     }
 }
