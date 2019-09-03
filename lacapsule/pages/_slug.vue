@@ -150,6 +150,7 @@ export default {
     mounted() {
         this.$store.commit('setHoverBurger', false);
         this.$store.commit('setClickBurger', false);
+        this.$store.commit('setHasFooter', true);
         document.body.classList.remove('menuOpen');
 
         //this.page.blocks ? document.body.classList.add('content-under') : document.body.classList.remove('content-under');
