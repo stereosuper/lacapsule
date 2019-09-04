@@ -23,8 +23,15 @@
                 <listRef v-for='ref in refs' :key='ref.title' :reference='ref'/>
                 <listRef key='contact' :reference='{"contact": true}'/>
             </ul>
+            <ul v-if='refsPages > 1' class='pagination'>
+                <li v-if='currentPage > 1' class='nav'><nuxt-link :to="'?pages=' + (currentPage - 1)">‹</nuxt-link></li>
+                <li v-for='n in refsPages' :key='n'>
+                    <nuxt-link :to='"?pages="+n' :class='[{"nuxt-link-exact-active": currentPage === 1 && n === 1}]'>{{n}}</nuxt-link>
+                </li>
+                <li v-if='currentPage < refsPages' class='nav'><nuxt-link :to="'?pages=' + (currentPage + 1)">›</nuxt-link></li>
+            </ul>
 
-            <form v-if='page.cats' class='cats'>
+            <form v-if='page.cats' class='cats'> 
                 <select v-model='currentCat'>
                     <option value='all' selected>Toutes les ressources</option>
                     <option v-for='cat in page.cats' :key='cat' :value='cat'>{{cat}}</option>
@@ -68,7 +75,7 @@ export default {
     data() {
         return {
             isMounted: false,
-            currentCat: 'all',
+            currentCat: 'all'
         };
     },
     mixins: [btn],
@@ -80,14 +87,18 @@ export default {
         Contact,
         Who
     },
-    async asyncData({ params, error }) {
+    watchQuery: ['pages'],
+    key: to => to.fullPath,
+    async asyncData({ params, error, query }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
 
         let page = {},
             data = {},
             refData = false,
-            refs = [];
+            refs = [],
+            refsPages = 0,
+            currentPage = 1;
 
         await api.query(Prismic.Predicates.at('my.page.uid', params.slug)).then(
             function(response) {
@@ -123,10 +134,13 @@ export default {
             error({ statusCode: '404', message: 'Page not found' });
         }
 
-        await api.query(Prismic.Predicates.at('document.type', 'references')).then(
+        if( query.pages ) currentPage = +query.pages;
+
+        await api.query(Prismic.Predicates.at('document.type', 'references'), {pageSize: 7, page: currentPage}).then(
             function(response) {
                 if (!response.results.length) return;
 
+                refsPages = response.total_pages;
                 refData = response.results;
                 
             }, function(error){
@@ -145,7 +159,7 @@ export default {
             });
         }
 
-        return { page, refs };
+        return { page, refs, refsPages, currentPage };
     },
     mounted() {
         this.$store.commit('setHoverBurger', false);
@@ -216,6 +230,29 @@ export default {
 
 .cats{
     margin: 90px 0 40px;
+}
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 7em 0 0;
+    font-size: 1.8rem;
+    li{
+        padding: 10px;
+        &:before{
+            content: none;
+        }
+    }
+    .nuxt-link-exact-active{
+        color: #fff;
+        text-decoration: none;
+    }
+    .nav{
+        a{
+            text-decoration: none;
+        }
+    }
 }
 
 @media (max-width: 1252px) {
