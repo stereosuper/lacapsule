@@ -63,10 +63,9 @@ textarea{
 
 select {
     color: #fff;
-    // hide the arrow on edge + ie
-    &::-ms-expand {
-        display: none;
-    }
+}
+option{
+    color: #000;
 }
 
 button {

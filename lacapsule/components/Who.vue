@@ -112,7 +112,6 @@ export default {
     display: flex;
     padding: 40px 0;
     justify-content: space-between;
-    align-items: flex-start;
     /deep/ h2{
         margin-top: 20px;
     }
@@ -126,7 +125,8 @@ export default {
     margin: 0 0 0 10%;
 }
 .galaxy{
-    margin: -80px -100px 0 -80px;
+    flex: 1;
+    margin: -80px -100px 0 0;
 }
 
 .team-wrapper{
@@ -240,7 +240,7 @@ export default {
     }
 
     .galaxy{
-        margin: -50px -50px 0;
+        margin: -50px -50px 0 0;
     }
 
     .team-wrapper{
@@ -291,6 +291,10 @@ export default {
 
     .header-text{
         width: 100%;
+    }
+
+    .galaxy{
+        margin-left: -50px;
     }
 
     .team-wrapper{

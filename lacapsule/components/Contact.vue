@@ -151,6 +151,7 @@ export default {
     }
 }
 .contact-content{
+    flex: 1;
     padding: 30px 65px 30px 30px;
     margin: 0 0 0 70px;
     background: rgba(#000, 0.16);
