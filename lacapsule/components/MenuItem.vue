@@ -4,7 +4,7 @@
             <div :id='item.ref'></div>
             <span>{{ item.label }}</span>
         </a>
-        <nuxt-link v-if='item.link.uid' :to='item.link.uid' :class='[{"menuClicked": isBurgerClicked, "menuNotClicked": !isBurgerClicked}, "link"]' @click.native='closeMenu'>
+        <nuxt-link v-if='item.link.uid' :to='"/" + item.link.uid' :class='[{"menuClicked": isBurgerClicked, "menuNotClicked": !isBurgerClicked}, "link"]' @click.native='closeMenu'>
             <div :id='item.ref'></div>
             <span>{{ item.label }}</span>
         </nuxt-link>

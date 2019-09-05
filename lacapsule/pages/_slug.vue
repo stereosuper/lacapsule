@@ -14,11 +14,24 @@
                 <listItem v-for='item in page.blocks' :key='item.item_title[0].text' :item='item'/>
             </ul>
 
+            <!--
             <ul v-if='page.logos' class='logos'>
                 <listLogo v-for='logo in page.logos' :key='logo.logo_title[0].text' :logo='logo'/>
+            </ul> -->
+
+            <ul v-if='page.custom_post === "references" && refs[0]' class='logos'>
+                <listRef v-for='ref in refs' :key='ref.title' :reference='ref'/>
+                <listRef key='contact' :reference='{"contact": true}'/>
+            </ul>
+            <ul v-if='refsPages > 1' class='pagination'>
+                <li v-if='currentPage > 1' class='nav'><nuxt-link :to="'?pages=' + (currentPage - 1)">‹</nuxt-link></li>
+                <li v-for='n in refsPages' :key='n'>
+                    <nuxt-link :to='"?pages="+n' :class='[{"nuxt-link-exact-active": currentPage === 1 && n === 1}]'>{{n}}</nuxt-link>
+                </li>
+                <li v-if='currentPage < refsPages' class='nav'><nuxt-link :to="'?pages=' + (currentPage + 1)">›</nuxt-link></li>
             </ul>
 
-            <form v-if='page.cats' class='cats'>
+            <form v-if='page.cats' class='cats'> 
                 <select v-model='currentCat'>
                     <option value='all' selected>Toutes les ressources</option>
                     <option v-for='cat in page.cats' :key='cat' :value='cat'>{{cat}}</option>
@@ -52,7 +65,8 @@ import PrismicDOM from 'prismic-dom';
 import btn from '~/mixins/btn.js';
 
 import ListItem from '~/components/ListItem.vue';
-import ListLogo from '~/components/ListLogo.vue';
+//import ListLogo from '~/components/ListLogo.vue';
+import ListRef from '~/components/ListRef.vue';
 import ListFile from '~/components/ListFile.vue';
 import Contact from '~/components/Contact.vue';
 import Who from '~/components/Who.vue';
@@ -61,23 +75,30 @@ export default {
     data() {
         return {
             isMounted: false,
-            currentCat: 'all',
+            currentCat: 'all'
         };
     },
     mixins: [btn],
     components: {
         ListItem,
-        ListLogo,
+        //ListLogo,
+        ListRef,
         ListFile,
         Contact,
         Who
     },
-    async asyncData({ params, error }) {
+    watchQuery: ['pages'],
+    key: to => to.fullPath,
+    async asyncData({ params, error, query }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
 
         let page = {},
-            data = {};
+            data = {},
+            refData = false,
+            refs = [],
+            refsPages = 0,
+            currentPage = 1;
 
         await api.query(Prismic.Predicates.at('my.page.uid', params.slug)).then(
             function(response) {
@@ -91,9 +112,10 @@ export default {
                     'desc': data.desc ? data.desc : '',
                     'intro': data.intro ? PrismicDOM.RichText.asHtml(data.intro) : '',
                     'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
+                    'custom_post': data.custom_post ? data.custom_post : '',
                     'cta': data.cta[0] ? data.cta : '',
                     'blocks': data.blocks[0] ? data.blocks : '',
-                    'logos': data.logos[0] ? data.logos : '',
+                    //'logos': data.logos[0] ? data.logos : '',
                     'cats': data.cats ? data.cats.split(',') : '',
                     'files': data.files[0] ? data.files : '',
                     'contact': data.contact[0] ? data.contact[0] : '',
@@ -112,11 +134,37 @@ export default {
             error({ statusCode: '404', message: 'Page not found' });
         }
 
-        return { page };
+        if( query.pages ) currentPage = +query.pages;
+
+        await api.query(Prismic.Predicates.at('document.type', 'references'), {pageSize: 7, page: currentPage}).then(
+            function(response) {
+                if (!response.results.length) return;
+
+                refsPages = response.total_pages;
+                refData = response.results;
+                
+            }, function(error){
+                error({ statusCode: error.response.status, message: error.message });
+            }
+        );
+
+        if( refData ){
+            refData.forEach((ref, i) => {
+                refs[i] = {
+                    'url': ref.uid ? '/reference/' + ref.uid : '',
+                    'title': ref.data.title[0] ? ref.data.title[0].text : '',
+                    'company': ref.data.company ? ref.data.company : '',
+                    'logo': ref.data.logo ? ref.data.logo : '',
+                };
+            });
+        }
+
+        return { page, refs, refsPages, currentPage };
     },
     mounted() {
         this.$store.commit('setHoverBurger', false);
         this.$store.commit('setClickBurger', false);
+        this.$store.commit('setHasFooter', true);
         document.body.classList.remove('menuOpen');
 
         //this.page.blocks ? document.body.classList.add('content-under') : document.body.classList.remove('content-under');
@@ -142,33 +190,6 @@ export default {
     margin: 0 $col;
 }
 
-.intro {
-    max-width: 560px;
-    margin: 0 auto;
-    padding: 0 #{$gutter + 10px};
-    position: relative;
-    font-size: 1.7rem;
-    font-style: italic;
-    text-align: center;
-    &:before,
-    &:after {
-        content: '';
-        width: $gutter;
-        height: 3px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        background: $primary;
-    }
-    &:before {
-        left: 0;
-    }
-    &:after {
-        right: 0;
-    }
-}
-
 .cta {
     text-align: center;
     > div {
@@ -184,18 +205,19 @@ export default {
     flex-wrap: wrap;
 }
 
-.logos,
 .files {
     justify-content: space-between;
-}
-
-.files{
     margin-bottom: 200px;
 }
 
 .blocks,
 .logos {
     text-align: center;
+}
+
+.logos{
+    justify-content: center;
+    margin-top: -30px;
 }
 
 .blocks {
@@ -208,6 +230,29 @@ export default {
 
 .cats{
     margin: 90px 0 40px;
+}
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 7em 0 0;
+    font-size: 1.8rem;
+    li{
+        padding: 10px;
+        &:before{
+            content: none;
+        }
+    }
+    .nuxt-link-exact-active{
+        color: #fff;
+        text-decoration: none;
+    }
+    .nav{
+        a{
+            text-decoration: none;
+        }
+    }
 }
 
 @media (max-width: 1252px) {
@@ -259,14 +304,6 @@ export default {
 }
 
 @media (max-width: $phone-small) {
-    .intro {
-        padding: 0;
-        &:before,
-        &:after {
-            content: none;
-        }
-    }
-
     .logos {
         margin-left: 0;
         margin-right: 0;

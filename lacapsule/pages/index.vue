@@ -2,14 +2,17 @@
     <div>
         <div class='container'>
             <div class='text'>
-                <h1 class='title to-anim' :class='{"appear": isMounted}'>{{ home.title[0].text }}</h1>
-                <div v-html='intro' :class='{"appear": isMounted}' class='inner-text to-anim'/>
+                <h1 class='title to-anim' :class='{"appear": isMounted}'>
+                    {{ home.title[0].text }} <br>
+                    {{ home.title2 }}
+                </h1>
+                <!--<div v-if='intro' v-html='intro' :class='{"appear": isMounted}' class='inner-text to-anim'/>-->
                 <div class='illu'>
                     <div class='earth to-anim' :class='{"appear": isMounted}'></div>
                     <div class='ovni to-anim' :class='{"appear": isMounted}'></div>
                 </div>
                 <div class='inner-text to-anim' :class='{"appear": isMounted}'>
-                    <div v-html='text'/>
+                    <!--<div v-if='text' v-html='text'/>-->
                     <div v-if='home.btn && !home.btn.isBroken' class='button'>
                         <a v-if='!home.btn.slug' :href='home.btn.url' :target='home.btn.target'>
                             {{home.btn_label}}
@@ -86,6 +89,7 @@ export default {
 @import "./assets/scss/abstracts/_variables.scss";
 
 h1 {
+    max-width: 350px;
     position: relative;
     z-index: 1;
     margin: 0 0 0.55em;
@@ -126,11 +130,11 @@ h1 {
     background: url(../static/img/ovni.png) no-repeat 0 0 / 100%;
 }
 
-@media (max-height: 800px) {
-    .container {
-        margin-top: 25vh;
-    }
-}
+// @media (max-height: 800px) {
+//     .container {
+//         margin-top: 25vh;
+//     }
+// }
 
 @media (max-width: $desktop-big) {
     .ovni {
@@ -140,6 +144,8 @@ h1 {
 
 @media (max-width: $tablet) {
     h1 {
+        margin-left: auto;
+        margin-right: auto;
         text-align: center;
     }
 

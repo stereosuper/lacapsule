@@ -44,8 +44,7 @@ li{
     padding: 0 $gutter 20px;
     z-index: 1;
     .circle &{
-        margin-left: 0;
-        margin-right: 0;
+        margin: 0;
         &:nth-child(2), &:nth-child(3){
             margin: 50px 0 -50px;
         }
@@ -76,12 +75,14 @@ h2{
 @media (max-width: $desktop){
     li{
         width: calc(50% - 30px);
-        margin-bottom: 0 0 80px;
-        &:nth-child(2), &:nth-child(3){
-            .circle &{
-                margin: 0 0 70px;
+        margin-bottom: 80px;
+        .circle &{
+            margin: 0 0 80px;
+            &:nth-child(2), &:nth-child(3){
+                margin: 0 0 80px;
             }
         }
+        
     }
 }
 

@@ -91,7 +91,14 @@ module.exports = {
                 name: 'theme-color',
                 content: '#ffffff'
             }
-        ]
+        ],
+        script: [
+            {
+                src: '//js.hsforms.net/forms/shell.js',
+                type: 'text/javascript',
+                charset: 'utf-8'
+            }
+        ] 
     },
 
     /*
