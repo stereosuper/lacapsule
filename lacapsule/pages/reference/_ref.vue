@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class='[{"appear": isMounted}, "to-anim"]'>
         <div class="container reference">
             <div class='top'>
                 <div>
@@ -88,6 +88,8 @@ export default {
             return PrismicDOM.RichText.asHtml(this.page.data.conclusion);
         }
     },
+    watchQuery: ['pages'],
+    key: to => to.fullPath,
     async asyncData({ params, error }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
@@ -105,7 +107,9 @@ export default {
                 page = {
                     type: response.results[0].type,
                     tags: response.results[0].tags,
-                    data: data
+                    data: data,
+                    title: data.title[0] ? data.title[0].text : '',
+                    desc: data.desc ? data.desc : '',
                 };
             }, function(error){
                 error({ statusCode: error.response.status, message: error.message });
