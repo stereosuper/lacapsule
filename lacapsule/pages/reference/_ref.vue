@@ -1,4 +1,5 @@
 <template>
+<div>
     <div :class='[{"appear": isMounted}, "to-anim"]'>
         <div class="container reference">
             <div class='top'>
@@ -64,6 +65,7 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -79,6 +81,7 @@ export default {
             currentCat: 'all',
         };
     },
+    key: to => to.fullPath,
     mixins: [btn],
     computed: {
         contentText(){
@@ -88,8 +91,6 @@ export default {
             return PrismicDOM.RichText.asHtml(this.page.data.conclusion);
         }
     },
-    watchQuery: ['pages'],
-    key: to => to.fullPath,
     async asyncData({ params, error }) {
         const apiEndpoint = 'https://lacapsule.cdn.prismic.io/api/v2';
         const api = await Prismic.getApi(apiEndpoint);
