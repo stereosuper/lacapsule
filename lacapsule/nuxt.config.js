@@ -9,7 +9,9 @@ module.exports = {
             const api = await Prismic.getApi(apiEndpoint);
             return await api.query('').then(res => {
                 return res.results.reduce((acc, cur) => {
-                    if (cur.uid !== null) acc.push(cur.uid);
+                    if (cur.uid !== null){
+                        acc.push(cur.uid);
+                    }
                     return acc;
                 }, []);
             });
