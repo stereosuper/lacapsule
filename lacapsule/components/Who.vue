@@ -6,7 +6,7 @@
             --><div id='galaxy' class='galaxy' ref='galaxy'></div>
         </div>
 
-        <h2 class='title-line'><span>{{content.team_title[0].text}}</span></h2>
+        <h2 class='title-line' v-if='content.team_title[0]'><span>{{content.team_title[0].text}}</span></h2>
         <div class='team-wrapper'>
             <div v-if='teamText' v-html='teamText'/>
             <div v-if='team'>
@@ -26,12 +26,12 @@
 
         <div class='story' v-if='storyText' v-html='storyText'/>
 
-        <h2 class='title-line'><span>{{story.our_way_title[0].text}}</span></h2>
+        <h2 class='title-line' v-if='story.our_way_title[0]'><span>{{story.our_way_title[0].text}}</span></h2>
         <div class='intro'>{{story.our_way_text}}</div>
 
         <div v-if='dimensions' class='dimensions'>
             <ul>
-                <li v-for='(dimension, index) in dimensions' :key='dimension.dimension_title[0].text'>
+                <li v-for='(dimension, index) in dimensions' v-if='dimension.dimension_title[0]' :key='dimension.dimension_title[0].text'>
                     <h3>{{dimension.dimension_title[0].text}}</h3>
                     <img v-if='dimension.img.url' :src='dimension.img.url' :alt='dimension.img.alt' :whidth='dimension.img.dimensions.width' :height='dimension.img.dimensions.height'>
                     <div v-if='dimensionTexts[index]' v-html='dimensionTexts[index]'/>

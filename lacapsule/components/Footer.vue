@@ -31,9 +31,9 @@
                 <div class='col-1'>
                     <h3 v-if='footer.title_contact[0]' class='no-top'>{{footer.title_contact[0].text}}</h3>
                     <a v-if='footer.email' :href='"mailto:" + footer.email'>{{footer.email}}</a>
-
-                    <h3 v-if='footer.title_docs[0]'>{{footer.title_docs[0].text}}</h3>
-                    <ul v-if='footer.docs' class='list-simple'>
+                    
+                    <h3 v-if='footer.title_docs[0].text'>{{footer.title_docs[0].text}}</h3>
+                    <ul v-if='footer.docs[0]' class='list-simple'>
                         <li v-for='doc in footer.docs' :key='doc.link.url'>
                             <a v-if='doc.link.url' :href='doc.link.url'>
                                 {{doc.text}}
