@@ -3,8 +3,10 @@
         <div class='container'>
             <div class='text'>
                 <h1 class='title to-anim' :class='{"appear": isMounted}'>
-                    {{ home.title[0].text }} <br>
-                    {{ home.title2 }}
+                    {{ home.title1 }} <br v-if='home.title2'>
+                    {{ home.title2 }} <br v-if='home.title3'>
+                    {{ home.title3 }}
+                    <span v-if='home.keywords' id='typed'></span>
                 </h1>
                 <!--<div v-if='intro' v-html='intro' :class='{"appear": isMounted}' class='inner-text to-anim'/>-->
                 <div class='illu'>
@@ -30,6 +32,8 @@
 <script>
 import Prismic from 'prismic-javascript';
 import PrismicDOM from 'prismic-dom';
+
+import Typed from 'typed.js';
 
 import btn from '~/mixins/btn.js';
 
@@ -74,6 +78,16 @@ export default {
         setTimeout(() => {
             this.isMounted = true;
         }, 300);
+
+        let keywords = this.home.keywords;
+        keywords = keywords.split(',');
+
+        new Typed('#typed', {
+            strings: keywords,
+            typeSpeed: 50,
+            backDelay: 2000,
+            loop: true
+        });
     },
     head() {
         return {
@@ -89,7 +103,6 @@ export default {
 @import "./assets/scss/abstracts/_variables.scss";
 
 h1 {
-    max-width: 350px;
     position: relative;
     z-index: 1;
     margin: 0 0 0.55em;
@@ -105,7 +118,7 @@ h1 {
 }
 
 .text {
-    width: 40%;
+    width: 50%;
 }
 
 .inner-text {

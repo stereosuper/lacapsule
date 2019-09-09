@@ -136,7 +136,7 @@ export default {
     > div{
         padding: 0 $gutter;
         &:first-child{
-            width: 36%;
+            width: 41%;
             margin: 0 0 0 10%;
         }
         &:last-child{

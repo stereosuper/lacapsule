@@ -85,8 +85,6 @@
 
 <script>
 export default {
-    components: {
-    },
     computed: {
         settings() {
             return this.$store.state.settings;
@@ -94,14 +92,6 @@ export default {
         footer() {
             return this.$store.state.footer;
         },
-    },
-    methods: {
-    },
-    watch: {
-    },
-    data() {
-        return {
-        };
     },
     mounted(){
         window.hbspt.forms.create({

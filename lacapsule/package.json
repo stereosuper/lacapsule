@@ -27,8 +27,10 @@
     "nuxt-sass-resources-loader": "^2.0.5",
     "prismic-dom": "^2.1.0",
     "prismic-javascript": "^1.5.0",
+    "typed.js": "^2.0.10",
     "validator": "^10.10.0",
-    "vivus": "^0.4.4"
+    "vivus": "^0.4.4",
+    "vue-typed-js": "^0.1.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
