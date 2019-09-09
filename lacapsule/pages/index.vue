@@ -3,9 +3,7 @@
         <div class='container'>
             <div class='text'>
                 <h1 class='title to-anim' :class='{"appear": isMounted}'>
-                    {{ home.title1 }} <br v-if='home.title2'>
-                    {{ home.title2 }} <br v-if='home.title3'>
-                    {{ home.title3 }}
+                    {{ home.title1 }}
                     <span v-if='home.keywords' id='typed'></span>
                 </h1>
                 <!--<div v-if='intro' v-html='intro' :class='{"appear": isMounted}' class='inner-text to-anim'/>-->
@@ -84,9 +82,11 @@ export default {
 
         new Typed('#typed', {
             strings: keywords,
-            typeSpeed: 50,
-            backDelay: 2000,
-            loop: true
+            typeSpeed: 60,
+            backSpeed: 30,
+            backDelay: 3000,
+            loop: true,
+            showCursor: false
         });
     },
     head() {
@@ -106,8 +106,13 @@ h1 {
     position: relative;
     z-index: 1;
     margin: 0 0 0.55em;
+    font-size: 4.5rem;
     text-align: left;
     text-shadow: none;
+    > span{
+        display: block;
+        height: 70px;
+    }
 }
 
 .container {
@@ -118,7 +123,7 @@ h1 {
 }
 
 .text {
-    width: 50%;
+    width: 40%;
 }
 
 .inner-text {
@@ -159,6 +164,7 @@ h1 {
     h1 {
         margin-left: auto;
         margin-right: auto;
+        font-size: 4rem;
         text-align: center;
     }
 
