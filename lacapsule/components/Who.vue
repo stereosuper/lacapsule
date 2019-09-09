@@ -136,7 +136,7 @@ export default {
     > div{
         padding: 0 $gutter;
         &:first-child{
-            width: 41%;
+            width: 36%;
             margin: 0 0 0 10%;
         }
         &:last-child{
@@ -186,7 +186,7 @@ export default {
 }
 
 .dimensions{
-    margin: 90px 12%;
+    margin: 40px 12% 90px;
     ul{
         display: flex;
         justify-content: space-between;
