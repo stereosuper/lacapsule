@@ -108,7 +108,7 @@ export default {
             self.$axios.$post('/api/contact', 'email='+self.email+'&name='+self.name+'&object='+self.object+'&message='+self.message+'&rgpd='+self.rgpd)
                 .then(res => {
                     console.log(res);
-                    self.formError = "Votre message a bien été envoyé! Nous répondons à votre message dans les plus brefs délais :)";
+                    self.formError = "Votre message a bien été envoyé! Nous répondrons à votre message dans les plus brefs délais :)";
                     self.success = true;
                 }, err => {
                     console.log(err);
