@@ -82,9 +82,9 @@ export default {
 
         new Typed('#typed', {
             strings: keywords,
-            typeSpeed: 60,
+            typeSpeed: 55,
             backSpeed: 30,
-            backDelay: 3000,
+            backDelay: 2500,
             loop: true,
             showCursor: false
         });
