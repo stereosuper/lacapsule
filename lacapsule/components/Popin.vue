@@ -83,7 +83,7 @@ export default {
                 return;
             }
             
-            self.$axios.$post('/api/ressource', 'email='+self.email+'&title='+self.file)
+            self.$axios.$post('/api/ressource', 'email='+self.email+'&title='+self.file+'&rgpd='+self.rgpd)
                 .then(res => {
                     console.log(res);
                     self.formError = "Bien envoyé! La ressource vous sera envoyée par mail :)";

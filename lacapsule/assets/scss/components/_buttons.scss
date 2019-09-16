@@ -22,10 +22,10 @@
         }
     }
     &.inverted{
-        > a, &:after{
+        > a, > button, &:after{
             background: none;
         }
-        > a{
+        > a, > button{
             border: 1px solid #fff;
             &:hover,
             &:focus {

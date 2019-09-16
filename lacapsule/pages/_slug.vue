@@ -46,11 +46,14 @@
             <who v-if='page.who' :content='page.who' :team='page.team' :story='page.story' :dimensions='page.dimensions' :video='page.video'/>
 
             <div v-if='page.cta' class='cta'>
-                <div v-for='item in page.cta' :key='item.link_text'>
+                <div v-for='(item, i) in page.cta' :key='i'>
                     <div :class='[{"inverted": item.style === "transparent"}, "button"]'>
-                        <a :href='item.link.url'>
+                        <a :href='item.link.url' v-if='item.link.url'>
                             {{item.link_text}}
                         </a>
+                        <button v-else @click='openPopin' :data-popin='i+1'>
+                            {{item.link_text}}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -58,6 +61,10 @@
 
         <div v-for='(file, i) in page.files' :key='i' >
             <popin :file='file.file_title[0].text' :name='"ressource"+(i+1)' :labelID='i' v-if='!file.file.url'/>
+        </div>
+
+        <div v-for='(item, i) in page.cta' :key='i' >
+            <popin :file='item.link_text' :name='"cta"+(i+1)' :labelID='i' v-if='!item.link.url'/>
         </div>
     </div>
 </template>
@@ -186,6 +193,11 @@ export default {
             title: this.page.title,
             meta: [{ hid: 'description', name: 'description', content: this.page.desc }]
         };
+    }, 
+    methods: {
+        openPopin (e){
+            this.$store.commit('openPopin', "cta"+e.currentTarget.dataset.popin);
+        }
     }
 };
 </script>
