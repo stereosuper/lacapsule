@@ -91,6 +91,11 @@ export default {
     watch: {
         open() {
             this.closed = this.$store.state.popin !== this.labelID+1;
+            if( this.closed ){
+                document.body.classList.remove('menuOpen');
+            }else{
+                document.body.classList.add('menuOpen');
+            }
         }
     }
 };
