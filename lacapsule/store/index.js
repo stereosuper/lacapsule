@@ -13,7 +13,7 @@ const createStore = () => {
                 clickBurger: false
             },
             hasFooter: true,
-            popin: 0
+            popin: '',
         }),
         mutations: {
             setSettings(state, settings) {

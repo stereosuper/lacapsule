@@ -56,7 +56,9 @@
             </div>
         </div>
 
-        <popin v-for='(file, i) in page.files' :key='i' :file='file.file_title[0].text' :labelID='i' v-if='currentCat == "all" || currentCat == file.cat'/>
+        <div v-for='(file, i) in page.files' :key='i' >
+            <popin :file='file.file_title[0].text' :name='"ressource"+(i+1)' :labelID='i' v-if='!file.file.url'/>
+        </div>
     </div>
 </template>
 

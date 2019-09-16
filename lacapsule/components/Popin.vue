@@ -1,15 +1,15 @@
 <template>
-    <div class='popin' :class='[{"off": closed}]'>
+    <div class='popin' :class='[{"off": closed}]' :data-name='name'>
         <div class='content'>
             <h2>Télécharger un document</h2>
             <form method='post' action='/api/ressource' @submit='checkForm'>
                 <div class='field'>
-                    <label :for='"email"+labelID'>Email <span>*</span></label>
-                    <input type='email' name='email' v-model='email' :id='"email"+labelID'/>
+                    <label :for='"email"+name'>Email <span>*</span></label>
+                    <input type='email' :name='"email"+name' v-model='email' :id='"email"+name'/>
                 </div>
                 <div class='field-check'>
-                    <input type='checkbox' :id='"rgpd"+labelID' name='rgpd' value='1' v-model='rgpd'/>
-                    <label :for='"rgpd"+labelID'>
+                    <input type='checkbox' :id='"rgpd"+name' :name='"rgpd"+name' value='1' v-model='rgpd'/>
+                    <label :for='"rgpd"+name'>
                         J’accepte de recevoir régulièrement, par courrier électronique, les newsletters contenant les derniers articles de blog, l’actualité corporate, évènementiel de La Capsule, et avoir pris connaissance de notre politique de confidentialité.
                     </label>
                 </div>
@@ -19,8 +19,9 @@
                     <path d="M0.541016 13.1653H10.4577V11.7487H0.541016V13.1653ZM10.4577 4.37363H7.62435V0.123632H3.37435V4.37363H0.541016L5.49935 9.33199L10.4577 4.37363Z"/>
                     </svg>
                 </button>
+                <p v-if='formError' class='error'>{{formError}}</p>
             </form>
-            <p v-if='formError' class='error'>{{formError}}</p>
+            
             <button class='close' @click='close'>Fermer <div></div></button>
         </div>
     </div>
@@ -51,12 +52,16 @@ export default {
         labelID: {
             type: Number,
             required: true
-        }
+        },
+        name: {
+            type: String,
+            required: true
+        },
     },
     methods: {
         close() {
             this.closed = true;
-            this.$store.commit('openPopin', 0);
+            this.$store.commit('openPopin', '');
         },
         async checkForm(e){
             e.preventDefault();
@@ -90,8 +95,8 @@ export default {
     },
     watch: {
         open() {
-            this.closed = this.$store.state.popin !== this.labelID+1;
-            if( this.closed ){
+            this.closed = this.$store.state.popin !== this.name;
+            if( this.$store.state.popin === '' ){
                 document.body.classList.remove('menuOpen');
             }else{
                 document.body.classList.add('menuOpen');
@@ -113,6 +118,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 100;
     background: rgba(#182D52, 0.7);
     overflow-y: auto;
     &.off{
@@ -238,7 +244,7 @@ input{
 }
 
 .error{
-    margin: 10px 0 0;
+    margin: 20px 0 0 65px;
     font-size: 1.2rem;
     color: $primary;
 }

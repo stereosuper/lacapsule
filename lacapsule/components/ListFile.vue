@@ -66,7 +66,7 @@ export default {
             this.form = true;
         },
         openPopin (){
-            this.$store.commit('openPopin', this.nb+1);
+            this.$store.commit('openPopin', 'ressource'+(this.nb+1));
         }
     }
 };

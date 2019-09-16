@@ -34,10 +34,13 @@
                     
                     <h3 v-if='footer.title_docs[0].text'>{{footer.title_docs[0].text}}</h3>
                     <ul v-if='footer.docs[0]' class='list-simple'>
-                        <li v-for='doc in footer.docs' :key='doc.link.url'>
+                        <li v-for='(doc, i) in footer.docs' :key='doc.link.url'>
                             <a v-if='doc.link.url' :href='doc.link.url'>
                                 {{doc.text}}
                             </a>
+                            <button v-else @click='openPopin' :data-popin='i+1'>
+                                {{doc.text}}
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -99,6 +102,11 @@ export default {
             formId: "78b3bc5e-2d7a-45e2-9fe1-6902a15819ed",
             target: "#hubspotForm"
         });
+    }, 
+    methods: {
+        openPopin (e){
+            this.$store.commit('openPopin', "doc"+e.target.dataset.popin);
+        }
     }
 };
 </script>
@@ -120,7 +128,7 @@ h3{
             content: none;
         }
     }
-    a{
+    a, button{
         font-style: normal;
         color: inherit;
         text-decoration: none;
@@ -131,6 +139,9 @@ h3{
         &:hover, &:focus{
             color: $primary;
         }
+    }
+    button{
+        text-align: left;
     }
 }
 
