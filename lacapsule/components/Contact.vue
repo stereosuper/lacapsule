@@ -189,7 +189,6 @@ input, textarea{
 input{
     max-width: 345px;
     &[type=checkbox]{
-        width: auto;
         margin: 7px 15px 0 calc(21% + 15px);
         + label{
             width: 100%;

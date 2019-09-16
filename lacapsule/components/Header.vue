@@ -1,5 +1,5 @@
 <template>
-    <header class='header'>
+    <header :class='["header", {"off": isPopinOpen}]'>
         <div class='header-container'>
             <nuxt-link to='/' class='logo'>
                 <svg ref='logo' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175.71 38.88" width='175.71' height='38.88'>
@@ -57,6 +57,9 @@ export default {
         },
         isPageTransitioning() {
             return this.$store.state.pageTransitioning;
+        },
+        isPopinOpen() {
+            return this.$store.state.popin;
         }
     },
     methods: {
@@ -87,12 +90,16 @@ export default {
         isBurgerClicked() {
             this.menuOpen = !this.menuOpen;
             this.menuText = this.menuOpen ? 'Fermer' : 'Menu';
+        },
+        isPopinOpen() {
+            this.off = this.$store.state.popin === 0;
         }
     },
     data() {
         return {
             menuOpen: false,
-            menuText: 'Menu'
+            menuText: 'Menu',
+            off: false
         };
     },
     mounted(){
@@ -108,6 +115,9 @@ export default {
     padding: $gutter 0;
     position: relative;
     z-index: 40;
+    &.off{
+        z-index: 10;
+    }
 }
 
 .header-container {

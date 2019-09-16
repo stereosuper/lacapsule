@@ -12,7 +12,8 @@ const createStore = () => {
                 hoverBurger: false,
                 clickBurger: false
             },
-            hasFooter: true
+            hasFooter: true,
+            popin: 0
         }),
         mutations: {
             setSettings(state, settings) {
@@ -35,6 +36,9 @@ const createStore = () => {
             },
             setPageTransitioning(state, value) {
                 state.pageTransitioning = value;
+            },
+            openPopin(state, value) {
+                state.popin = value;
             }
         },
         actions: {

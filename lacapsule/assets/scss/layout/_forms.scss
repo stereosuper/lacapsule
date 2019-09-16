@@ -55,6 +55,9 @@ input {
             display: none;
         }
     }
+    &[type=checkbox]{
+        width: auto;
+    }
 }
 
 textarea{

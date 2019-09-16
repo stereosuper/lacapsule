@@ -16,13 +16,14 @@
                 </svg>
                 Demander le document
             </a>-->
-            <button :class='[{"off": form}, "download"]' @click='displayForm' v-else>
+            <!--<button :class='[{"off": form}, "download"]' @click='displayForm' v-else>-->
+            <button class='download' v-else @click='openPopin'>
                 <svg class='mail' width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M15.2918 2.13477H2.54785V11.3743H15.2918V2.13477ZM3.54785 3.8483V9.67323L6.7786 6.44256L3.54785 3.8483ZM13.6217 10.3743H4.26094L7.56298 7.0724L9.22511 8.40708L10.4945 7.24708L13.6217 10.3743ZM14.2918 9.63021V3.77716L11.2335 6.57182L14.2918 9.63021ZM13.5124 3.13477H4.25641L9.18309 7.09085L13.5124 3.13477Z"/>
                 </svg>
                 Demander le document
             </button>
-            <form method='post' action='/api/ressource' :class='[{"on": form}]' @submit='checkForm'>
+            <!--<form method='post' action='/api/ressource' :class='[{"on": form}]' @submit='checkForm'>
                 <label>Email</label>
                 <input type='email' name='email' v-model='email'/>
                 <button type='submit' class='ok' name='submit'>
@@ -32,7 +33,7 @@
                     </svg>
                 </button>
             </form>
-            <p v-if='formError' class='error'>{{formError}}</p>
+            <p v-if='formError' class='error'>{{formError}}</p>-->
         </div>
     </li>
 </template>
@@ -40,21 +41,21 @@
 <script>
 import Prismic from 'prismic-javascript';
 import PrismicDOM from 'prismic-dom';
-import validator from 'validator';
 
 export default {
     props: {
         file: {
             type: Object,
             required: true
+        },
+        nb: {
+            type: Number,
+            required: true
         }
     },
     data() {
         return {
             content: '',
-            form: false,
-            formError: '',
-            email: ''
         };
     },
     created() {
@@ -64,29 +65,8 @@ export default {
         displayForm(){
             this.form = true;
         },
-        async checkForm(e){
-            e.preventDefault();
-
-            const self = this;
-
-            if( !self.email ){
-                self.formError = "L'adresse email est requise!";
-                return;
-            }
-
-            if( !validator.isEmail(self.email) ){
-                self.formError = "L'adresse email semble invalide...";
-                return;
-            }
-            
-            self.$axios.$post('/api/ressource', 'email='+self.email+'&title='+self.file.file_title[0].text)
-                .then(res => {
-                    console.log(res);
-                    self.formError = "Bien envoyé! La ressource vous sera envoyée par mail :)";
-                }, err => {
-                    console.log(err);
-                    self.formError = "Désolé, un problème est survenu!";
-                });
+        openPopin (){
+            this.$store.commit('openPopin', this.nb+1);
         }
     }
 };
@@ -126,18 +106,6 @@ img{
     margin: 10px 0 0;
 }
 
-form{
-    display: none;
-    align-items: center;
-    &.on{
-        display: flex;
-    }
-}
-
-input{
-    margin: 0 15px;
-}
-
 svg{
     fill: currentColor;
 }
@@ -163,28 +131,6 @@ svg{
     .mail{
         top: 3px;
     }
-}
-
-.ok{
-    padding: 9px 10px 8px;
-    font-family: $league;
-    font-size: 1.1rem;
-    white-space: nowrap;
-    border-radius: 5px;
-    background: $primary;
-    &:hover, &:focus{
-        background: #fff;
-        color: $primary;
-    }
-    svg{
-        margin: -4px 0 0 3px;
-    }
-}
-
-.error{
-    margin: 10px 0 0;
-    font-size: 1.2rem;
-    color: $primary;
 }
 
 

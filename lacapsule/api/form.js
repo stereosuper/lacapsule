@@ -51,7 +51,7 @@ app.post('/contact', urlencodedParser, (req, res) => {
 });
 
 app.post('/ressource', urlencodedParser, (req, res) => {
-    if (!req.body.email) {
+    if (!req.body.email || !req.body.rgpd) {
         return res.status(422).json({ error: 'Désolé, un problème est survenu!' });
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='main-content'>
         <div :class='[{"appear": isMounted}, "to-anim", "container"]'>
             <div class='small-content'>
                 <div class='title'>
@@ -38,12 +38,12 @@
                 </select>
             </form>
             <ul v-if='page.files' class='files'>
-                <listFile v-for='file in page.files' :key='file.file_title[0].text' :file='file' :cat='currentCat' v-if='currentCat == "all" || currentCat == file.cat'/>
+                <listFile v-for='(file, i) in page.files' :key='file.file_title[0].text' :nb='i' :file='file' :cat='currentCat' v-if='currentCat == "all" || currentCat == file.cat'/>
             </ul>
 
-            <contact v-if='page.contact' :content='page.contact'></contact>
+            <contact v-if='page.contact' :content='page.contact'/>
 
-            <who v-if='page.who' :content='page.who' :team='page.team' :story='page.story' :dimensions='page.dimensions' :video='page.video'></who>
+            <who v-if='page.who' :content='page.who' :team='page.team' :story='page.story' :dimensions='page.dimensions' :video='page.video'/>
 
             <div v-if='page.cta' class='cta'>
                 <div v-for='item in page.cta' :key='item.link_text'>
@@ -55,6 +55,8 @@
                 </div>
             </div>
         </div>
+
+        <popin v-for='(file, i) in page.files' :key='i' :file='file.file_title[0].text' :labelID='i' v-if='currentCat == "all" || currentCat == file.cat'/>
     </div>
 </template>
 
@@ -71,6 +73,8 @@ import ListFile from '~/components/ListFile.vue';
 import Contact from '~/components/Contact.vue';
 import Who from '~/components/Who.vue';
 
+import Popin from '~/components/Popin.vue';
+
 export default {
     data() {
         return {
@@ -85,7 +89,8 @@ export default {
         ListRef,
         ListFile,
         Contact,
-        Who
+        Who,
+        Popin
     },
     watchQuery: ['pages'],
     key: to => to.fullPath,
@@ -185,6 +190,11 @@ export default {
 
 <style lang='scss' scoped>
 @import "./assets/scss/abstracts/_variables.scss";
+
+.main-content{
+    position: relative;
+    z-index: 20;
+}
 
 .small-content {
     margin: 0 $col;
