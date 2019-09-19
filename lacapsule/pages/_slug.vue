@@ -245,9 +245,10 @@ export default {
 }
 
 .blocks {
-    padding: 4vh 0 80px;
+    padding: 80px 0 0;
     justify-content: center;
     &.circle {
+        padding: 4vh 0 80px;
         justify-content: space-between;
     }
 }

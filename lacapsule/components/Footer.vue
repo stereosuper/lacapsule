@@ -28,11 +28,8 @@
                     <li v-if='footer.medium.url' class='medium'><a :href='footer.medium.url' :target='footer.medium.target'>Medium</a></li>
                 </ul>
 
-                <div class='col-1'>
-                    <h3 v-if='footer.title_contact[0]' class='no-top'>{{footer.title_contact[0].text}}</h3>
-                    <a v-if='footer.email' :href='"mailto:" + footer.email'>{{footer.email}}</a>
-                    
-                    <h3 v-if='footer.title_docs[0].text'>{{footer.title_docs[0].text}}</h3>
+                <div class='col-2'>
+                    <h3 v-if='footer.title_docs[0].text' class='no-top'>{{footer.title_docs[0].text}}</h3>
                     <ul v-if='footer.docs[0]' class='list-simple'>
                         <li v-for='(doc, i) in footer.docs' :key='doc.link.url'>
                             <a v-if='doc.link.url' :href='doc.link.url'>
@@ -45,7 +42,13 @@
                     </ul>
                 </div>
 
-                 <div class='col-2'></div>
+                <div class='col-1'>
+                    <div v-if='footer.img_contact' class='contact_img'>
+                        <div><img :src='footer.img_contact.url' :alt='footer.img_contact.alt'/></div>
+                    </div>
+                    <h3 v-if='footer.title_contact[0]' class='no-top'>{{footer.title_contact[0].text}}</h3>
+                    <a v-if='footer.email' :href='"mailto:" + footer.email'>{{footer.email}}</a>
+                </div>
 
                 <div class='col-3'>
                     <h3 v-if='footer.title_newsletter[0]'>{{footer.title_newsletter[0].text}}</h3>
@@ -149,6 +152,18 @@ h3{
     position: relative;
     margin: 100px 0 0;
     z-index: 10;
+}
+
+.contact_img {
+    display: inline-block;
+    > div {
+        border: 5px solid #fff;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    + h3{
+        margin-bottom: 0;
+    }
 }
 
 .addresses{
@@ -296,15 +311,16 @@ input{
 }
 
 @media (max-width: $desktop){
+    .col-1, .col-2, .col-3{
+        margin-bottom: 40px;
+    }
+
     .col-1{
         width: 50%;
     }
 
-    .col-2, .col-3{
-        width: 100%;
-    }
-
     .col-3{
+        width: 100%;
         margin: 0;
     }
 }
@@ -330,7 +346,7 @@ input{
         padding: 0;
     }
 
-    .col-1{
+    .col-1, .col-2{
         width: 100%;
     }
 

@@ -32,6 +32,9 @@ export default {
     ul{
         text-align: left;
     }
+    .block-img{
+        min-height: 172px;
+    }
 }
 </style>
 

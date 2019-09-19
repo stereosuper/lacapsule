@@ -32,16 +32,19 @@ app.post('/contact', urlencodedParser, (req, res) => {
     let error = false;
     object = object ? ' - ' + object : '';
 
-    transporter.sendMail({
-        from: req.body.name + ' <' + req.body.email + '>',
-        to: 'elisabethhamel@outlook.com',
-        subject: 'Message du site La Capsule ' + object,
-        text: req.body.message
-    }, err => {
-        if (err) {
-            error = err;
+    transporter.sendMail(
+        {
+            from: req.body.name + ' <' + req.body.email + '>',
+            to: 'contact@lacapsule.co',
+            subject: 'Message du site La Capsule ' + object,
+            text: req.body.message
+        },
+        err => {
+            if (err) {
+                error = err;
+            }
         }
-    });
+    );
 
     if (error) {
         return res.status(422).json({ message: error });
@@ -67,9 +70,10 @@ app.post('/ressource', urlencodedParser, (req, res) => {
 
     let error = false;
 
-    transporter.sendMail({
+    transporter.sendMail(
+        {
             from: req.body.email,
-            to: 'elisabethhamel@outlook.com',
+            to: 'contact@lacapsule.co',
             subject: 'Demande de ressource - La Capsule',
             text: req.body.email + " a demandé l'accès à " + req.body.title
         },

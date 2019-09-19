@@ -266,6 +266,8 @@ blockquote{
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+    margin-top: 100px;
+    margin-bottom: 150px;
     .details{
         > div {
             display: flex;
