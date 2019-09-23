@@ -10,7 +10,7 @@
                 <div class='field-check'>
                     <input type='checkbox' :id='"rgpd"+name' :name='"rgpd"+name' value='1' v-model='rgpd'/>
                     <label :for='"rgpd"+name'>
-                        J’accepte de recevoir régulièrement, par courrier électronique, les newsletters contenant les derniers articles de blog, l’actualité corporate, évènementiel de La Capsule, et avoir pris connaissance de notre politique de confidentialité.
+                        J’accepte de recevoir régulièrement, par courrier électronique, les newsletters contenant les derniers articles de blog, l’actualité corporate, évènementielle de La Capsule, et avoir pris connaissance de notre politique de confidentialité.
                     </label>
                 </div>
                 <button type='submit' class='ok' name='submit'>
@@ -86,7 +86,7 @@ export default {
             self.$axios.$post('/api/ressource', 'email='+self.email+'&title='+self.file+'&rgpd='+self.rgpd)
                 .then(res => {
                     console.log(res);
-                    self.formError = "Bien envoyé! La ressource vous sera envoyée par mail :)";
+                    self.formError = "Bien reçu! La ressource vous sera envoyée par mail :)";
                 }, err => {
                     console.log(err);
                     self.formError = "Désolé, un problème est survenu!";
