@@ -73,7 +73,7 @@ app.post('/ressource', urlencodedParser, (req, res) => {
     transporter.sendMail(
         {
             from: req.body.email,
-            to: 'contact@lacapsule.co',
+            to: 'alfred@lacapsule.co',
             subject: 'Demande de ressource - La Capsule',
             text: req.body.email + " a demandé l'accès à " + req.body.title
         },
