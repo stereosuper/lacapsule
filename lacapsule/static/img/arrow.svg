@@ -1,5 +1,6 @@
 <svg width="292" height="263" viewBox="0 0 292 263" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0)">
+<g class='menu-stars'>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M237.967 58.6191L235.727 58.1712L237.988 57.7193L238.439 55.4664L238.884 57.6909L241.142 58.1143L238.917 58.6347L238.496 60.8818L237.967 58.6191Z" fill="white" fill-opacity="0.9"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M194.487 58.8415L190.008 57.9457L194.53 57.0418L195.431 52.5356L196.321 56.9849L200.838 57.8318L196.387 58.8728L195.545 63.3671L194.487 58.8415Z" fill="white" fill-opacity="0.9"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M38.621 183.632L35.3971 182.987L38.6523 182.336L39.3008 179.093L39.941 182.295L43.193 182.905L39.9891 183.654L39.3828 186.889L38.621 183.632Z" fill="white" fill-opacity="0.9"/>
@@ -9,6 +10,7 @@
 <path fill-rule="evenodd" clip-rule="evenodd" d="M79.8038 149.706L77.4763 149.24L79.8263 148.771L80.2945 146.429L80.7567 148.741L83.1045 149.181L80.7914 149.722L80.3537 152.058L79.8038 149.706Z" fill="white" fill-opacity="0.9"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M229.178 102.173L225.955 101.529L229.209 100.878L229.858 97.6355L230.498 100.837L233.749 101.447L230.546 102.196L229.94 105.43L229.178 102.173Z" fill="white" fill-opacity="0.9"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M113.427 191.984L111.724 191.643L113.444 191.299L113.786 189.586L114.125 191.278L115.843 191.6L114.15 191.996L113.83 193.705L113.427 191.984Z" fill="white" fill-opacity="0.9"/>
+</g>
 <g filter="url(#filter_arrow)">
 <line x1="36.7221" y1="182.53" x2="79.3062" y2="148.838" stroke="white" stroke-width="2"/>
 <line x1="59.2901" y1="199.194" x2="236.662" y2="58.2904" stroke="white" stroke-width="2"/>

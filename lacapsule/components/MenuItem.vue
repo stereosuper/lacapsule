@@ -1,13 +1,13 @@
 <template>
     <li :class='[item.ref, "item"]'>
-        <a v-if='!item.link.uid' :href='item.link.url' :target='item.link.target' :class='[{"menuClicked": isBurgerClicked}, "link"]'>
-            <div :id='item.ref'></div>
-            <span>{{ item.label }}</span>
-        </a>
         <nuxt-link v-if='item.link.uid' :to='"/" + item.link.uid' :class='[{"menuClicked": isBurgerClicked, "menuNotClicked": !isBurgerClicked}, "link"]' @click.native='closeMenu'>
             <div :id='item.ref'></div>
             <span>{{ item.label }}</span>
         </nuxt-link>
+        <a v-else :href='item.link.url' :target='item.link.target' :class='[{"menuClicked": isBurgerClicked}, "link"]'>
+            <div :id='item.ref'></div>
+            <span>{{ item.label }}</span>
+        </a>
     </li>
 </template>
 
@@ -58,6 +58,18 @@ export default {
     }
 };
 </script>
+
+
+<style lang='scss'>
+@import "./assets/scss/abstracts/_variables.scss";
+.menu-stars{
+    opacity: 0;
+    transition: $transition;
+    .menuOpen &{
+        opacity: 1;
+    }
+}
+</style>
 
 <style lang='scss' scoped>
 @import "./assets/scss/abstracts/_variables.scss";

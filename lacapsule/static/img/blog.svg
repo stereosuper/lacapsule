@@ -12,6 +12,7 @@
 <line x1="127.267" y1="38.2611" x2="126.58" y2="31.1112" stroke="white" stroke-width="2"/>
 <line x1="69.6577" y1="98.2439" x2="78.1094" y2="74.7812" stroke="white" stroke-width="2"/>
 </g>
+<g class='menu-stars'>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M3.94047 67.1677L1.70947 66.6795L3.97838 66.2684L4.46942 64.024L4.87397 66.2562L7.12493 66.7204L4.89034 67.2005L4.42871 69.4396L3.94047 67.1677Z" fill="white" fill-opacity="0.9"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M99.4858 56.047L96.3623 55.3635L99.5388 54.788L100.226 51.6459L100.793 54.7709L103.944 55.4207L100.816 56.0929L100.169 59.2276L99.4858 56.047Z" fill="white" fill-opacity="0.9"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M83.6338 112.015L81.4028 111.527L83.6717 111.116L84.1628 108.871L84.5673 111.103L86.8183 111.568L84.5837 112.048L84.1221 114.287L83.6338 112.015Z" fill="white" fill-opacity="0.9"/>
@@ -22,6 +23,7 @@
 <path fill-rule="evenodd" clip-rule="evenodd" d="M43.5832 145.324L42.4881 145.084L43.6018 144.882L43.8429 143.78L44.0415 144.876L45.1464 145.104L44.0495 145.34L43.8229 146.439L43.5832 145.324Z" fill="white" fill-opacity="0.9"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M155.893 50.1486L153.703 49.6693L155.93 49.2657L156.412 47.0621L156.81 49.2537L159.019 49.7094L156.826 50.1808L156.372 52.3792L155.893 50.1486Z" fill="white" fill-opacity="0.9"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M73.2177 1.81645L72.1226 1.57679L73.2363 1.37503L73.4773 0.273315L73.6759 1.36902L74.7809 1.59686L73.684 1.83256L73.4574 2.93165L73.2177 1.81645Z" fill="white" fill-opacity="0.9"/>
+</g>
 <defs>
 <filter id="filter0_dd" x="0.10675" y="2.54382" width="163.736" height="168.66" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
