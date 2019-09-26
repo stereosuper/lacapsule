@@ -10,7 +10,7 @@
                 <div class='field-check'>
                     <input type='checkbox' :id='"rgpd"+name' :name='"rgpd"+name' value='1' v-model='rgpd'/>
                     <label :for='"rgpd"+name'>
-                        J’accepte de recevoir régulièrement, par courrier électronique, les newsletters contenant les derniers articles de blog, l’actualité corporate, évènementielle de La Capsule, et avoir pris connaissance de notre politique de confidentialité.
+                        J’accepte de recevoir régulièrement, par courrier électronique, les newsletters contenant les derniers articles de blog, l’actualité corporate, évènementielle de La Capsule, et avoir pris connaissance de <nuxt-link to='/confidentialite'>notre politique de confidentialité</nuxt-link>.
                     </label>
                 </div>
                 <button type='submit' class='ok' name='submit'>

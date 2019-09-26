@@ -79,9 +79,9 @@
             <div class='footer-bottom'>
                 <p v-if='footer.text_footer'>
                     {{footer.text_footer}}
-                    <span v-if='footer.legal_link.url'> - </span>
-                    <nuxt-link v-if='footer.legal_link.url' :to='footer.legal_link.url'>
-                        {{footer.legal_link.name}}
+                    <span v-if='footer.legal_link.slug'> - </span>
+                    <nuxt-link v-if='footer.legal_link.uid' :to='footer.legal_link.uid'>
+                        Politique de confidentialité
                     </nuxt-link>
                 </p>
             </div>
