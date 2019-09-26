@@ -133,6 +133,7 @@ export default {
     > span {
         display: none;
         position: absolute;
+        white-space: nowrap;
     }
 }
 
