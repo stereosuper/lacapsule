@@ -95,7 +95,7 @@ export default {
         left: 30%;
     }
     &:nth-of-type(4) {
-        top: 47%;
+        top: 44%;
         left: 75%;
     }
     &:nth-of-type(5) {
@@ -198,9 +198,6 @@ export default {
         }
         &:nth-of-type(3){
             top: 65%;
-        }
-        &:nth-of-type(4){
-            top: 52%;
         }
     }
 }
