@@ -40,6 +40,17 @@
                             </button>
                         </li>
                     </ul>
+                    <h3 class='no-top'>Blog</h3>
+                    <ul v-if='mediumArticles && mediumArticles.length' class='list-blog'>
+                        <li v-for='art in mediumArticles' :key='art.guid._'>
+                            <a :href='art.link' rel='noopener nofollow noreferrer' target="_blank">
+                                {{art.title}}
+                            </a>
+                        </li>
+                    </ul>
+                    <a v-if='footer.medium.url' :href='footer.medium.url' rel='noopener nofollow noreferrer' target="_blank">
+                        › Tous les articles
+                    </a>
                 </div>
 
                 <div class='col-1'>
@@ -98,57 +109,80 @@ export default {
         footer() {
             return this.$store.state.footer;
         },
+        mediumArticles() {
+            return this.$store.state.mediumArticles;
+        }
     },
-    mounted(){
+    mounted() {
         window.hbspt.forms.create({
-            portalId: "6299131",
-            formId: "78b3bc5e-2d7a-45e2-9fe1-6902a15819ed",
-            target: "#hubspotForm"
+            portalId: '6299131',
+            formId: '78b3bc5e-2d7a-45e2-9fe1-6902a15819ed',
+            target: '#hubspotForm'
         });
-    }, 
+    },
     methods: {
-        openPopin (e){
-            this.$store.commit('openPopin', "doc"+e.target.dataset.popin);
+        openPopin(e) {
+            this.$store.commit('openPopin', 'doc' + e.target.dataset.popin);
         }
     }
 };
 </script>
 
 <style lang='scss' scoped>
-@import "./assets/scss/abstracts/_variables.scss";
+@import './assets/scss/abstracts/_variables.scss';
 
-h3{
+h3 {
     font-size: 1.8rem;
-    &.no-top{
+    &.no-top {
         margin: 0.5em 0;
     }
 }
 
-.list-simple{
-    > li{
+.list-blog {
+    > li {
         padding: 0;
-        &:before{
+        &:before {
             content: none;
         }
     }
-    a, button{
+    a {
         font-style: normal;
         color: inherit;
         text-decoration: none;
-        &:before{
-            content: '› ';
-            position: static;
-        }
-        &:hover, &:focus{
+        &:hover,
+        &:focus {
             color: $primary;
         }
     }
-    button{
+}
+
+.list-simple {
+    > li {
+        padding: 0;
+        &:before {
+            content: none;
+        }
+    }
+    a,
+    button {
+        font-style: normal;
+        color: inherit;
+        text-decoration: none;
+        &:before {
+            content: '› ';
+            position: static;
+        }
+        &:hover,
+        &:focus {
+            color: $primary;
+        }
+    }
+    button {
         text-align: left;
     }
 }
 
-.footer{
+.footer {
     position: relative;
     margin: 100px 0 0;
     z-index: 10;
@@ -161,59 +195,63 @@ h3{
         border-radius: 50%;
         overflow: hidden;
     }
-    + h3{
+    + h3 {
         margin-bottom: 0;
     }
 }
 
-.addresses{
+.addresses {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    > li{
+    > li {
         width: 25%;
         padding: 0 $gutter $gutter;
-        &:before{
+        &:before {
             content: none;
         }
     }
-    p{
+    p {
         margin: 25px 0 0;
         font-weight: 700;
     }
 }
 
-.footer-galaxies{
+.footer-galaxies {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
-.col-1, .col-2, .col-3{
+.col-1,
+.col-2,
+.col-3 {
     padding: 0 $gutter;
 }
-.col-1{
+.col-1 {
     width: 25%;
 }
-.col-2{
+.col-2 {
     width: 50%;
 }
-.col-3{
+.col-3 {
     width: 75%;
     margin: 0 0 0 auto;
 }
 
-.social{
+.social {
     height: 220px;
     position: relative;
     margin: 0;
-    > li{
+    > li {
         position: absolute;
         padding: 0;
-        &:before{
+        &:before {
             content: none;
         }
-        &:nth-child(2):before, &:nth-child(3):before, &:nth-child(3):after{
+        &:nth-child(2):before,
+        &:nth-child(3):before,
+        &:nth-child(3):after {
             content: '';
             width: 145px;
             height: 2px;
@@ -223,31 +261,31 @@ h3{
             border-radius: 0;
             box-shadow: 0 0 24px rgba(#fff, 0.25), 0 0 15px rgba(#fff, 0.68);
         }
-        &:nth-child(2){
+        &:nth-child(2) {
             top: 20px;
             left: 135px;
-            &:before{
+            &:before {
                 left: -85px;
                 top: 27px;
                 transform: rotate(13deg);
             }
         }
-        &:nth-child(3){
+        &:nth-child(3) {
             top: 105px;
             left: 55px;
-            &:before{
+            &:before {
                 left: -50px;
                 top: -15px;
                 transform: rotate(73deg);
             }
-            &:after{
+            &:after {
                 right: -74px;
                 top: 0;
                 transform: rotate(-45deg);
             }
         }
     }
-    a{
+    a {
         display: block;
         width: 72px;
         height: 72px;
@@ -256,17 +294,17 @@ h3{
     }
 }
 
-.linkedin{
+.linkedin {
     background: url(../static/img/linkedin.png);
 }
-.twitter{
+.twitter {
     background: url(../static/img/twitter.png);
 }
-.medium{
+.medium {
     background: url(../static/img/medium.png);
 }
 
-.footer-bottom{
+.footer-bottom {
     padding: $gutter;
     margin: 60px 0 0;
     background: linear-gradient(360deg, rgba(#000, 0.25) 0%, rgba(#000, 0.25) 72%);
@@ -275,28 +313,28 @@ h3{
     font-weight: 700;
     line-height: 1;
     text-align: center;
-    p{
+    p {
         margin: 0;
     }
-    a{
+    a {
         font-weight: 400;
     }
 }
 
-form{
-    > div{
+form {
+    > div {
         display: flex;
         align-items: center;
     }
 }
 
-label{
+label {
     display: none;
 }
 
-input{
+input {
     margin: 0;
-    &[type=submit]{
+    &[type='submit'] {
         border: 0;
         padding: 0;
         margin: 0 0 0 70px;
@@ -304,58 +342,64 @@ input{
         text-decoration: underline;
         font-style: italic;
         text-align: left;
-        &:hover, &:focus{
+        &:hover,
+        &:focus {
             color: #fff;
         }
     }
 }
 
-@media (max-width: $desktop){
-    .col-1, .col-2, .col-3{
+@media (max-width: $desktop) {
+    .col-1,
+    .col-2,
+    .col-3 {
         margin-bottom: 40px;
     }
 
-    .col-1{
+    .col-1 {
         width: 50%;
     }
 
-    .col-3{
+    .col-3 {
         width: 100%;
         margin: 0;
     }
 }
 
-@media (max-width: $tablet){
-    .addresses{
-        > li{
+@media (max-width: $tablet) {
+    .addresses {
+        > li {
             width: 50%;
         }
     }
 }
 
-@media (max-width: $phone){
-    .addresses{
-        > li{
+@media (max-width: $phone) {
+    .addresses {
+        > li {
             width: 100%;
             padding-left: 0;
             padding-right: 0;
         }
     }
 
-    .col-1, .col-2, .col-3{
+    .col-1,
+    .col-2,
+    .col-3 {
         padding: 0;
     }
 
-    .col-1, .col-2{
+    .col-1,
+    .col-2 {
         width: 100%;
     }
 
-    form > div{
+    form > div {
         display: block;
     }
 
-    input{
-        &[type=submit]{
+    input {
+        &[type='submit'] {
             margin: 20px 0 0;
         }
     }
