@@ -1,42 +1,42 @@
 <template>
-    <div class='contact'>
-        <aside class='contact-sidebar'>
-            <div v-if='content.contact_img' class='contact_img'>
-                <div><img :src='content.contact_img.url' :alt='content.contact_img.alt'/></div>
-            </div>
-            <a v-if='content.contact_email' :href='"mailto:"+content.contact_email'>{{content.contact_email}}</a>
-        </aside>
-        <div class='contact-content'>
-            <h2>{{content.form_title[0].text}}</h2>
-            <div v-if='text' v-html='text'/>
-                <form method='post' action='/api/contact' @submit='checkForm' v-if='!success'>
-                    <div :class='[{"error": nameError}, "field"]'>
-                        <label for='name'>Votre nom <span>*</span></label>
-                        <input type='text' name='name' id='name' v-model='name'/>
-                    </div>
-                    <div :class='[{"error": emailError}, "field"]'>
-                        <label for='email'>Votre email <span>*</span></label>
-                        <input type='email' name='email' id='email' v-model='email'/>
-                    </div>
-                    <div class='field'>
-                        <label for='object'>Sujet</label>
-                        <input type='text' name='object' id='object' v-model='object'/>
-                    </div>
-                    <div class='field'>
-                        <label for='message'>Votre message</label>
-                        <textarea name='message' id='message' v-model='message' placeholder='Je veux challenger des hypothèses, faire émerger une vision commune, dynamiser une équipe projet, stimuler la créativité, définir une feuille de route, cadrer un projet… Aidez-moi !'></textarea>
-                    </div>
-                    <div :class='[{"error": rgpdError}, "field field-check"]'>
-                        <input type='checkbox' name='rgpd' id='rgpd' value='1' v-model='rgpd'/>
-                        <label for='rgpd'>J'accepte que les informations saisies soient utilisées exclusivement dans le cadre de ma demande et de la relation commerciale personnalisée qui peut en découler (par e-mail et/ou par téléphone)</label>
-                    </div>
-                    <div class='button'>
-                        <button type='submit' name='submit'>Envoyer</button>
-                    </div>
-                </form>
-                <p v-if='formError' class='error'>{{formError}}</p>
-            </div>
+  <div class="contact">
+    <aside class="contact-sidebar">
+      <div v-if="content.contact_img" class="contact_img">
+        <div><img :src="content.contact_img.url" :alt="content.contact_img.alt"></div>
+      </div>
+      <a v-if="content.contact_email" :href="&quot;mailto:&quot;+content.contact_email">{{ content.contact_email }}</a>
+    </aside>
+    <div class="contact-content">
+      <h2>{{ content.form_title[0].text }}</h2>
+      <div v-if="text" v-html="text"/>
+      <form method="post" v-if='!success' action="/api/contact" @submit="checkForm">
+        <div :class="[{&quot;error&quot;: nameError}, &quot;field&quot;]">
+          <label for="name">Votre nom <span>*</span></label>
+          <input id='name' type="text" v-model="name" name='name'>
         </div>
+        <div :class="[{&quot;error&quot;: emailError}, &quot;field&quot;]">
+          <label for="email">Votre email <span>*</span></label>
+          <input id='email' type="email" v-model="email" name='email'>
+        </div>
+        <div class="field">
+          <label for="object">Sujet</label>
+          <input id='object' type="text" v-model="object" name='object'>
+        </div>
+        <div class="field">
+          <label for="message">Votre message</label>
+          <textarea id="message" v-model="message" name='message' placeholder="Je veux challenger des hypothèses, faire émerger une vision commune, dynamiser une équipe projet, stimuler la créativité, définir une feuille de route, cadrer un projet… Aidez-moi !"/>
+        </div>
+        <div :class="[{&quot;error&quot;: rgpdError}, &quot;field field-check&quot;]">
+          <input id='rgpd' type="checkbox" v-model='rgpd' name='rgpd' value="1">
+          <label for="rgpd">J'accepte que les informations saisies soient utilisées exclusivement dans le cadre de ma demande et de la relation commerciale personnalisée qui peut en découler (par e-mail et/ou par téléphone)</label>
+        </div>
+        <div class="button">
+          <button type="submit" name="submit">Envoyer</button>
+        </div>
+      </form>
+      <p v-if="formError" class="error">{{ formError }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -70,34 +70,34 @@ export default {
         this.text = this.content.form_text ? PrismicDOM.RichText.asHtml(this.content.form_text) : '';
     },
     methods: {
-        async checkForm(e){
+        async checkForm(e) {
             e.preventDefault();
 
             const self = this;
 
-            if (!self.name){
-                self.formError = "Le nom est requis!";
+            if (!self.name) {
+                self.formError = 'Le nom est requis!';
                 self.nameError = true;
                 return;
             }
 
             self.nameError = false;
 
-            if (!self.email){
+            if (!self.email) {
                 self.formError = "L'adresse email est requise!";
                 self.emailError = true;
                 return;
             }
 
-            if(!validator.isEmail(self.email)){
-               self.formError = "L'adresse email semble invalide...";
-               self.emailError = true;
-               return;
+            if (!validator.isEmail(self.email)) {
+                self.formError = "L'adresse email semble invalide...";
+                self.emailError = true;
+                return;
             }
 
             self.emailError = false;
 
-            if (!self.rgpd){
+            if (!self.rgpd) {
                 self.formError = "Vous devez accepter les conditions d'utilisation!";
                 self.rgpdError = true;
                 return;
@@ -105,24 +105,26 @@ export default {
 
             self.rgpdError = false;
 
-            self.$axios.$post('/api/contact', 'email='+self.email+'&name='+self.name+'&object='+self.object+'&message='+self.message+'&rgpd='+self.rgpd)
-                .then(res => {
+            self.$axios.$post('/api/contact', 'email=' + self.email + '&name=' + self.name + '&object=' + self.object + '&message=' + self.message + '&rgpd=' + self.rgpd).then(
+                res => {
                     console.log(res);
-                    self.formError = "Votre message a bien été envoyé! Nous répondrons à votre message dans les plus brefs délais :)";
+                    self.formError = 'Votre message a bien été envoyé! Nous répondrons à votre message dans les plus brefs délais :)';
                     self.success = true;
-                }, err => {
+                },
+                err => {
                     console.log(err);
-                    self.formError = "Désolé, un problème est survenu! Veulliez réessayer plus tard.";
-                });
+                    self.formError = 'Désolé, un problème est survenu! Veulliez réessayer plus tard.';
+                }
+            );
         }
     }
 };
 </script>
 
 <style lang='scss' scoped>
-@import "./assets/scss/abstracts/_variables.scss";
+@import './assets/scss/abstracts/_variables.scss';
 
-.contact{
+.contact {
     display: flex;
     justify-content: space-between;
 }
@@ -150,124 +152,125 @@ export default {
         overflow: hidden;
     }
 }
-.contact-content{
+.contact-content {
     flex: 1;
     padding: 30px 65px 30px 30px;
     margin: 0 0 0 70px;
     background: rgba(#000, 0.16);
     border-radius: 10px;
 }
-h2{
+h2 {
     padding: 0 0 0 15px;
     margin: 0 0 20px 21%;
-    + div{
+    + div {
         padding: 0 0 0 15px;
         margin: 0 0 0 21%;
     }
 }
-form{
+form {
     margin: 40px 0 0;
 }
-.field{
+.field {
     display: flex;
     margin: 0 0 15px;
-    &.error{
+    &.error {
         color: $primary;
     }
 }
-label{
+label {
     width: 21%;
     flex-shrink: 0;
     text-align: right;
-    span{
+    span {
         color: $primary;
     }
 }
-input, textarea{
+input,
+textarea {
     margin: 0 0 0 15px;
 }
-input{
+input {
     max-width: 345px;
-    &[type=checkbox]{
+    &[type='checkbox'] {
         margin: 7px 15px 0 calc(21% + 15px);
-        + label{
+        + label {
             width: 100%;
             flex-shrink: 1;
             text-align: left;
         }
     }
-    .error &{
+    .error & {
         border-color: $primary;
     }
 }
-.button{
+.button {
     margin: 25px 0 0 calc(21% + 15px);
 }
-p.error{
+p.error {
     padding: 0 0 0 15px;
     margin: 30px 0 0 21%;
     color: $primary;
 }
 
-
-@media (max-width: $desktop){
-    .contact{
+@media (max-width: $desktop) {
+    .contact {
         display: block;
     }
-    .contact-sidebar{
+    .contact-sidebar {
         margin: 0 auto;
     }
-    .contact-content{
+    .contact-content {
         margin: 50px 0 0;
     }
 }
 
-@media (max-width: $tablet){
-    h2{
+@media (max-width: $tablet) {
+    h2 {
         padding: 0;
         margin-left: 0;
-        + div{
+        + div {
             padding: 0;
             margin: 0;
         }
     }
 
-    .field{
+    .field {
         display: block;
     }
-    .field-check{
+    .field-check {
         display: flex;
     }
 
-    label{
+    label {
         display: block;
         width: 100%;
         text-align: left;
     }
 
-    input, textarea{
+    input,
+    textarea {
         margin: 10px 0 0;
     }
 
-    input{
-        &[type=checkbox]{
+    input {
+        &[type='checkbox'] {
             margin-left: 0;
         }
     }
 
-    .button{
+    .button {
         margin-left: 0;
     }
 }
 
-@media (max-width: $phone){
-    .contact-content{
+@media (max-width: $phone) {
+    .contact-content {
         padding-right: 30px;
     }
 }
 
-@media (max-width: $phone-small){
-    .contact-content{
+@media (max-width: $phone-small) {
+    .contact-content {
         padding: 0;
         background: none;
     }

@@ -1,72 +1,72 @@
 <template>
-    <div class='main-content'>
-        <div :class='[{"appear": isMounted}, "to-anim", "container"]'>
-            <div class='small-content'>
-                <div class='title'>
-                    <nuxt-link to='/' class='breadcrumb'>Accueil</nuxt-link>
-                    <h1 class='title'>{{ page.title }}</h1>
-                </div>
-                <div class='intro' v-if='page.intro' v-html='page.intro'/>
-                <div v-if='page.text' v-html='page.text'/>
-            </div>
+  <div class="main-content">
+    <div :class="[{'appear': isMounted}, 'to-anim', 'container']">
+      <div class="small-content">
+        <div class="title">
+          <nuxt-link to="/" class="breadcrumb">Accueil</nuxt-link>
+          <h1 class="title">{{ page.title }}</h1>
+        </div>
+        <div v-if="page.intro" class="intro" v-html="page.intro"/>
+        <div v-if="page.text" v-html="page.text"/>
+      </div>
 
-            <ul v-if='page.blocks' :class='[{"circle": page.blocks.length === 4}, "blocks"]'>
-                <listItem v-for='item in page.blocks' :key='item.item_title[0].text' :item='item'/>
-            </ul>
+      <ul v-if="page.blocks" :class="[{'circle': page.blocks.length === 4}, 'blocks']">
+        <listItem v-for="item in page.blocks" :key="item.item_title[0].text" :item="item"/>
+      </ul>
 
-            <!--
+      <!--
             <ul v-if='page.logos' class='logos'>
                 <listLogo v-for='logo in page.logos' :key='logo.logo_title[0].text' :logo='logo'/>
             </ul> -->
 
-            <ul v-if='page.custom_post === "references" && refs[0]' class='logos'>
-                <listRef v-for='ref in refs' :key='ref.title' :reference='ref'/>
-                <listRef key='contact' :reference='{"contact": true}'/>
-            </ul>
-            <ul v-if='refsPages > 1' class='pagination'>
-                <li v-if='currentPage > 1' class='nav'><nuxt-link :to="'?pages=' + (currentPage - 1)">‹</nuxt-link></li>
-                <li v-for='n in refsPages' :key='n'>
-                    <nuxt-link :to='"?pages="+n' :class='[{"nuxt-link-exact-active": currentPage === 1 && n === 1}]'>{{n}}</nuxt-link>
-                </li>
-                <li v-if='currentPage < refsPages' class='nav'><nuxt-link :to="'?pages=' + (currentPage + 1)">›</nuxt-link></li>
-            </ul>
+      <ul v-if="page.custom_post === 'references' && refs[0]" class="logos">
+        <listRef v-for="ref in refs" :key="ref.title" :reference="ref"/>
+        <listRef key="contact" :reference="{'contact': true}"/>
+      </ul>
+      <ul v-if="refsPages > 1" class="pagination">
+        <li v-if="currentPage > 1" class="nav"><nuxt-link :to="'?pages=' + (currentPage - 1)">‹</nuxt-link></li>
+        <li v-for="n in refsPages" :key="n">
+          <nuxt-link :to="'?pages='+n" :class="[{'nuxt-link-exact-active': currentPage === 1 && n === 1}]">{{ n }}</nuxt-link>
+        </li>
+        <li v-if="currentPage < refsPages" class="nav"><nuxt-link :to="'?pages=' + (currentPage + 1)">›</nuxt-link></li>
+      </ul>
 
-            <form v-if='page.cats' class='cats'> 
-                <select v-model='currentCat'>
-                    <option value='all' selected>Toutes les ressources</option>
-                    <option v-for='cat in page.cats' :key='cat' :value='cat'>{{cat}}</option>
-                </select>
-            </form>
-            <ul v-if='page.files' class='files'>
-                <listFile v-for='(file, i) in page.files' :key='file.file_title[0].text' :nb='i' :file='file' :cat='currentCat' v-if='currentCat == "all" || currentCat == file.cat'/>
-            </ul>
+      <form v-if="page.cats" class="cats"> 
+        <select v-model="currentCat">
+          <option value="all" selected>Toutes les ressources</option>
+          <option v-for="cat in page.cats" :key="cat" :value="cat">{{ cat }}</option>
+        </select>
+      </form>
+      <ul v-if="page.files" class="files">
+        <listFile v-for="(file, i) in page.files" v-if="currentCat == 'all' || currentCat == file.cat" :key="file.file_title[0].text" :nb="i" :file="file" :cat="currentCat"/>
+      </ul>
 
-            <contact v-if='page.contact' :content='page.contact'/>
+      <contact v-if="page.contact" :content="page.contact"/>
 
-            <who v-if='page.who' :content='page.who' :team='page.team' :story='page.story' :dimensions='page.dimensions' :video='page.video'/>
+      <who v-if="page.who" :content="page.who" :team="page.team" :story="page.story" :dimensions="page.dimensions" :video="page.video"/>
 
-            <div v-if='page.cta' class='cta'>
-                <div v-for='(item, i) in page.cta' :key='i'>
-                    <div :class='[{"inverted": item.style === "transparent"}, "button"]'>
-                        <a :href='item.link.url' v-if='item.link.url'>
-                            {{item.link_text}}
-                        </a>
-                        <button v-else @click='openPopin' :data-popin='i+1'>
-                            {{item.link_text}}
-                        </button>
-                    </div>
-                </div>
-            </div>
+      <div v-if="page.cta" class="cta">
+        <div v-for="(item, i) in page.cta" :key="i">
+          <div :class="[{'inverted': item.style === 'transparent'}, 'button']">
+            <a v-if="item.link.url" :href="item.link.url">
+              {{ item.link_text }}
+            </a>
+            <button v-else :data-popin="i+1" @click="openPopin">
+              {{ item.link_text }}
+            </button>
+          </div>
         </div>
-
-        <div v-for='(file, i) in page.files' :key='i' >
-            <popin :file='file.file_title[0].text' :name='"ressource"+(i+1)' :labelID='i' v-if='!file.file.url'/>
-        </div>
-
-        <div v-for='(item, i) in page.cta' :key='i' >
-            <popin :file='item.link_text' :name='"cta"+(i+1)' :labelID='i' v-if='!item.link.url'/>
-        </div>
+      </div>
     </div>
+
+    <div v-for="(file, i) in page.files" :key="i" >
+      <popin v-if="!file.file.url" :file="file.file_title[0].text" :name="'ressource'+(i+1)" :label-id="i"/>
+    </div>
+
+    <div v-for="(item, i) in page.cta" :key="i" >
+      <popin v-if="!item.link.url" :file="item.link_text" :name="'cta'+(i+1)" :label-id="i"/>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -85,13 +85,6 @@ import Who from '~/components/Who.vue';
 import Popin from '~/components/Popin.vue';
 
 export default {
-    data() {
-        return {
-            isMounted: false,
-            currentCat: 'all'
-        };
-    },
-    mixins: [btn],
     components: {
         ListItem,
         //ListLogo,
@@ -100,6 +93,13 @@ export default {
         Contact,
         Who,
         Popin
+    },
+    mixins: [btn],
+    data() {
+        return {
+            isMounted: false,
+            currentCat: 'all'
+        };
     },
     watchQuery: ['pages'],
     key: to => to.fullPath,
@@ -121,25 +121,26 @@ export default {
                 data = response.results[0].data;
 
                 page = {
-                    'type': response.results[0].type,
-                    'title': data.title[0] ? data.title[0].text : '',
-                    'desc': data.desc ? data.desc : '',
-                    'intro': data.intro ? PrismicDOM.RichText.asHtml(data.intro) : '',
-                    'text': data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
-                    'custom_post': data.custom_post ? data.custom_post : '',
-                    'cta': data.cta[0] ? data.cta : '',
-                    'blocks': data.blocks[0] ? data.blocks : '',
+                    type: response.results[0].type,
+                    title: data.title[0] ? data.title[0].text : '',
+                    desc: data.desc ? data.desc : '',
+                    intro: data.intro ? PrismicDOM.RichText.asHtml(data.intro) : '',
+                    text: data.text ? PrismicDOM.RichText.asHtml(data.text) : '',
+                    custom_post: data.custom_post ? data.custom_post : '',
+                    cta: data.cta[0] ? data.cta : '',
+                    blocks: data.blocks[0] ? data.blocks : '',
                     //'logos': data.logos[0] ? data.logos : '',
-                    'cats': data.cats ? data.cats.split(',') : '',
-                    'files': data.files[0] ? data.files : '',
-                    'contact': data.contact[0] ? data.contact[0] : '',
-                    'who': data.who[0] ? data.who[0] : '',
-                    'team': data.team ? data.team : '',
-                    'story': data.story_group[0] ? data.story_group[0] : '',
-                    'dimensions': data.dimensions ? data.dimensions : '',
-                    'video': data.video_group[0] ? data.video_group[0] : ''
+                    cats: data.cats ? data.cats.split(',') : '',
+                    files: data.files[0] ? data.files : '',
+                    contact: data.contact[0] ? data.contact[0] : '',
+                    who: data.who[0] ? data.who[0] : '',
+                    team: data.team ? data.team : '',
+                    story: data.story_group[0] ? data.story_group[0] : '',
+                    dimensions: data.dimensions ? data.dimensions : '',
+                    video: data.video_group[0] ? data.video_group[0] : ''
                 };
-            }, function(error){
+            },
+            function(error) {
                 error({ statusCode: error.response.status, message: error.message });
             }
         );
@@ -148,27 +149,27 @@ export default {
             error({ statusCode: '404', message: 'Page not found' });
         }
 
-        if( query.pages ) currentPage = +query.pages;
+        if (query.pages) currentPage = +query.pages;
 
-        await api.query(Prismic.Predicates.at('document.type', 'references'), {pageSize: 7, page: currentPage}).then(
+        await api.query(Prismic.Predicates.at('document.type', 'references'), { pageSize: 7, page: currentPage }).then(
             function(response) {
                 if (!response.results.length) return;
 
                 refsPages = response.total_pages;
                 refData = response.results;
-                
-            }, function(error){
+            },
+            function(error) {
                 error({ statusCode: error.response.status, message: error.message });
             }
         );
 
-        if( refData ){
+        if (refData) {
             refData.forEach((ref, i) => {
                 refs[i] = {
-                    'url': ref.uid ? '/reference/' + ref.uid : '',
-                    'title': ref.data.title[0] ? ref.data.title[0].text : '',
-                    'company': ref.data.company ? ref.data.company : '',
-                    'logo': ref.data.logo ? ref.data.logo : '',
+                    url: ref.uid ? '/reference/' + ref.uid : '',
+                    title: ref.data.title[0] ? ref.data.title[0].text : '',
+                    company: ref.data.company ? ref.data.company : '',
+                    logo: ref.data.logo ? ref.data.logo : ''
                 };
             });
         }
@@ -193,19 +194,19 @@ export default {
             title: this.page.title,
             meta: [{ hid: 'description', name: 'description', content: this.page.desc }]
         };
-    }, 
+    },
     methods: {
-        openPopin (e){
-            this.$store.commit('openPopin', "cta"+e.currentTarget.dataset.popin);
+        openPopin(e) {
+            this.$store.commit('openPopin', 'cta' + e.currentTarget.dataset.popin);
         }
     }
 };
 </script>
 
 <style lang='scss' scoped>
-@import "./assets/scss/abstracts/_variables.scss";
+@import './assets/scss/abstracts/_variables.scss';
 
-.main-content{
+.main-content {
     position: relative;
     z-index: 20;
 }
@@ -239,7 +240,7 @@ export default {
     text-align: center;
 }
 
-.logos{
+.logos {
     justify-content: center;
     margin-top: -30px;
 }
@@ -253,28 +254,28 @@ export default {
     }
 }
 
-.cats{
+.cats {
     margin: 90px 0 40px;
 }
 
-.pagination{
+.pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 7em 0 0;
     font-size: 1.8rem;
-    li{
+    li {
         padding: 10px;
-        &:before{
+        &:before {
             content: none;
         }
     }
-    .nuxt-link-exact-active{
+    .nuxt-link-exact-active {
         color: #fff;
         text-decoration: none;
     }
-    .nav{
-        a{
+    .nav {
+        a {
             text-decoration: none;
         }
     }
