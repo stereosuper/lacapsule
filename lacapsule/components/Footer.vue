@@ -40,6 +40,17 @@
                             </button>
                         </li>
                     </ul>
+                    <h3 class='no-top'>Blog</h3>
+                    <ul v-if='mediumArticles && mediumArticles.length' class='list-blog'>
+                        <li v-for='art in mediumArticles' :key='art.guid._'>
+                            <a :href='art.link' rel='noopener nofollow noreferrer' target="_blank">
+                                {{art.title}}
+                            </a>
+                        </li>
+                    </ul>
+                    <a v-if='footer.medium.url' :href='footer.medium.url' rel='noopener nofollow noreferrer' target="_blank">
+                        › Tous les articles
+                    </a>
                 </div>
 
                 <div class='col-1'>
@@ -97,6 +108,9 @@ export default {
         },
         footer() {
             return this.$store.state.footer;
+        },
+        mediumArticles() {
+            return this.$store.state.mediumArticles;
         }
     },
     mounted() {
@@ -121,6 +135,24 @@ h3 {
     font-size: 1.8rem;
     &.no-top {
         margin: 0.5em 0;
+    }
+}
+
+.list-blog {
+    > li {
+        padding: 0;
+        &:before {
+            content: none;
+        }
+    }
+    a {
+        font-style: normal;
+        color: inherit;
+        text-decoration: none;
+        &:hover,
+        &:focus {
+            color: $primary;
+        }
     }
 }
 
