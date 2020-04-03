@@ -4,30 +4,30 @@
       <div v-if="content.contact_img" class="contact_img">
         <div><img :src="content.contact_img.url" :alt="content.contact_img.alt"></div>
       </div>
-      <a v-if="content.contact_email" :href="&quot;mailto:&quot;+content.contact_email">{{ content.contact_email }}</a>
+      <a v-if="content.contact_email" :href="'mailto:'+content.contact_email">{{ content.contact_email }}</a>
     </aside>
     <div class="contact-content">
       <h2>{{ content.form_title[0].text }}</h2>
       <div v-if="text" v-html="text"/>
-      <form method="post" v-if='!success' action="/api/contact" @submit="checkForm">
-        <div :class="[{&quot;error&quot;: nameError}, &quot;field&quot;]">
+      <form v-if="!success" method="post" action="/api/contact" @submit="checkForm">
+        <div :class="[{'error': nameError}, 'field']">
           <label for="name">Votre nom <span>*</span></label>
-          <input id='name' type="text" v-model="name" name='name'>
+          <input id="name" v-model="name" type="text" name="name">
         </div>
-        <div :class="[{&quot;error&quot;: emailError}, &quot;field&quot;]">
+        <div :class="[{'error': emailError}, 'field']">
           <label for="email">Votre email <span>*</span></label>
-          <input id='email' type="email" v-model="email" name='email'>
+          <input id="email" v-model="email" type="email" name="email">
         </div>
         <div class="field">
           <label for="object">Sujet</label>
-          <input id='object' type="text" v-model="object" name='object'>
+          <input id="object" v-model="object" type="text" name="object">
         </div>
         <div class="field">
           <label for="message">Votre message</label>
-          <textarea id="message" v-model="message" name='message' placeholder="Je veux challenger des hypothèses, faire émerger une vision commune, dynamiser une équipe projet, stimuler la créativité, définir une feuille de route, cadrer un projet… Aidez-moi !"/>
+          <textarea id="message" v-model="message" name="message" placeholder="Je veux challenger des hypothèses, faire émerger une vision commune, dynamiser une équipe projet, stimuler la créativité, définir une feuille de route, cadrer un projet… Aidez-moi !"/>
         </div>
-        <div :class="[{&quot;error&quot;: rgpdError}, &quot;field field-check&quot;]">
-          <input id='rgpd' type="checkbox" v-model='rgpd' name='rgpd' value="1">
+        <div :class="[{'error': rgpdError}, 'field field-check']">
+          <input id="rgpd" v-model="rgpd" type="checkbox" name="rgpd" value="1">
           <label for="rgpd">J'accepte que les informations saisies soient utilisées exclusivement dans le cadre de ma demande et de la relation commerciale personnalisée qui peut en découler (par e-mail et/ou par téléphone)</label>
         </div>
         <div class="button">

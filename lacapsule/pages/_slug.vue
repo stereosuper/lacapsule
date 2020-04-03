@@ -58,13 +58,13 @@
         </div>
       </div>
     </div>
-
+    
     <div v-for="(file, i) in page.files" :key="i" >
-      <popin v-if="!file.file.url" :file="file.file_title[0].text" :name="'ressource'+(i+1)" :label-id="i"/>
+      <popin v-if="!file.file.url" :file="file.file_title[0].text" :name="'ressource'+(i+1)"/>
     </div>
 
     <div v-for="(item, i) in page.cta" :key="i" >
-      <popin v-if="!item.link.url" :file="item.link_text" :name="'cta'+(i+1)" :label-id="i"/>
+      <popin v-if="!item.link.url" :file="item.link_text" :name="'cta'+(i+1)"/>
     </div>
   </div>
 </template>
@@ -151,27 +151,29 @@ export default {
 
         if (query.pages) currentPage = +query.pages;
 
-        await api.query(Prismic.Predicates.at('document.type', 'references'), { pageSize: 7, page: currentPage }).then(
-            function(response) {
-                if (!response.results.length) return;
+        if (page.custom_post == 'references') {
+            await api.query(Prismic.Predicates.at('document.type', 'references'), { pageSize: 7, page: currentPage }).then(
+                function(response) {
+                    if (!response.results.length) return;
 
-                refsPages = response.total_pages;
-                refData = response.results;
-            },
-            function(error) {
-                error({ statusCode: error.response.status, message: error.message });
+                    refsPages = response.total_pages;
+                    refData = response.results;
+                },
+                function(error) {
+                    error({ statusCode: error.response.status, message: error.message });
+                }
+            );
+
+            if (refData) {
+                refData.forEach((ref, i) => {
+                    refs[i] = {
+                        url: ref.uid ? '/reference/' + ref.uid : '',
+                        title: ref.data.title[0] ? ref.data.title[0].text : '',
+                        company: ref.data.company ? ref.data.company : '',
+                        logo: ref.data.logo ? ref.data.logo : ''
+                    };
+                });
             }
-        );
-
-        if (refData) {
-            refData.forEach((ref, i) => {
-                refs[i] = {
-                    url: ref.uid ? '/reference/' + ref.uid : '',
-                    title: ref.data.title[0] ? ref.data.title[0].text : '',
-                    company: ref.data.company ? ref.data.company : '',
-                    logo: ref.data.logo ? ref.data.logo : ''
-                };
-            });
         }
 
         return { page, refs, refsPages, currentPage };

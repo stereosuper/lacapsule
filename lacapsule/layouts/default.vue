@@ -1,13 +1,13 @@
 <template>
-    <div class='wrapper' id='wrapper'>
-        <siteHeader/>
-        <div :class='[{"menuClicked": isBurgerClicked}, "content"]'>
-            <nuxt/>
-            <siteFooter v-if='hasFooter'/>
-            <popin v-for='(doc, i) in footer.docs' :name='"doc"+(i+1)' :key='i' :labelID='i' :file='doc.text' :ref='"popin"+i' v-if='!doc.link.url'/>
-        </div>
-        <stars/>
+  <div id="wrapper" class="wrapper">
+    <siteHeader/>
+    <div :class="[{'menuClicked': isBurgerClicked}, 'content']">
+      <nuxt/>
+      <siteFooter v-if="hasFooter"/>
+      <popin v-for="(doc, i) in footer.docs" v-if="!doc.link.url" :name="'doc'+(i+1)" :key="i" :file="doc.text" :ref="'popin'+i"/>
     </div>
+    <stars/>
+  </div>
 </template>
 
 <script>
@@ -27,7 +27,7 @@ export default {
         isBurgerClicked() {
             return this.$store.state.menuHTML.clickBurger;
         },
-        hasFooter(){
+        hasFooter() {
             return this.$store.state.hasFooter;
         },
         footer() {
@@ -37,14 +37,14 @@ export default {
     head: {
         titleTemplate: '%s - La Capsule',
         htmlAttrs: {
-            lang: 'fr',
+            lang: 'fr'
         }
     }
 };
 </script>
 
 <style lang='scss' scoped>
-@import "./assets/scss/abstracts/_variables.scss";
+@import './assets/scss/abstracts/_variables.scss';
 
 .content {
     position: relative;
