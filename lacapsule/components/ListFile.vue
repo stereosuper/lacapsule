@@ -4,7 +4,7 @@
         <div>
             <h2>{{file.file_title[0].text}}</h2>
             <div v-if='content' v-html='content'/>
-            <a :href='file.file.url' class='download' v-if='file.file.url'>
+            <a :href='file.file.url' class='download' target='_blank' v-if='file.file.url'>
                 <svg width="11" height="14" viewBox="0 0 11 14" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0.541016 13.1653H10.4577V11.7487H0.541016V13.1653ZM10.4577 4.37363H7.62435V0.123632H3.37435V4.37363H0.541016L5.49935 9.33199L10.4577 4.37363Z"/>
                 </svg>
